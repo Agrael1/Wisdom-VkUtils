@@ -41,7 +41,6 @@ int main(int argc, const char* argv[])
         std::cout << "Parsing...\n";
         wis::Context ctx(doc);
 
-
     } catch (const std::exception& e) {
         std::cout << "Wisdom Vk Utils: Exception: " << e.what() << '\n';
         return -1;
@@ -49,7 +48,5 @@ int main(int argc, const char* argv[])
         std::cout << "Wisdom Vk Utils: Unknown exception\n";
         return -1;
     }
-}
-
-return 0;
+    return 0;
 }

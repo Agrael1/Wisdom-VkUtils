@@ -39,7 +39,7 @@ include(format.cmake)
 # Download the vk spec
 if(WISVK_LOAD_SPEC)
 	message(STATUS "Downloading Vulkan spec...")
-	file(DOWNLOAD "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/master/xml/vk.xml" "${CMAKE_CURRENT_SOURCE_DIR}/spec/vk.xml" SHOW_PROGRESS)
+	file(DOWNLOAD "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/main/xml/vk.xml" "${CMAKE_CURRENT_SOURCE_DIR}/spec/vk.xml" SHOW_PROGRESS)
 	message(STATUS "Downloading Vulkan spec... Done")
 	set(WISVK_LOAD_SPEC OFF CACHE BOOL "Download fresh spec from Khronos" FORCE)
 endif()
@@ -77,7 +77,7 @@ add_executable (${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
 	PRIVATE 
 		 "entry_main.cpp"
- "format.h" "context.h")
+ "format.h" "context.h" "context.cpp")
 if(WISDOM_USE_FMT)
 	target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 endif()
