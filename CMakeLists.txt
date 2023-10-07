@@ -77,8 +77,8 @@ add_executable (${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
 	PRIVATE 
 		 "entry_main.cpp"
- "format.h" "context.h" "context.cpp")
-if(WISDOM_USE_FMT)
+ "format.h" "context.h"  "generator.h" "generator.cpp" "context.cpp" "wisvk/vk_managed_handles.hpp")
+if(WISVK_USE_FMT)
 	target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 endif()
 
@@ -87,7 +87,8 @@ target_compile_definitions(${PROJECT_NAME}
 	PRIVATE 
 		VK_SPEC="${VK_SPEC}"
 		CLANG_FORMAT_EXECUTABLE="${CLANG_FORMAT_EXECUTABLE}"
-		WISDOM_USE_FMT="${WISDOM_USE_FMT}"
+		WISVK_USE_FMT=$<BOOL:${WISVK_USE_FMT}>
+		OUTPUT_FOLDER="${CMAKE_CURRENT_SOURCE_DIR}/wisvk"
 )
 
 

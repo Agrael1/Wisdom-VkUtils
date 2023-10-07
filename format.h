@@ -1,5 +1,5 @@
 #pragma once
-#if defined(WISVK_USE_FMT)
+#if WISVK_USE_FMT
 #include <fmt/xchar.h>
 namespace wis {
 using fmt::format; // NOLINT

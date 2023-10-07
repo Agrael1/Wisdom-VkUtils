@@ -2,9 +2,10 @@
 #include <span>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "format.h"
-#include "context.h"
+#include "generator.h"
 
 constexpr inline std::string_view clang_format_exe = CLANG_FORMAT_EXECUTABLE;
 constexpr inline std::string_view vulkan_spec_xml = VK_SPEC;
@@ -40,6 +41,15 @@ int main(int argc, const char* argv[])
     try {
         std::cout << "Parsing...\n";
         wis::Context ctx(doc);
+        std::cout << "Generating...\n";
+        std::ofstream out_managed(OUTPUT_FOLDER "/vk_handle_traits.hpp");
+        if (!out_managed.is_open()) {
+            std::cout << "Wisdom Vk Utils: Failed to open output file\n";
+            return -1;
+        }
+
+        wis::Generator gen;
+        gen.GenerateHandleTraits(ctx, out_managed);
 
     } catch (const std::exception& e) {
         std::cout << "Wisdom Vk Utils: Exception: " << e.what() << '\n';
