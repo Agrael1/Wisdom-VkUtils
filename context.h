@@ -10,6 +10,9 @@ struct Feature {
     std::vector<std::string_view> commands;
     std::vector<std::string_view> handles;
 };
+struct Command {
+    std::string_view for_type;
+};
 
 class Context
 {
@@ -117,15 +120,30 @@ private:
         }
 
         // parse command
+        std::string_view cmd_name = "";
+        Command cmd;
+
         for (auto child = command.FirstChildElement(); child != nullptr; child = child->NextSiblingElement()) {
             std::string_view value = child->Value();
             if (value == "proto") {
                 auto name = child->FirstChildElement("name");
                 if (!name)
                     throw std::runtime_error("Command without name");
-                command_names.emplace_back(name->GetText());
+                cmd_name = name->GetText();
+            }
+            if (value == "param") {
+                auto type = child->FirstChildElement("type");
+                if (!type)
+                    break;
+
+                cmd.for_type = type->GetText();
+                if (!handle_parents.contains(cmd.for_type) || handle_aliases.contains(cmd.for_type)) {
+                    cmd.for_type = "";
+                }
+                break;
             }
         }
+        commands[cmd_name] = cmd;
     }
 
     // Features
@@ -170,6 +188,6 @@ public:
     std::unordered_map<std::string_view, std::string_view> command_aliases;
     std::unordered_map<std::string_view, Feature> features;
     std::unordered_map<std::string_view, Feature> extensions;
-    std::vector<std::string_view> command_names;
+    std::unordered_map<std::string_view, Command> commands;
 };
 } // namespace wis
