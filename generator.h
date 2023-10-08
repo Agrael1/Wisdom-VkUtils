@@ -7,7 +7,7 @@ class Generator
 {
 public:
     void GenerateHandleTraits(const Context& context, std::ostream& stream);
-
+    void GenerateLoader(const Context& context, std::ostream& stream);
 private:
     static std::string MakeHandleTraits(const Context& context);
     static std::string MakeHandleTrait(const Handle& handle);

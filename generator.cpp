@@ -1,6 +1,7 @@
 #include "generator.h"
 #include "format.h"
 #include <ostream>
+#include <ranges>
 
 void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& stream)
 {
@@ -39,13 +40,59 @@ public:
     stream << output;
 }
 
+void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream)
+{
+    std::string output{ "#pragma once\n"
+                        "#include <vulkan/vulkan.h>\n" };
+    stream << output;
+}
+
 std::string wis::Generator::MakeHandleTraits(const Context& context)
 {
     std::string output;
-    for (auto&& [name, h] : context.handles) {
-        output += MakeHandleTrait(h);
+    std::unordered_map<std::string_view, std::vector<std::string_view>> handle_to_ext;
+    handle_to_ext.reserve(context.handles.size());
+
+    for (auto&& [fname, f] : context.features) {
+        for (auto&& h : f.handles) {
+            handle_to_ext[h].push_back(fname);
+        }
+    }
+    for (auto&& [ename, e] : context.extensions) {
+        for (auto&& h : e.handles) {
+            handle_to_ext[h].push_back(ename);
+        }
     }
 
+    for (auto& [hname, extst] : handle_to_ext) {
+        if (extst.size() == 1) {
+            continue;
+        }
+        auto& handle = context.handles.at(hname);
+        output += "#if ";
+        for (auto& i : extst) {
+            output += wis::format("defined({}) || ", i);
+        }
+        output.insert(output.size() - 4, wis::format("\n{}\n#endif\n\n", MakeHandleTrait(handle)));
+        handle_to_ext.erase(hname);
+    }
+
+    for (auto&& [fname, f] : context.features) {
+        if (f.handles.empty()) {
+            continue;
+        }
+        output += wis::format("#ifdef {}\n", fname);
+        for (auto hname : f.handles) {
+            if (!handle_to_ext.contains(hname)) {
+                continue;
+            }
+            auto& handle = context.handles.at(hname);
+            auto& exts = handle_to_ext.at(hname);
+
+            output += wis::format("{}\n", MakeHandleTrait(handle));
+        }
+        output += "#endif\n\n";
+    }
     return output;
 }
 

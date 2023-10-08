@@ -51,6 +51,14 @@ int main(int argc, const char* argv[])
         wis::Generator gen;
         gen.GenerateHandleTraits(ctx, out_managed);
 
+        std::ofstream out_loader(OUTPUT_FOLDER "/vk_loader.hpp");
+        if (!out_loader.is_open()) {
+            std::cout << "Wisdom Vk Utils: Failed to open output file\n";
+            return -1;
+        }
+
+        gen.GenerateLoader(ctx, out_loader);
+
     } catch (const std::exception& e) {
         std::cout << "Wisdom Vk Utils: Exception: " << e.what() << '\n';
         return -1;
