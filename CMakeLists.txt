@@ -29,6 +29,7 @@ endif()
 option(WISVK_INSTALL "Enable installation of VkUtils." ON)
 option(WISVK_RUN_GENERATOR "Run VkUtils generator to generate newest headers." ${WTOP})
 option(WISVK_LOAD_SPEC "Download fresh spec from Khronos" ${WTOP})
+option(WISVK_BUILD_EXAMPLES "Build examples" ${WTOP})
 option(WISVK_USE_FMT "Use fmtlib for formatting" ${WUSE_FMT})
 
 set_property( GLOBAL PROPERTY USE_FOLDERS ON )
@@ -91,13 +92,19 @@ target_compile_definitions(${PROJECT_NAME}
 		WISVK_USE_FMT=$<BOOL:${WISVK_USE_FMT}>
 		OUTPUT_FOLDER="${OUTPUT_FOLDER}"
 )
-target_include_directories(${PROJECT_NAME} PRIVATE ${OUTPUT_FOLDER})
 
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 20
 	CXX_STANDARD_REQUIRED ON
 )
+
+add_library(wisvk INTERFACE)
+target_include_directories(wisvk INTERFACE ${OUTPUT_FOLDER})
+
+if(WISVK_BUILD_EXAMPLES)
+	add_subdirectory(examples)
+endif()
 
 if(WISVK_INSTALL)
 	include( GNUInstallDirs )

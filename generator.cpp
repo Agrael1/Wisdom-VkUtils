@@ -42,9 +42,92 @@ public:
 
 void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream)
 {
-    std::string output{ "#pragma once\n"
-                        "#include <vulkan/vulkan.h>\n" };
-    stream << output;
+    std::string output{ R"(#pragma once
+#include <vulkan/vulkan.h>
+namespace wis {
+struct VulkanTable
+{
+)" };
+
+    std::unordered_map<std::string_view, std::vector<std::string_view>> command_to_features;
+    command_to_features.reserve(context.commands.size());
+    std::vector<std::string_view> to_erase;
+
+    for (auto&& [fname, f] : context.features) {
+        for (auto&& c : f.commands) {
+            command_to_features[c].push_back(fname);
+        }
+    }
+    for (auto&& [ename, e] : context.extensions) {
+        for (auto&& c : e.commands) {
+            command_to_features[c].push_back(ename);
+        }
+    }
+
+    std::span<std::string_view> last_features{};
+    std::string accumulator;
+
+    for (auto& [cname, extst] : command_to_features) {
+        if (extst.size() == 1) {
+            continue;
+        }
+
+        if ((last_features.size() != extst.size() || !std::equal(last_features.begin(), last_features.end(), extst.begin())) && !last_features.empty()) {
+            output += wis::format("#if ");
+            for (auto& i : last_features) {
+                output += wis::format("defined({}) || ", i);
+            }
+            output.pop_back();
+            output.pop_back();
+            output.pop_back();
+            output += "\n";
+
+            output += wis::format("{}#endif\n\n", accumulator);
+            accumulator.clear();
+        }
+        last_features = extst;
+        accumulator += wis::format("PFN_{} {};\n", cname, cname);
+
+        to_erase.push_back(cname);
+    }
+    for (auto& i : to_erase | std::views::reverse) {
+        command_to_features.erase(i);
+    }
+
+    for (auto&& [fname, f] : context.features) {
+        if (f.commands.empty()) {
+            continue;
+        }
+        output += wis::format("#ifdef {}\n", fname);
+        for (auto cname : f.commands) {
+            if (!command_to_features.contains(cname)) {
+                continue;
+            }
+
+            output += wis::format("PFN_{} {};\n", cname, cname);
+        }
+        output += "#endif\n\n";
+    }
+    for (auto&& [fname, f] : context.extensions) {
+        if (f.commands.empty()) {
+            continue;
+        }
+        output += wis::format("#ifdef {}\n", fname);
+        for (auto cname : f.commands) {
+            if (!command_to_features.contains(cname)) {
+                continue;
+            }
+
+            output += wis::format("PFN_{} {};\n", cname, cname);
+        }
+        output += "#endif\n\n";
+    }
+
+    /*for (auto& [cname, _] : context.commands) {
+        output += wis::format("PFN_{} {};\n", cname, cname);
+    }*/
+
+    stream << output + "};\n}\n";
 }
 
 std::string wis::Generator::MakeHandleTraits(const Context& context)
@@ -52,6 +135,7 @@ std::string wis::Generator::MakeHandleTraits(const Context& context)
     std::string output;
     std::unordered_map<std::string_view, std::vector<std::string_view>> handle_to_ext;
     handle_to_ext.reserve(context.handles.size());
+    std::vector<std::string_view> to_erase;
 
     for (auto&& [fname, f] : context.features) {
         for (auto&& h : f.handles) {
@@ -73,8 +157,15 @@ std::string wis::Generator::MakeHandleTraits(const Context& context)
         for (auto& i : extst) {
             output += wis::format("defined({}) || ", i);
         }
-        output.insert(output.size() - 4, wis::format("\n{}\n#endif\n\n", MakeHandleTrait(handle)));
-        handle_to_ext.erase(hname);
+        output.pop_back();
+        output.pop_back();
+        output.pop_back();
+
+        output += wis::format("\n{}\n#endif\n\n", MakeHandleTrait(handle));
+        to_erase.push_back(hname);
+    }
+    for (auto& i : to_erase | std::views::reverse) {
+        handle_to_ext.erase(i);
     }
 
     for (auto&& [fname, f] : context.features) {
@@ -87,8 +178,20 @@ std::string wis::Generator::MakeHandleTraits(const Context& context)
                 continue;
             }
             auto& handle = context.handles.at(hname);
-            auto& exts = handle_to_ext.at(hname);
-
+            output += wis::format("{}\n", MakeHandleTrait(handle));
+        }
+        output += "#endif\n\n";
+    }
+    for (auto&& [fname, f] : context.extensions) {
+        if (f.handles.empty()) {
+            continue;
+        }
+        output += wis::format("#ifdef {}\n", fname);
+        for (auto hname : f.handles) {
+            if (!handle_to_ext.contains(hname)) {
+                continue;
+            }
+            auto& handle = context.handles.at(hname);
             output += wis::format("{}\n", MakeHandleTrait(handle));
         }
         output += "#endif\n\n";
