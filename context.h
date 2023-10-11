@@ -6,6 +6,8 @@
 #include <string>
 
 namespace wis {
+
+class Context;
 struct Feature {
     std::vector<std::string_view> commands;
     std::vector<std::string_view> handles;
@@ -13,6 +15,7 @@ struct Feature {
 struct Command {
     std::string_view name;
     std::vector<std::string_view> param_types;
+    bool is_global(const Context& ctx) const noexcept;
 };
 struct Handle {
     std::string_view name;
@@ -26,6 +29,18 @@ class Context
 {
 public:
     Context(const tinyxml2::XMLDocument& doc);
+
+public:
+    auto& GetCommand(std::string_view cmd) const
+    {
+        if (auto it = commands.find(cmd); it != commands.end()) {
+            return it->second;
+        }
+        if (auto it = command_aliases.find(cmd); it != command_aliases.end()) {
+            return commands.at(it->second);
+        }
+        throw std::runtime_error("Command not found");
+    }
 
 private:
     void ReadRegistry(const tinyxml2::XMLElement& registry);

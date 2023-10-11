@@ -105,7 +105,7 @@ void wis::Context::ReadCommand(const tinyxml2::XMLElement& command)
         if (name == attributes.end())
             throw std::runtime_error("Alias without name");
 
-        command_aliases[alias_it->second] = name->second;
+        command_aliases[name->second] = alias_it->second;
         return;
     }
 
@@ -213,4 +213,14 @@ void wis::Context::ComposeHandleInfo()
             destroy_handle.destroy_parent = destroy_handle.name == destroy_parent.name ? nullptr : &destroy_parent;
         }
     }
+}
+
+bool wis::Command::is_global(const Context& ctx) const noexcept
+{
+    for (auto& i : param_types) {
+        if (ctx.handles.contains(i)) {
+            return false;
+        }
+    }
+    return true;
 }

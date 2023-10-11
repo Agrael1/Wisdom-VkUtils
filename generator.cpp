@@ -3,6 +3,54 @@
 #include <ostream>
 #include <ranges>
 
+constexpr std::string_view libopen_code = R"(
+#  if defined( __unix__ ) || defined( __QNXNTO__ ) || defined(__Fuchsia__)
+        m_library = dlopen( "libvulkan.so", RTLD_NOW | RTLD_LOCAL );
+        if ( m_library == nullptr )
+        {
+          m_library = dlopen( "libvulkan.so.1", RTLD_NOW | RTLD_LOCAL );
+        }
+#  elif defined( __APPLE__ )
+        m_library = dlopen( "libvulkan.dylib", RTLD_NOW | RTLD_LOCAL );
+#  elif defined( _WIN32 )
+        m_library = ::LoadLibraryA( "vulkan-1.dll" );
+#  else
+#    error unsupported platform
+#  endif
+)";
+
+constexpr std::string_view libclose_code = R"(
+#  if defined( __unix__ ) || defined( __APPLE__ ) || defined( __QNXNTO__ ) || defined(__Fuchsia__)
+        dlclose( m_library );
+#  elif defined( _WIN32 )
+        ::FreeLibrary( m_library );
+#  else
+#    error unsupported platform
+#  endif
+)";
+
+constexpr std::string_view symload_code = R"(
+#  if defined( __unix__ ) || defined( __APPLE__ ) || defined( __QNXNTO__ ) || defined(__Fuchsia__)
+      return (T)dlsym( m_library, function );
+#  elif defined( _WIN32 )
+      return (T)::GetProcAddress( m_library, function );
+#  else
+#    error unsupported platform
+#  endif
+)";
+
+
+
+std::string MakeGlobalCommands(std::span<std::string_view> commands)
+{
+    std::string output{ "struct GlobalCommands{\n" };
+    for (auto& i : commands) {
+        output += wis::format("PFN_{} {};\n", i, i);
+    }
+    output += "};\n";
+    return output;
+}
+
 void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& stream)
 {
     std::string output{
@@ -44,26 +92,40 @@ void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream
 {
     std::string output{ R"(#pragma once
 #include <vulkan/vulkan.h>
+
 namespace wis {
-struct VulkanTable
-{
+
 )" };
 
     std::unordered_map<std::string_view, std::vector<std::string_view>> command_to_features;
-    command_to_features.reserve(context.commands.size());
+    std::vector<std::string_view> global_commands;
+    global_commands.push_back("vkCreateInstance");
+
     std::vector<std::string_view> to_erase;
+    command_to_features.reserve(context.commands.size());
 
     for (auto&& [fname, f] : context.features) {
         for (auto&& c : f.commands) {
             command_to_features[c].push_back(fname);
+            if (context.GetCommand(c).is_global(context)) {
+                global_commands.push_back(c);
+            }
         }
     }
     for (auto&& [ename, e] : context.extensions) {
         for (auto&& c : e.commands) {
             command_to_features[c].push_back(ename);
+            if (context.GetCommand(c).is_global(context)) {
+                global_commands.push_back(c);
+            }
         }
     }
 
+    output += MakeGlobalCommands(global_commands);
+
+
+
+    output += "struct VulkanTable {\n";
     std::span<std::string_view> last_features{};
     std::string accumulator;
 
@@ -122,11 +184,6 @@ struct VulkanTable
         }
         output += "#endif\n\n";
     }
-
-    /*for (auto& [cname, _] : context.commands) {
-        output += wis::format("PFN_{} {};\n", cname, cname);
-    }*/
-
     stream << output + "};\n}\n";
 }
 

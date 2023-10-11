@@ -1,8 +1,16 @@
 #pragma once
+#include "vk_libinit.h"
 #include <vulkan/vulkan.h>
+
 namespace wis {
-struct VulkanTable
-{
+
+struct GlobalCommands{
+PFN_vkCreateInstance vkCreateInstance;
+PFN_vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties;
+PFN_vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties;
+PFN_vkEnumerateInstanceVersion vkEnumerateInstanceVersion;
+};
+struct VulkanTable {
 #if defined(VK_EXT_shader_object) || defined(VK_EXT_extended_dynamic_state3) 
 PFN_vkCmdSetAlphaToCoverageEnableEXT vkCmdSetAlphaToCoverageEnableEXT;
 PFN_vkCmdSetSampleMaskEXT vkCmdSetSampleMaskEXT;
