@@ -215,12 +215,12 @@ void wis::Context::ComposeHandleInfo()
     }
 }
 
-bool wis::Command::is_global(const Context& ctx) const noexcept
+const wis::Handle* wis::Command::GetAttachedHandle(const Context& ctx) const noexcept
 {
     for (auto& i : param_types) {
-        if (ctx.handles.contains(i)) {
-            return false;
+        if (auto it = ctx.handles.find(i); it != ctx.handles.end()) {
+            return &it->second;
         }
     }
-    return true;
+    return nullptr;
 }

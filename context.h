@@ -7,15 +7,12 @@
 
 namespace wis {
 
+struct Command;
 class Context;
+
 struct Feature {
     std::vector<std::string_view> commands;
     std::vector<std::string_view> handles;
-};
-struct Command {
-    std::string_view name;
-    std::vector<std::string_view> param_types;
-    bool is_global(const Context& ctx) const noexcept;
 };
 struct Handle {
     std::string_view name;
@@ -23,6 +20,28 @@ struct Handle {
     Handle* destroy_parent = nullptr;
     Handle* pool = nullptr;
     Command* destroy_command = nullptr;
+    bool IsChildOf(std::string_view parent_name) const noexcept
+    {
+        if (name == parent_name)
+            return true;
+
+        auto* xparent = this->parent;
+        while (xparent) {
+            if (xparent->name == parent_name)
+                return true;
+            xparent = xparent->parent;
+        }
+        return false;
+    }
+};
+
+struct Command {
+    std::string_view name;
+    std::vector<std::string_view> param_types;
+    const Handle* GetAttachedHandle(const Context& ctx) const noexcept;
+    bool IsGlobal(const Context& ctx) const noexcept { return !GetAttachedHandle(ctx); }
+    bool IsInstance(const Context& ctx) const noexcept { return GetAttachedHandle(ctx) && GetAttachedHandle(ctx)->IsChildOf("VkInstance"); }
+    bool IsDevice(const Context& ctx) const noexcept { return GetAttachedHandle(ctx) && GetAttachedHandle(ctx)->IsChildOf("VkDevice"); }
 };
 
 class Context

@@ -2,54 +2,117 @@
 #include "format.h"
 #include <ostream>
 #include <ranges>
+#include <unordered_set>
 
-constexpr std::string_view libopen_code = R"(
-#  if defined( __unix__ ) || defined( __QNXNTO__ ) || defined(__Fuchsia__)
-        m_library = dlopen( "libvulkan.so", RTLD_NOW | RTLD_LOCAL );
-        if ( m_library == nullptr )
-        {
-          m_library = dlopen( "libvulkan.so.1", RTLD_NOW | RTLD_LOCAL );
+struct FeatureHash {
+    std::size_t operator()(const std::span<std::string_view>& k) const noexcept
+    {
+        std::size_t hash = 0;
+        for (auto& i : k) {
+            hash ^= std::hash<std::string_view>()(i);
         }
-#  elif defined( __APPLE__ )
-        m_library = dlopen( "libvulkan.dylib", RTLD_NOW | RTLD_LOCAL );
-#  elif defined( _WIN32 )
-        m_library = ::LoadLibraryA( "vulkan-1.dll" );
-#  else
-#    error unsupported platform
-#  endif
-)";
-
-constexpr std::string_view libclose_code = R"(
-#  if defined( __unix__ ) || defined( __APPLE__ ) || defined( __QNXNTO__ ) || defined(__Fuchsia__)
-        dlclose( m_library );
-#  elif defined( _WIN32 )
-        ::FreeLibrary( m_library );
-#  else
-#    error unsupported platform
-#  endif
-)";
-
-constexpr std::string_view symload_code = R"(
-#  if defined( __unix__ ) || defined( __APPLE__ ) || defined( __QNXNTO__ ) || defined(__Fuchsia__)
-      return (T)dlsym( m_library, function );
-#  elif defined( _WIN32 )
-      return (T)::GetProcAddress( m_library, function );
-#  else
-#    error unsupported platform
-#  endif
-)";
-
-
-
-std::string MakeGlobalCommands(std::span<std::string_view> commands)
-{
-    std::string output{ "struct GlobalCommands{\n" };
-    for (auto& i : commands) {
-        output += wis::format("PFN_{} {};\n", i, i);
+        return hash;
     }
-    output += "};\n";
+};
+
+struct FeatureEqual {
+    bool operator()(const std::span<std::string_view>& lhs, const std::span<std::string_view>& rhs) const
+    {
+        return lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    }
+};
+
+auto SortByFeature(const std::unordered_set<std::string_view>& commands, std::unordered_map<std::string_view, std::vector<std::string_view>>& command_to_features)
+{
+    // stores the commands under the same features
+    std::unordered_map<std::span<std::string_view>, std::vector<std::string_view>, FeatureHash, FeatureEqual> feature_blocks;
+    for (auto command : commands) {
+        feature_blocks[command_to_features[command]].push_back(command);
+    }
+    return feature_blocks;
+}
+std::string MakeGuard(std::span<std::string_view> features)
+{
+    std::string output{ "#if " };
+    for (auto& i : features) {
+        output += wis::format("defined({}) || ", i);
+    }
+    output.pop_back();
+    output.pop_back();
+    output.pop_back();
+    output += "\n";
     return output;
 }
+
+std::string MakeTable(auto feature_blocks)
+{
+    std::string output;
+    for (auto& [feature, cmds] : feature_blocks) {
+        output += MakeGuard(feature);
+        for (auto& i : cmds) {
+            output += wis::format("PFN_{} {};\n", i, i);
+        }
+        output += "#endif\n";
+    }
+    return output;
+}
+
+std::string MakeGlobalCommands(const std::unordered_set<std::string_view>& commands, std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
+{
+    auto feature_blocks = SortByFeature(commands, features);
+
+    std::string output{ "struct VkGlobalTable{\n" };
+    output += "void Init(LibToken token) noexcept{\n";
+
+    for (auto& [feature, cmds] : feature_blocks) {
+        output += MakeGuard(feature);
+        for (auto& i : cmds) {
+            output += wis::format("\t{} = token.GetProcAddress<decltype({})>();\n", i, i);
+        }
+        output += "#endif\n";
+    }
+
+    return output + wis::format("}}\npublic:\n{}}};\n", MakeTable(feature_blocks));
+}
+
+
+std::string MakeInstanceCommands(const std::unordered_set<std::string_view>& commands, std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
+{
+    auto feature_blocks = SortByFeature(commands, features);
+
+    std::string output{ "struct VkInstanceTable{\n" };
+    output += "void Init(VkInstance instance, VkGlobalTable global_table) noexcept{\n";
+
+    for (auto& [feature, cmds] : feature_blocks) {
+        output += MakeGuard(feature);
+        for (auto& i : cmds) {
+            output += wis::format("\t{} = (PFN_{})global_table.vkGetInstanceProcAddr(instance, \"{}\");\n", i, i, i);
+        }
+        output += "#endif\n";
+    }
+
+    return output + wis::format("}}\npublic:\n{}}};\n", MakeTable(feature_blocks));
+}
+
+std::string MakeDeviceCommands(const std::unordered_set<std::string_view>& commands, std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
+{
+    auto feature_blocks = SortByFeature(commands, features);
+
+    std::string output{ "struct VkDeviceTable{\n" };
+    output += "void Init(VkDevice device, VkGlobalTable global_table) noexcept{\n";
+
+    for (auto& [feature, cmds] : feature_blocks) {
+        output += MakeGuard(feature);
+        for (auto& i : cmds) {
+            output += wis::format("\t{} = (PFN_{})global_table.vkGetDeviceProcAddr(device, \"{}\");\n", i, i, i);
+        }
+        output += "#endif\n";
+    }
+
+    return output + wis::format("}}\npublic:\n{}}};\n", MakeTable(feature_blocks));
+}
+
+
 
 void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& stream)
 {
@@ -92,14 +155,19 @@ void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream
 {
     std::string output{ R"(#pragma once
 #include <vulkan/vulkan.h>
+#include "vk_libinit.h"
 
 namespace wis {
 
 )" };
 
     std::unordered_map<std::string_view, std::vector<std::string_view>> command_to_features;
-    std::vector<std::string_view> global_commands;
-    global_commands.push_back("vkCreateInstance");
+    std::unordered_set<std::string_view> global_commands;
+    std::unordered_set<std::string_view> instance_commands;
+    std::unordered_set<std::string_view> device_commands;
+    global_commands.emplace("vkGetInstanceProcAddr");
+    global_commands.emplace("vkGetDeviceProcAddr");
+    global_commands.emplace("vkCreateInstance");
 
     std::vector<std::string_view> to_erase;
     command_to_features.reserve(context.commands.size());
@@ -107,84 +175,58 @@ namespace wis {
     for (auto&& [fname, f] : context.features) {
         for (auto&& c : f.commands) {
             command_to_features[c].push_back(fname);
-            if (context.GetCommand(c).is_global(context)) {
-                global_commands.push_back(c);
+            auto xcommand = context.GetCommand(c);
+            if (global_commands.contains(c)) {
+                continue;
+            }
+            if (xcommand.IsGlobal(context)) {
+                global_commands.emplace(c);
+                continue;
+            }
+            if (xcommand.IsDevice(context)) {
+                device_commands.emplace(c);
+                continue;
+            }
+            if (xcommand.IsInstance(context)) {
+                instance_commands.emplace(c);
             }
         }
     }
     for (auto&& [ename, e] : context.extensions) {
         for (auto&& c : e.commands) {
             command_to_features[c].push_back(ename);
-            if (context.GetCommand(c).is_global(context)) {
-                global_commands.push_back(c);
-            }
-        }
-    }
 
-    output += MakeGlobalCommands(global_commands);
-
-
-
-    output += "struct VulkanTable {\n";
-    std::span<std::string_view> last_features{};
-    std::string accumulator;
-
-    for (auto& [cname, extst] : command_to_features) {
-        if (extst.size() == 1) {
-            continue;
-        }
-
-        if ((last_features.size() != extst.size() || !std::equal(last_features.begin(), last_features.end(), extst.begin())) && !last_features.empty()) {
-            output += wis::format("#if ");
-            for (auto& i : last_features) {
-                output += wis::format("defined({}) || ", i);
-            }
-            output.pop_back();
-            output.pop_back();
-            output.pop_back();
-            output += "\n";
-
-            output += wis::format("{}#endif\n\n", accumulator);
-            accumulator.clear();
-        }
-        last_features = extst;
-        accumulator += wis::format("PFN_{} {};\n", cname, cname);
-
-        to_erase.push_back(cname);
-    }
-    for (auto& i : to_erase | std::views::reverse) {
-        command_to_features.erase(i);
-    }
-
-    for (auto&& [fname, f] : context.features) {
-        if (f.commands.empty()) {
-            continue;
-        }
-        output += wis::format("#ifdef {}\n", fname);
-        for (auto cname : f.commands) {
-            if (!command_to_features.contains(cname)) {
+            auto xcommand = context.GetCommand(c);
+            if (global_commands.contains(c)) {
                 continue;
             }
 
-            output += wis::format("PFN_{} {};\n", cname, cname);
-        }
-        output += "#endif\n\n";
-    }
-    for (auto&& [fname, f] : context.extensions) {
-        if (f.commands.empty()) {
-            continue;
-        }
-        output += wis::format("#ifdef {}\n", fname);
-        for (auto cname : f.commands) {
-            if (!command_to_features.contains(cname)) {
+            if (xcommand.IsGlobal(context)) {
+                global_commands.emplace(c);
                 continue;
             }
-
-            output += wis::format("PFN_{} {};\n", cname, cname);
+            if (xcommand.IsDevice(context)) {
+                device_commands.emplace(c);
+                continue;
+            }
+            if (xcommand.IsInstance(context)) {
+                instance_commands.emplace(c);
+            }
         }
-        output += "#endif\n\n";
     }
-    stream << output + "};\n}\n";
+    // Global commands
+    output += MakeGlobalCommands(global_commands, command_to_features);
+    output += "\n";
+
+    // Instance commands
+    output += MakeInstanceCommands(instance_commands, command_to_features);
+    output += "\n";
+
+    // Device commands
+    output += MakeDeviceCommands(device_commands, command_to_features);
+    output += "\n";
+
+    stream << output + "}\n";
 }
 
 std::string wis::Generator::MakeHandleTraits(const Context& context)
