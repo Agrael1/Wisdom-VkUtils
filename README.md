@@ -11,8 +11,8 @@ Contains only parts of the API that are actually improving the development exper
 - Does not require linking to the Vulkan library
 - Does not pollute the global namespace with Vulkan functions
 - Functions are loaded on demand
-- Supports feature switching with `#define` macros
-- Provides implicit conversions to function pointers
+- Supports feature switching with `#undef` macros
+- Loads functions depending on header version replacing new commands with extension ones if necessary
 
 ## Managed handle implementation (vk_managed_handles.hpp) 
 - Provides a shared_ptr like handle implementation for Vulkan handles with parent-child relationships
@@ -32,3 +32,19 @@ Contains only parts of the API that are actually improving the development exper
 
 The generator is used to generate up-to-date headers for Wisdom project. However, it can be used for other projects as well. 
 The generated output is specifically constrained to the needs of Wisdom project, but it can be easily modified.
+
+# Usage
+
+Use FetchContent to add the repository to your project. If you intend only to use headers, you can use the following snippet:
+
+```cmake
+FetchContent_Declare(
+	wisvk
+	GIT_REPOSITORY https://github.com/Agrael1/Wisdom-VkUtils.git
+	GIT_TAG        master
+	)
+
+	set(WISVK_ONLY_HEADERS ON CACHE BOOL "" FORCE)
+	FetchContent_MakeAvailable(wisvk)
+```
+This will make a target called wisvk available. You can then use it in your target_link_libraries command. Configuration should take no time at all.

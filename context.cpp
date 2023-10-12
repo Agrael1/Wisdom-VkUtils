@@ -105,7 +105,8 @@ void wis::Context::ReadCommand(const tinyxml2::XMLElement& command)
         if (name == attributes.end())
             throw std::runtime_error("Alias without name");
 
-        command_aliases[name->second] = alias_it->second;
+        alias_to_command[name->second] = alias_it->second;
+        command_to_aliases[alias_it->second].emplace_back(name->second);
         return;
     }
 

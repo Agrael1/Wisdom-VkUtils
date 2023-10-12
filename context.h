@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <unordered_set>
 
 namespace wis {
 
@@ -55,7 +56,7 @@ public:
         if (auto it = commands.find(cmd); it != commands.end()) {
             return it->second;
         }
-        if (auto it = command_aliases.find(cmd); it != command_aliases.end()) {
+        if (auto it = alias_to_command.find(cmd); it != alias_to_command.end()) {
             return commands.at(it->second);
         }
         throw std::runtime_error("Command not found");
@@ -93,7 +94,8 @@ private:
 public:
     std::unordered_map<std::string_view, std::string_view> handle_parents;
     std::unordered_map<std::string_view, std::string_view> handle_aliases;
-    std::unordered_map<std::string_view, std::string_view> command_aliases;
+    std::unordered_map<std::string_view, std::string_view> alias_to_command;
+    std::unordered_map<std::string_view, std::vector<std::string_view>> command_to_aliases;
 
     std::unordered_map<std::string_view, Feature> features;
     std::unordered_map<std::string_view, Feature> extensions;
