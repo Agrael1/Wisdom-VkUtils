@@ -44,13 +44,25 @@ std::string MakeGuard(std::span<std::string_view> features)
     return output;
 }
 
-std::string MakeTable(auto feature_blocks)
+std::string MakeTable(auto& feature_blocks)
 {
     std::string output;
     for (auto& [feature, cmds] : feature_blocks) {
         output += MakeGuard(feature);
         for (auto& i : cmds) {
             output += wis::format("PFN_{} {};\n", i, i);
+        }
+        output += "#endif\n";
+    }
+    return output;
+}
+std::string MakeOperators(auto& feature_blocks)
+{
+    std::string output;
+    for (auto& [feature, cmds] : feature_blocks) {
+        output += MakeGuard(feature);
+        for (auto& i : cmds) {
+            output += wis::format("operator PFN_{}()const noexcept {{ return {};}};\n", i, i);
         }
         output += "#endif\n";
     }
@@ -72,9 +84,8 @@ std::string MakeGlobalCommands(const std::unordered_set<std::string_view>& comma
         output += "#endif\n";
     }
 
-    return output + wis::format("}}\npublic:\n{}}};\n", MakeTable(feature_blocks));
+    return output + wis::format("}}\npublic:\n{}\npublic:\n{}}};\n", MakeOperators(feature_blocks), MakeTable(feature_blocks));
 }
-
 
 std::string MakeInstanceCommands(const std::unordered_set<std::string_view>& commands, std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
 {
@@ -91,7 +102,7 @@ std::string MakeInstanceCommands(const std::unordered_set<std::string_view>& com
         output += "#endif\n";
     }
 
-    return output + wis::format("}}\npublic:\n{}}};\n", MakeTable(feature_blocks));
+    return output + wis::format("}}\npublic:\n{}\npublic:\n{}}};\n", MakeOperators(feature_blocks), MakeTable(feature_blocks));
 }
 
 std::string MakeDeviceCommands(const std::unordered_set<std::string_view>& commands, std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
@@ -109,10 +120,8 @@ std::string MakeDeviceCommands(const std::unordered_set<std::string_view>& comma
         output += "#endif\n";
     }
 
-    return output + wis::format("}}\npublic:\n{}}};\n", MakeTable(feature_blocks));
+    return output + wis::format("}}\npublic:\n{}\npublic:\n{}}};\n", MakeOperators(feature_blocks), MakeTable(feature_blocks));
 }
-
-
 
 void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& stream)
 {

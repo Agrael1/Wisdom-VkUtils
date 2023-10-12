@@ -19,6 +19,18 @@ void Init(LibToken token) noexcept{
 }
 public:
 #if defined(VK_VERSION_1_0) 
+operator PFN_vkGetInstanceProcAddr()const noexcept { return vkGetInstanceProcAddr;};
+operator PFN_vkGetDeviceProcAddr()const noexcept { return vkGetDeviceProcAddr;};
+operator PFN_vkEnumerateInstanceLayerProperties()const noexcept { return vkEnumerateInstanceLayerProperties;};
+operator PFN_vkEnumerateInstanceExtensionProperties()const noexcept { return vkEnumerateInstanceExtensionProperties;};
+operator PFN_vkCreateInstance()const noexcept { return vkCreateInstance;};
+#endif
+#if defined(VK_VERSION_1_1) 
+operator PFN_vkEnumerateInstanceVersion()const noexcept { return vkEnumerateInstanceVersion;};
+#endif
+
+public:
+#if defined(VK_VERSION_1_0) 
 PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr;
 PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr;
 PFN_vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties;
@@ -241,6 +253,219 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 #endif
 }
 public:
+#if defined(VK_EXT_directfb_surface) 
+operator PFN_vkCreateDirectFBSurfaceEXT()const noexcept { return vkCreateDirectFBSurfaceEXT;};
+operator PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT()const noexcept { return vkGetPhysicalDeviceDirectFBPresentationSupportEXT;};
+#endif
+#if defined(VK_VERSION_1_0) 
+operator PFN_vkGetPhysicalDeviceMemoryProperties()const noexcept { return vkGetPhysicalDeviceMemoryProperties;};
+operator PFN_vkDestroyInstance()const noexcept { return vkDestroyInstance;};
+operator PFN_vkGetPhysicalDeviceProperties()const noexcept { return vkGetPhysicalDeviceProperties;};
+operator PFN_vkEnumeratePhysicalDevices()const noexcept { return vkEnumeratePhysicalDevices;};
+operator PFN_vkEnumerateDeviceLayerProperties()const noexcept { return vkEnumerateDeviceLayerProperties;};
+operator PFN_vkGetPhysicalDeviceFeatures()const noexcept { return vkGetPhysicalDeviceFeatures;};
+operator PFN_vkGetPhysicalDeviceFormatProperties()const noexcept { return vkGetPhysicalDeviceFormatProperties;};
+operator PFN_vkGetPhysicalDeviceImageFormatProperties()const noexcept { return vkGetPhysicalDeviceImageFormatProperties;};
+operator PFN_vkGetPhysicalDeviceQueueFamilyProperties()const noexcept { return vkGetPhysicalDeviceQueueFamilyProperties;};
+operator PFN_vkCreateDevice()const noexcept { return vkCreateDevice;};
+operator PFN_vkEnumerateDeviceExtensionProperties()const noexcept { return vkEnumerateDeviceExtensionProperties;};
+operator PFN_vkGetPhysicalDeviceSparseImageFormatProperties()const noexcept { return vkGetPhysicalDeviceSparseImageFormatProperties;};
+#endif
+#if defined(VK_EXT_calibrated_timestamps) 
+operator PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT()const noexcept { return vkGetPhysicalDeviceCalibrateableTimeDomainsEXT;};
+#endif
+#if defined(VK_EXT_tooling_info) 
+operator PFN_vkGetPhysicalDeviceToolPropertiesEXT()const noexcept { return vkGetPhysicalDeviceToolPropertiesEXT;};
+#endif
+#if defined(VK_KHR_xcb_surface) 
+operator PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR()const noexcept { return vkGetPhysicalDeviceXcbPresentationSupportKHR;};
+operator PFN_vkCreateXcbSurfaceKHR()const noexcept { return vkCreateXcbSurfaceKHR;};
+#endif
+#if defined(VK_EXT_acquire_xlib_display) 
+operator PFN_vkAcquireXlibDisplayEXT()const noexcept { return vkAcquireXlibDisplayEXT;};
+operator PFN_vkGetRandROutputDisplayEXT()const noexcept { return vkGetRandROutputDisplayEXT;};
+#endif
+#if defined(VK_EXT_debug_utils) 
+operator PFN_vkSubmitDebugUtilsMessageEXT()const noexcept { return vkSubmitDebugUtilsMessageEXT;};
+operator PFN_vkCreateDebugUtilsMessengerEXT()const noexcept { return vkCreateDebugUtilsMessengerEXT;};
+operator PFN_vkDestroyDebugUtilsMessengerEXT()const noexcept { return vkDestroyDebugUtilsMessengerEXT;};
+#endif
+#if defined(VK_KHR_get_physical_device_properties2) 
+operator PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR()const noexcept { return vkGetPhysicalDeviceQueueFamilyProperties2KHR;};
+operator PFN_vkGetPhysicalDeviceMemoryProperties2KHR()const noexcept { return vkGetPhysicalDeviceMemoryProperties2KHR;};
+operator PFN_vkGetPhysicalDeviceFormatProperties2KHR()const noexcept { return vkGetPhysicalDeviceFormatProperties2KHR;};
+operator PFN_vkGetPhysicalDeviceFeatures2KHR()const noexcept { return vkGetPhysicalDeviceFeatures2KHR;};
+operator PFN_vkGetPhysicalDeviceProperties2KHR()const noexcept { return vkGetPhysicalDeviceProperties2KHR;};
+operator PFN_vkGetPhysicalDeviceImageFormatProperties2KHR()const noexcept { return vkGetPhysicalDeviceImageFormatProperties2KHR;};
+operator PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR()const noexcept { return vkGetPhysicalDeviceSparseImageFormatProperties2KHR;};
+#endif
+#if defined(VK_KHR_cooperative_matrix) 
+operator PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR()const noexcept { return vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR;};
+#endif
+#if defined(VK_KHR_get_surface_capabilities2) 
+operator PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR()const noexcept { return vkGetPhysicalDeviceSurfaceCapabilities2KHR;};
+operator PFN_vkGetPhysicalDeviceSurfaceFormats2KHR()const noexcept { return vkGetPhysicalDeviceSurfaceFormats2KHR;};
+#endif
+#if defined(VK_KHR_win32_surface) 
+operator PFN_vkCreateWin32SurfaceKHR()const noexcept { return vkCreateWin32SurfaceKHR;};
+operator PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR()const noexcept { return vkGetPhysicalDeviceWin32PresentationSupportKHR;};
+#endif
+#if defined(VK_KHR_display) 
+operator PFN_vkGetPhysicalDeviceDisplayPropertiesKHR()const noexcept { return vkGetPhysicalDeviceDisplayPropertiesKHR;};
+operator PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR()const noexcept { return vkGetPhysicalDeviceDisplayPlanePropertiesKHR;};
+operator PFN_vkGetDisplayPlaneSupportedDisplaysKHR()const noexcept { return vkGetDisplayPlaneSupportedDisplaysKHR;};
+operator PFN_vkGetDisplayModePropertiesKHR()const noexcept { return vkGetDisplayModePropertiesKHR;};
+operator PFN_vkCreateDisplayModeKHR()const noexcept { return vkCreateDisplayModeKHR;};
+operator PFN_vkGetDisplayPlaneCapabilitiesKHR()const noexcept { return vkGetDisplayPlaneCapabilitiesKHR;};
+operator PFN_vkCreateDisplayPlaneSurfaceKHR()const noexcept { return vkCreateDisplayPlaneSurfaceKHR;};
+#endif
+#if defined(VK_NV_cooperative_matrix) 
+operator PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV()const noexcept { return vkGetPhysicalDeviceCooperativeMatrixPropertiesNV;};
+#endif
+#if defined(VK_VERSION_1_1) 
+operator PFN_vkEnumeratePhysicalDeviceGroups()const noexcept { return vkEnumeratePhysicalDeviceGroups;};
+operator PFN_vkGetPhysicalDeviceQueueFamilyProperties2()const noexcept { return vkGetPhysicalDeviceQueueFamilyProperties2;};
+operator PFN_vkGetPhysicalDeviceFeatures2()const noexcept { return vkGetPhysicalDeviceFeatures2;};
+operator PFN_vkGetPhysicalDeviceProperties2()const noexcept { return vkGetPhysicalDeviceProperties2;};
+operator PFN_vkGetPhysicalDeviceFormatProperties2()const noexcept { return vkGetPhysicalDeviceFormatProperties2;};
+operator PFN_vkGetPhysicalDeviceImageFormatProperties2()const noexcept { return vkGetPhysicalDeviceImageFormatProperties2;};
+operator PFN_vkGetPhysicalDeviceMemoryProperties2()const noexcept { return vkGetPhysicalDeviceMemoryProperties2;};
+operator PFN_vkGetPhysicalDeviceSparseImageFormatProperties2()const noexcept { return vkGetPhysicalDeviceSparseImageFormatProperties2;};
+operator PFN_vkGetPhysicalDeviceExternalBufferProperties()const noexcept { return vkGetPhysicalDeviceExternalBufferProperties;};
+operator PFN_vkGetPhysicalDeviceExternalSemaphoreProperties()const noexcept { return vkGetPhysicalDeviceExternalSemaphoreProperties;};
+operator PFN_vkGetPhysicalDeviceExternalFenceProperties()const noexcept { return vkGetPhysicalDeviceExternalFenceProperties;};
+#endif
+#if defined(VK_EXT_debug_report) 
+operator PFN_vkDebugReportMessageEXT()const noexcept { return vkDebugReportMessageEXT;};
+operator PFN_vkDestroyDebugReportCallbackEXT()const noexcept { return vkDestroyDebugReportCallbackEXT;};
+operator PFN_vkCreateDebugReportCallbackEXT()const noexcept { return vkCreateDebugReportCallbackEXT;};
+#endif
+#if defined(VK_MVK_macos_surface) 
+operator PFN_vkCreateMacOSSurfaceMVK()const noexcept { return vkCreateMacOSSurfaceMVK;};
+#endif
+#if defined(VK_EXT_metal_surface) 
+operator PFN_vkCreateMetalSurfaceEXT()const noexcept { return vkCreateMetalSurfaceEXT;};
+#endif
+#if defined(VK_EXT_sample_locations) 
+operator PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT()const noexcept { return vkGetPhysicalDeviceMultisamplePropertiesEXT;};
+#endif
+#if defined(VK_KHR_surface) 
+operator PFN_vkGetPhysicalDeviceSurfacePresentModesKHR()const noexcept { return vkGetPhysicalDeviceSurfacePresentModesKHR;};
+operator PFN_vkDestroySurfaceKHR()const noexcept { return vkDestroySurfaceKHR;};
+operator PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR()const noexcept { return vkGetPhysicalDeviceSurfaceCapabilitiesKHR;};
+operator PFN_vkGetPhysicalDeviceSurfaceSupportKHR()const noexcept { return vkGetPhysicalDeviceSurfaceSupportKHR;};
+operator PFN_vkGetPhysicalDeviceSurfaceFormatsKHR()const noexcept { return vkGetPhysicalDeviceSurfaceFormatsKHR;};
+#endif
+#if defined(VK_EXT_display_surface_counter) 
+operator PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT()const noexcept { return vkGetPhysicalDeviceSurfaceCapabilities2EXT;};
+#endif
+#if defined(VK_KHR_xlib_surface) 
+operator PFN_vkCreateXlibSurfaceKHR()const noexcept { return vkCreateXlibSurfaceKHR;};
+operator PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR()const noexcept { return vkGetPhysicalDeviceXlibPresentationSupportKHR;};
+#endif
+#if defined(VK_KHR_wayland_surface) 
+operator PFN_vkCreateWaylandSurfaceKHR()const noexcept { return vkCreateWaylandSurfaceKHR;};
+operator PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR()const noexcept { return vkGetPhysicalDeviceWaylandPresentationSupportKHR;};
+#endif
+#if defined(VK_VERSION_1_3) 
+operator PFN_vkGetPhysicalDeviceToolProperties()const noexcept { return vkGetPhysicalDeviceToolProperties;};
+#endif
+#if defined(VK_NN_vi_surface) 
+operator PFN_vkCreateViSurfaceNN()const noexcept { return vkCreateViSurfaceNN;};
+#endif
+#if defined(VK_NV_external_sci_sync) || defined(VK_NV_external_sci_sync2) 
+operator PFN_vkGetPhysicalDeviceSciSyncAttributesNV()const noexcept { return vkGetPhysicalDeviceSciSyncAttributesNV;};
+#endif
+#if defined(VK_KHR_swapchain) || defined(VK_KHR_device_group) 
+operator PFN_vkGetPhysicalDevicePresentRectanglesKHR()const noexcept { return vkGetPhysicalDevicePresentRectanglesKHR;};
+#endif
+#if defined(VK_EXT_full_screen_exclusive) 
+operator PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT()const noexcept { return vkGetPhysicalDeviceSurfacePresentModes2EXT;};
+#endif
+#if defined(VK_GGP_stream_descriptor_surface) 
+operator PFN_vkCreateStreamDescriptorSurfaceGGP()const noexcept { return vkCreateStreamDescriptorSurfaceGGP;};
+#endif
+#if defined(VK_KHR_external_semaphore_capabilities) 
+operator PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR()const noexcept { return vkGetPhysicalDeviceExternalSemaphorePropertiesKHR;};
+#endif
+#if defined(VK_KHR_get_display_properties2) 
+operator PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR()const noexcept { return vkGetPhysicalDeviceDisplayPlaneProperties2KHR;};
+operator PFN_vkGetPhysicalDeviceDisplayProperties2KHR()const noexcept { return vkGetPhysicalDeviceDisplayProperties2KHR;};
+operator PFN_vkGetDisplayModeProperties2KHR()const noexcept { return vkGetDisplayModeProperties2KHR;};
+operator PFN_vkGetDisplayPlaneCapabilities2KHR()const noexcept { return vkGetDisplayPlaneCapabilities2KHR;};
+#endif
+#if defined(VK_KHR_android_surface) 
+operator PFN_vkCreateAndroidSurfaceKHR()const noexcept { return vkCreateAndroidSurfaceKHR;};
+#endif
+#if defined(VK_KHR_performance_query) 
+operator PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR()const noexcept { return vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR;};
+operator PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR()const noexcept { return vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR;};
+#endif
+#if defined(VK_KHR_object_refresh) 
+operator PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR()const noexcept { return vkGetPhysicalDeviceRefreshableObjectTypesKHR;};
+#endif
+#if defined(VK_KHR_video_queue) 
+operator PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR()const noexcept { return vkGetPhysicalDeviceVideoCapabilitiesKHR;};
+operator PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR()const noexcept { return vkGetPhysicalDeviceVideoFormatPropertiesKHR;};
+#endif
+#if defined(VK_FUCHSIA_imagepipe_surface) 
+operator PFN_vkCreateImagePipeSurfaceFUCHSIA()const noexcept { return vkCreateImagePipeSurfaceFUCHSIA;};
+#endif
+#if defined(VK_NV_external_memory_capabilities) 
+operator PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV()const noexcept { return vkGetPhysicalDeviceExternalImageFormatPropertiesNV;};
+#endif
+#if defined(VK_NV_optical_flow) 
+operator PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV()const noexcept { return vkGetPhysicalDeviceOpticalFlowImageFormatsNV;};
+#endif
+#if defined(VK_KHR_device_group_creation) 
+operator PFN_vkEnumeratePhysicalDeviceGroupsKHR()const noexcept { return vkEnumeratePhysicalDeviceGroupsKHR;};
+#endif
+#if defined(VK_KHR_external_memory_capabilities) 
+operator PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR()const noexcept { return vkGetPhysicalDeviceExternalBufferPropertiesKHR;};
+#endif
+#if defined(VK_EXT_direct_mode_display) 
+operator PFN_vkReleaseDisplayEXT()const noexcept { return vkReleaseDisplayEXT;};
+#endif
+#if defined(VK_KHR_external_fence_capabilities) 
+operator PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR()const noexcept { return vkGetPhysicalDeviceExternalFencePropertiesKHR;};
+#endif
+#if defined(VK_MVK_ios_surface) 
+operator PFN_vkCreateIOSSurfaceMVK()const noexcept { return vkCreateIOSSurfaceMVK;};
+#endif
+#if defined(VK_QNX_screen_surface) 
+operator PFN_vkCreateScreenSurfaceQNX()const noexcept { return vkCreateScreenSurfaceQNX;};
+operator PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX()const noexcept { return vkGetPhysicalDeviceScreenPresentationSupportQNX;};
+#endif
+#if defined(VK_KHR_fragment_shading_rate) 
+operator PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR()const noexcept { return vkGetPhysicalDeviceFragmentShadingRatesKHR;};
+#endif
+#if defined(VK_NV_coverage_reduction_mode) 
+operator PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV()const noexcept { return vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV;};
+#endif
+#if defined(VK_EXT_headless_surface) 
+operator PFN_vkCreateHeadlessSurfaceEXT()const noexcept { return vkCreateHeadlessSurfaceEXT;};
+#endif
+#if defined(VK_EXT_acquire_drm_display) 
+operator PFN_vkAcquireDrmDisplayEXT()const noexcept { return vkAcquireDrmDisplayEXT;};
+operator PFN_vkGetDrmDisplayEXT()const noexcept { return vkGetDrmDisplayEXT;};
+#endif
+#if defined(VK_KHR_video_encode_queue) 
+operator PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR()const noexcept { return vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR;};
+#endif
+#if defined(VK_NV_acquire_winrt_display) 
+operator PFN_vkAcquireWinrtDisplayNV()const noexcept { return vkAcquireWinrtDisplayNV;};
+operator PFN_vkGetWinrtDisplayNV()const noexcept { return vkGetWinrtDisplayNV;};
+#endif
+#if defined(VK_NV_external_memory_sci_buf) 
+operator PFN_vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV()const noexcept { return vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV;};
+operator PFN_vkGetPhysicalDeviceSciBufAttributesNV()const noexcept { return vkGetPhysicalDeviceSciBufAttributesNV;};
+#endif
+
+public:
+#if defined(VK_EXT_directfb_surface) 
+PFN_vkCreateDirectFBSurfaceEXT vkCreateDirectFBSurfaceEXT;
+PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT vkGetPhysicalDeviceDirectFBPresentationSupportEXT;
+#endif
 #if defined(VK_VERSION_1_0) 
 PFN_vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties;
 PFN_vkDestroyInstance vkDestroyInstance;
@@ -255,19 +480,24 @@ PFN_vkCreateDevice vkCreateDevice;
 PFN_vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties;
 PFN_vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties;
 #endif
-#if defined(VK_EXT_directfb_surface) 
-PFN_vkCreateDirectFBSurfaceEXT vkCreateDirectFBSurfaceEXT;
-PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT vkGetPhysicalDeviceDirectFBPresentationSupportEXT;
-#endif
 #if defined(VK_EXT_calibrated_timestamps) 
 PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT vkGetPhysicalDeviceCalibrateableTimeDomainsEXT;
+#endif
+#if defined(VK_EXT_tooling_info) 
+PFN_vkGetPhysicalDeviceToolPropertiesEXT vkGetPhysicalDeviceToolPropertiesEXT;
 #endif
 #if defined(VK_KHR_xcb_surface) 
 PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR;
 PFN_vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR;
 #endif
-#if defined(VK_EXT_tooling_info) 
-PFN_vkGetPhysicalDeviceToolPropertiesEXT vkGetPhysicalDeviceToolPropertiesEXT;
+#if defined(VK_EXT_acquire_xlib_display) 
+PFN_vkAcquireXlibDisplayEXT vkAcquireXlibDisplayEXT;
+PFN_vkGetRandROutputDisplayEXT vkGetRandROutputDisplayEXT;
+#endif
+#if defined(VK_EXT_debug_utils) 
+PFN_vkSubmitDebugUtilsMessageEXT vkSubmitDebugUtilsMessageEXT;
+PFN_vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT;
+PFN_vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT;
 #endif
 #if defined(VK_KHR_get_physical_device_properties2) 
 PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR vkGetPhysicalDeviceQueueFamilyProperties2KHR;
@@ -278,25 +508,16 @@ PFN_vkGetPhysicalDeviceProperties2KHR vkGetPhysicalDeviceProperties2KHR;
 PFN_vkGetPhysicalDeviceImageFormatProperties2KHR vkGetPhysicalDeviceImageFormatProperties2KHR;
 PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR vkGetPhysicalDeviceSparseImageFormatProperties2KHR;
 #endif
-#if defined(VK_EXT_debug_utils) 
-PFN_vkSubmitDebugUtilsMessageEXT vkSubmitDebugUtilsMessageEXT;
-PFN_vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT;
-PFN_vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT;
-#endif
-#if defined(VK_EXT_acquire_xlib_display) 
-PFN_vkAcquireXlibDisplayEXT vkAcquireXlibDisplayEXT;
-PFN_vkGetRandROutputDisplayEXT vkGetRandROutputDisplayEXT;
-#endif
-#if defined(VK_KHR_win32_surface) 
-PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
-PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR;
+#if defined(VK_KHR_cooperative_matrix) 
+PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR;
 #endif
 #if defined(VK_KHR_get_surface_capabilities2) 
 PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR vkGetPhysicalDeviceSurfaceCapabilities2KHR;
 PFN_vkGetPhysicalDeviceSurfaceFormats2KHR vkGetPhysicalDeviceSurfaceFormats2KHR;
 #endif
-#if defined(VK_KHR_cooperative_matrix) 
-PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR;
+#if defined(VK_KHR_win32_surface) 
+PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
+PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR;
 #endif
 #if defined(VK_KHR_display) 
 PFN_vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR;
@@ -306,6 +527,9 @@ PFN_vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR;
 PFN_vkCreateDisplayModeKHR vkCreateDisplayModeKHR;
 PFN_vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR;
 PFN_vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR;
+#endif
+#if defined(VK_NV_cooperative_matrix) 
+PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV vkGetPhysicalDeviceCooperativeMatrixPropertiesNV;
 #endif
 #if defined(VK_VERSION_1_1) 
 PFN_vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups;
@@ -320,9 +544,6 @@ PFN_vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBuffe
 PFN_vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties;
 PFN_vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties;
 #endif
-#if defined(VK_NV_cooperative_matrix) 
-PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV vkGetPhysicalDeviceCooperativeMatrixPropertiesNV;
-#endif
 #if defined(VK_EXT_debug_report) 
 PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT;
 PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT;
@@ -331,6 +552,12 @@ PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT;
 #if defined(VK_MVK_macos_surface) 
 PFN_vkCreateMacOSSurfaceMVK vkCreateMacOSSurfaceMVK;
 #endif
+#if defined(VK_EXT_metal_surface) 
+PFN_vkCreateMetalSurfaceEXT vkCreateMetalSurfaceEXT;
+#endif
+#if defined(VK_EXT_sample_locations) 
+PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT vkGetPhysicalDeviceMultisamplePropertiesEXT;
+#endif
 #if defined(VK_KHR_surface) 
 PFN_vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR;
 PFN_vkDestroySurfaceKHR vkDestroySurfaceKHR;
@@ -338,43 +565,37 @@ PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabili
 PFN_vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR;
 PFN_vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR;
 #endif
-#if defined(VK_EXT_sample_locations) 
-PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT vkGetPhysicalDeviceMultisamplePropertiesEXT;
-#endif
-#if defined(VK_EXT_metal_surface) 
-PFN_vkCreateMetalSurfaceEXT vkCreateMetalSurfaceEXT;
+#if defined(VK_EXT_display_surface_counter) 
+PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT;
 #endif
 #if defined(VK_KHR_xlib_surface) 
 PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
 PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR;
 #endif
-#if defined(VK_EXT_display_surface_counter) 
-PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT;
-#endif
-#if defined(VK_VERSION_1_3) 
-PFN_vkGetPhysicalDeviceToolProperties vkGetPhysicalDeviceToolProperties;
-#endif
 #if defined(VK_KHR_wayland_surface) 
 PFN_vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR;
 PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR;
 #endif
+#if defined(VK_VERSION_1_3) 
+PFN_vkGetPhysicalDeviceToolProperties vkGetPhysicalDeviceToolProperties;
+#endif
 #if defined(VK_NN_vi_surface) 
 PFN_vkCreateViSurfaceNN vkCreateViSurfaceNN;
-#endif
-#if defined(VK_KHR_swapchain) || defined(VK_KHR_device_group) 
-PFN_vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR;
 #endif
 #if defined(VK_NV_external_sci_sync) || defined(VK_NV_external_sci_sync2) 
 PFN_vkGetPhysicalDeviceSciSyncAttributesNV vkGetPhysicalDeviceSciSyncAttributesNV;
 #endif
-#if defined(VK_KHR_external_semaphore_capabilities) 
-PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR vkGetPhysicalDeviceExternalSemaphorePropertiesKHR;
+#if defined(VK_KHR_swapchain) || defined(VK_KHR_device_group) 
+PFN_vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR;
+#endif
+#if defined(VK_EXT_full_screen_exclusive) 
+PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT vkGetPhysicalDeviceSurfacePresentModes2EXT;
 #endif
 #if defined(VK_GGP_stream_descriptor_surface) 
 PFN_vkCreateStreamDescriptorSurfaceGGP vkCreateStreamDescriptorSurfaceGGP;
 #endif
-#if defined(VK_EXT_full_screen_exclusive) 
-PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT vkGetPhysicalDeviceSurfacePresentModes2EXT;
+#if defined(VK_KHR_external_semaphore_capabilities) 
+PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR vkGetPhysicalDeviceExternalSemaphorePropertiesKHR;
 #endif
 #if defined(VK_KHR_get_display_properties2) 
 PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR vkGetPhysicalDeviceDisplayPlaneProperties2KHR;
@@ -385,22 +606,22 @@ PFN_vkGetDisplayPlaneCapabilities2KHR vkGetDisplayPlaneCapabilities2KHR;
 #if defined(VK_KHR_android_surface) 
 PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
 #endif
-#if defined(VK_KHR_object_refresh) 
-PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR vkGetPhysicalDeviceRefreshableObjectTypesKHR;
-#endif
 #if defined(VK_KHR_performance_query) 
 PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR;
 PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR;
+#endif
+#if defined(VK_KHR_object_refresh) 
+PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR vkGetPhysicalDeviceRefreshableObjectTypesKHR;
 #endif
 #if defined(VK_KHR_video_queue) 
 PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR vkGetPhysicalDeviceVideoCapabilitiesKHR;
 PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR vkGetPhysicalDeviceVideoFormatPropertiesKHR;
 #endif
-#if defined(VK_NV_external_memory_capabilities) 
-PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV vkGetPhysicalDeviceExternalImageFormatPropertiesNV;
-#endif
 #if defined(VK_FUCHSIA_imagepipe_surface) 
 PFN_vkCreateImagePipeSurfaceFUCHSIA vkCreateImagePipeSurfaceFUCHSIA;
+#endif
+#if defined(VK_NV_external_memory_capabilities) 
+PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV vkGetPhysicalDeviceExternalImageFormatPropertiesNV;
 #endif
 #if defined(VK_NV_optical_flow) 
 PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV vkGetPhysicalDeviceOpticalFlowImageFormatsNV;
@@ -420,12 +641,12 @@ PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR vkGetPhysicalDeviceExternalFen
 #if defined(VK_MVK_ios_surface) 
 PFN_vkCreateIOSSurfaceMVK vkCreateIOSSurfaceMVK;
 #endif
-#if defined(VK_KHR_fragment_shading_rate) 
-PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR vkGetPhysicalDeviceFragmentShadingRatesKHR;
-#endif
 #if defined(VK_QNX_screen_surface) 
 PFN_vkCreateScreenSurfaceQNX vkCreateScreenSurfaceQNX;
 PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX vkGetPhysicalDeviceScreenPresentationSupportQNX;
+#endif
+#if defined(VK_KHR_fragment_shading_rate) 
+PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR vkGetPhysicalDeviceFragmentShadingRatesKHR;
 #endif
 #if defined(VK_NV_coverage_reduction_mode) 
 PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV;
@@ -1271,6 +1492,824 @@ void Init(VkDevice device, VkGlobalTable global_table) noexcept{
 }
 public:
 #if defined(VK_VERSION_1_0) 
+operator PFN_vkDestroyDevice()const noexcept { return vkDestroyDevice;};
+operator PFN_vkResetEvent()const noexcept { return vkResetEvent;};
+operator PFN_vkMapMemory()const noexcept { return vkMapMemory;};
+operator PFN_vkGetDeviceQueue()const noexcept { return vkGetDeviceQueue;};
+operator PFN_vkQueueSubmit()const noexcept { return vkQueueSubmit;};
+operator PFN_vkGetDeviceMemoryCommitment()const noexcept { return vkGetDeviceMemoryCommitment;};
+operator PFN_vkAllocateMemory()const noexcept { return vkAllocateMemory;};
+operator PFN_vkDestroyPipeline()const noexcept { return vkDestroyPipeline;};
+operator PFN_vkQueueWaitIdle()const noexcept { return vkQueueWaitIdle;};
+operator PFN_vkCmdDispatchIndirect()const noexcept { return vkCmdDispatchIndirect;};
+operator PFN_vkCreateDescriptorSetLayout()const noexcept { return vkCreateDescriptorSetLayout;};
+operator PFN_vkCreateImage()const noexcept { return vkCreateImage;};
+operator PFN_vkFreeMemory()const noexcept { return vkFreeMemory;};
+operator PFN_vkDeviceWaitIdle()const noexcept { return vkDeviceWaitIdle;};
+operator PFN_vkResetDescriptorPool()const noexcept { return vkResetDescriptorPool;};
+operator PFN_vkSetEvent()const noexcept { return vkSetEvent;};
+operator PFN_vkUnmapMemory()const noexcept { return vkUnmapMemory;};
+operator PFN_vkCreateSampler()const noexcept { return vkCreateSampler;};
+operator PFN_vkCreateEvent()const noexcept { return vkCreateEvent;};
+operator PFN_vkFlushMappedMemoryRanges()const noexcept { return vkFlushMappedMemoryRanges;};
+operator PFN_vkDestroyDescriptorSetLayout()const noexcept { return vkDestroyDescriptorSetLayout;};
+operator PFN_vkGetFenceStatus()const noexcept { return vkGetFenceStatus;};
+operator PFN_vkInvalidateMappedMemoryRanges()const noexcept { return vkInvalidateMappedMemoryRanges;};
+operator PFN_vkCmdUpdateBuffer()const noexcept { return vkCmdUpdateBuffer;};
+operator PFN_vkBindBufferMemory()const noexcept { return vkBindBufferMemory;};
+operator PFN_vkBindImageMemory()const noexcept { return vkBindImageMemory;};
+operator PFN_vkGetBufferMemoryRequirements()const noexcept { return vkGetBufferMemoryRequirements;};
+operator PFN_vkDestroySampler()const noexcept { return vkDestroySampler;};
+operator PFN_vkDestroyImageView()const noexcept { return vkDestroyImageView;};
+operator PFN_vkGetImageMemoryRequirements()const noexcept { return vkGetImageMemoryRequirements;};
+operator PFN_vkCreateQueryPool()const noexcept { return vkCreateQueryPool;};
+operator PFN_vkGetImageSparseMemoryRequirements()const noexcept { return vkGetImageSparseMemoryRequirements;};
+operator PFN_vkQueueBindSparse()const noexcept { return vkQueueBindSparse;};
+operator PFN_vkCreateFence()const noexcept { return vkCreateFence;};
+operator PFN_vkCreateCommandPool()const noexcept { return vkCreateCommandPool;};
+operator PFN_vkDestroyFence()const noexcept { return vkDestroyFence;};
+operator PFN_vkGetRenderAreaGranularity()const noexcept { return vkGetRenderAreaGranularity;};
+operator PFN_vkResetFences()const noexcept { return vkResetFences;};
+operator PFN_vkWaitForFences()const noexcept { return vkWaitForFences;};
+operator PFN_vkCreateSemaphore()const noexcept { return vkCreateSemaphore;};
+operator PFN_vkDestroyBuffer()const noexcept { return vkDestroyBuffer;};
+operator PFN_vkDestroySemaphore()const noexcept { return vkDestroySemaphore;};
+operator PFN_vkGetEventStatus()const noexcept { return vkGetEventStatus;};
+operator PFN_vkDestroyEvent()const noexcept { return vkDestroyEvent;};
+operator PFN_vkDestroyQueryPool()const noexcept { return vkDestroyQueryPool;};
+operator PFN_vkGetQueryPoolResults()const noexcept { return vkGetQueryPoolResults;};
+operator PFN_vkCreateBuffer()const noexcept { return vkCreateBuffer;};
+operator PFN_vkCreateBufferView()const noexcept { return vkCreateBufferView;};
+operator PFN_vkDestroyBufferView()const noexcept { return vkDestroyBufferView;};
+operator PFN_vkDestroyImage()const noexcept { return vkDestroyImage;};
+operator PFN_vkGetImageSubresourceLayout()const noexcept { return vkGetImageSubresourceLayout;};
+operator PFN_vkCreatePipelineLayout()const noexcept { return vkCreatePipelineLayout;};
+operator PFN_vkCmdNextSubpass()const noexcept { return vkCmdNextSubpass;};
+operator PFN_vkCreateImageView()const noexcept { return vkCreateImageView;};
+operator PFN_vkCreateShaderModule()const noexcept { return vkCreateShaderModule;};
+operator PFN_vkDestroyShaderModule()const noexcept { return vkDestroyShaderModule;};
+operator PFN_vkCmdBindIndexBuffer()const noexcept { return vkCmdBindIndexBuffer;};
+operator PFN_vkCmdFillBuffer()const noexcept { return vkCmdFillBuffer;};
+operator PFN_vkGetPipelineCacheData()const noexcept { return vkGetPipelineCacheData;};
+operator PFN_vkCreatePipelineCache()const noexcept { return vkCreatePipelineCache;};
+operator PFN_vkDestroyPipelineCache()const noexcept { return vkDestroyPipelineCache;};
+operator PFN_vkMergePipelineCaches()const noexcept { return vkMergePipelineCaches;};
+operator PFN_vkCreateComputePipelines()const noexcept { return vkCreateComputePipelines;};
+operator PFN_vkCreateGraphicsPipelines()const noexcept { return vkCreateGraphicsPipelines;};
+operator PFN_vkDestroyPipelineLayout()const noexcept { return vkDestroyPipelineLayout;};
+operator PFN_vkCmdCopyImage()const noexcept { return vkCmdCopyImage;};
+operator PFN_vkCreateDescriptorPool()const noexcept { return vkCreateDescriptorPool;};
+operator PFN_vkDestroyDescriptorPool()const noexcept { return vkDestroyDescriptorPool;};
+operator PFN_vkCreateFramebuffer()const noexcept { return vkCreateFramebuffer;};
+operator PFN_vkAllocateDescriptorSets()const noexcept { return vkAllocateDescriptorSets;};
+operator PFN_vkFreeDescriptorSets()const noexcept { return vkFreeDescriptorSets;};
+operator PFN_vkCmdSetLineWidth()const noexcept { return vkCmdSetLineWidth;};
+operator PFN_vkUpdateDescriptorSets()const noexcept { return vkUpdateDescriptorSets;};
+operator PFN_vkDestroyFramebuffer()const noexcept { return vkDestroyFramebuffer;};
+operator PFN_vkCreateRenderPass()const noexcept { return vkCreateRenderPass;};
+operator PFN_vkDestroyRenderPass()const noexcept { return vkDestroyRenderPass;};
+operator PFN_vkDestroyCommandPool()const noexcept { return vkDestroyCommandPool;};
+operator PFN_vkResetCommandPool()const noexcept { return vkResetCommandPool;};
+operator PFN_vkAllocateCommandBuffers()const noexcept { return vkAllocateCommandBuffers;};
+operator PFN_vkFreeCommandBuffers()const noexcept { return vkFreeCommandBuffers;};
+operator PFN_vkBeginCommandBuffer()const noexcept { return vkBeginCommandBuffer;};
+operator PFN_vkEndCommandBuffer()const noexcept { return vkEndCommandBuffer;};
+operator PFN_vkResetCommandBuffer()const noexcept { return vkResetCommandBuffer;};
+operator PFN_vkCmdBindPipeline()const noexcept { return vkCmdBindPipeline;};
+operator PFN_vkCmdPipelineBarrier()const noexcept { return vkCmdPipelineBarrier;};
+operator PFN_vkCmdSetViewport()const noexcept { return vkCmdSetViewport;};
+operator PFN_vkCmdSetScissor()const noexcept { return vkCmdSetScissor;};
+operator PFN_vkCmdSetDepthBias()const noexcept { return vkCmdSetDepthBias;};
+operator PFN_vkCmdSetBlendConstants()const noexcept { return vkCmdSetBlendConstants;};
+operator PFN_vkCmdBindVertexBuffers()const noexcept { return vkCmdBindVertexBuffers;};
+operator PFN_vkCmdSetDepthBounds()const noexcept { return vkCmdSetDepthBounds;};
+operator PFN_vkCmdSetStencilCompareMask()const noexcept { return vkCmdSetStencilCompareMask;};
+operator PFN_vkCmdSetStencilWriteMask()const noexcept { return vkCmdSetStencilWriteMask;};
+operator PFN_vkCmdSetStencilReference()const noexcept { return vkCmdSetStencilReference;};
+operator PFN_vkCmdBindDescriptorSets()const noexcept { return vkCmdBindDescriptorSets;};
+operator PFN_vkCmdDraw()const noexcept { return vkCmdDraw;};
+operator PFN_vkCmdDrawIndexed()const noexcept { return vkCmdDrawIndexed;};
+operator PFN_vkCmdDrawIndirect()const noexcept { return vkCmdDrawIndirect;};
+operator PFN_vkCmdDrawIndexedIndirect()const noexcept { return vkCmdDrawIndexedIndirect;};
+operator PFN_vkCmdDispatch()const noexcept { return vkCmdDispatch;};
+operator PFN_vkCmdCopyBuffer()const noexcept { return vkCmdCopyBuffer;};
+operator PFN_vkCmdBlitImage()const noexcept { return vkCmdBlitImage;};
+operator PFN_vkCmdCopyBufferToImage()const noexcept { return vkCmdCopyBufferToImage;};
+operator PFN_vkCmdCopyImageToBuffer()const noexcept { return vkCmdCopyImageToBuffer;};
+operator PFN_vkCmdClearColorImage()const noexcept { return vkCmdClearColorImage;};
+operator PFN_vkCmdClearDepthStencilImage()const noexcept { return vkCmdClearDepthStencilImage;};
+operator PFN_vkCmdClearAttachments()const noexcept { return vkCmdClearAttachments;};
+operator PFN_vkCmdResolveImage()const noexcept { return vkCmdResolveImage;};
+operator PFN_vkCmdSetEvent()const noexcept { return vkCmdSetEvent;};
+operator PFN_vkCmdResetEvent()const noexcept { return vkCmdResetEvent;};
+operator PFN_vkCmdWaitEvents()const noexcept { return vkCmdWaitEvents;};
+operator PFN_vkCmdBeginQuery()const noexcept { return vkCmdBeginQuery;};
+operator PFN_vkCmdEndQuery()const noexcept { return vkCmdEndQuery;};
+operator PFN_vkCmdResetQueryPool()const noexcept { return vkCmdResetQueryPool;};
+operator PFN_vkCmdWriteTimestamp()const noexcept { return vkCmdWriteTimestamp;};
+operator PFN_vkCmdCopyQueryPoolResults()const noexcept { return vkCmdCopyQueryPoolResults;};
+operator PFN_vkCmdPushConstants()const noexcept { return vkCmdPushConstants;};
+operator PFN_vkCmdBeginRenderPass()const noexcept { return vkCmdBeginRenderPass;};
+operator PFN_vkCmdEndRenderPass()const noexcept { return vkCmdEndRenderPass;};
+operator PFN_vkCmdExecuteCommands()const noexcept { return vkCmdExecuteCommands;};
+#endif
+#if defined(VK_KHR_device_group) 
+operator PFN_vkCmdSetDeviceMaskKHR()const noexcept { return vkCmdSetDeviceMaskKHR;};
+operator PFN_vkCmdDispatchBaseKHR()const noexcept { return vkCmdDispatchBaseKHR;};
+operator PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR()const noexcept { return vkGetDeviceGroupPeerMemoryFeaturesKHR;};
+#endif
+#if defined(VK_VERSION_1_1) 
+operator PFN_vkBindBufferMemory2()const noexcept { return vkBindBufferMemory2;};
+operator PFN_vkGetDeviceGroupPeerMemoryFeatures()const noexcept { return vkGetDeviceGroupPeerMemoryFeatures;};
+operator PFN_vkGetBufferMemoryRequirements2()const noexcept { return vkGetBufferMemoryRequirements2;};
+operator PFN_vkBindImageMemory2()const noexcept { return vkBindImageMemory2;};
+operator PFN_vkCmdSetDeviceMask()const noexcept { return vkCmdSetDeviceMask;};
+operator PFN_vkCmdDispatchBase()const noexcept { return vkCmdDispatchBase;};
+operator PFN_vkGetImageMemoryRequirements2()const noexcept { return vkGetImageMemoryRequirements2;};
+operator PFN_vkGetImageSparseMemoryRequirements2()const noexcept { return vkGetImageSparseMemoryRequirements2;};
+operator PFN_vkGetDescriptorSetLayoutSupport()const noexcept { return vkGetDescriptorSetLayoutSupport;};
+operator PFN_vkTrimCommandPool()const noexcept { return vkTrimCommandPool;};
+operator PFN_vkGetDeviceQueue2()const noexcept { return vkGetDeviceQueue2;};
+operator PFN_vkCreateSamplerYcbcrConversion()const noexcept { return vkCreateSamplerYcbcrConversion;};
+operator PFN_vkDestroySamplerYcbcrConversion()const noexcept { return vkDestroySamplerYcbcrConversion;};
+operator PFN_vkCreateDescriptorUpdateTemplate()const noexcept { return vkCreateDescriptorUpdateTemplate;};
+operator PFN_vkDestroyDescriptorUpdateTemplate()const noexcept { return vkDestroyDescriptorUpdateTemplate;};
+operator PFN_vkUpdateDescriptorSetWithTemplate()const noexcept { return vkUpdateDescriptorSetWithTemplate;};
+#endif
+#if defined(VK_EXT_descriptor_buffer) 
+operator PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT()const noexcept { return vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT;};
+operator PFN_vkCmdSetDescriptorBufferOffsetsEXT()const noexcept { return vkCmdSetDescriptorBufferOffsetsEXT;};
+operator PFN_vkGetDescriptorEXT()const noexcept { return vkGetDescriptorEXT;};
+operator PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT()const noexcept { return vkGetSamplerOpaqueCaptureDescriptorDataEXT;};
+operator PFN_vkGetDescriptorSetLayoutSizeEXT()const noexcept { return vkGetDescriptorSetLayoutSizeEXT;};
+operator PFN_vkGetDescriptorSetLayoutBindingOffsetEXT()const noexcept { return vkGetDescriptorSetLayoutBindingOffsetEXT;};
+operator PFN_vkCmdBindDescriptorBuffersEXT()const noexcept { return vkCmdBindDescriptorBuffersEXT;};
+operator PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT()const noexcept { return vkCmdBindDescriptorBufferEmbeddedSamplersEXT;};
+operator PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT()const noexcept { return vkGetBufferOpaqueCaptureDescriptorDataEXT;};
+operator PFN_vkGetImageOpaqueCaptureDescriptorDataEXT()const noexcept { return vkGetImageOpaqueCaptureDescriptorDataEXT;};
+operator PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT()const noexcept { return vkGetImageViewOpaqueCaptureDescriptorDataEXT;};
+#endif
+#if defined(VK_EXT_debug_marker) 
+operator PFN_vkDebugMarkerSetObjectTagEXT()const noexcept { return vkDebugMarkerSetObjectTagEXT;};
+operator PFN_vkCmdDebugMarkerInsertEXT()const noexcept { return vkCmdDebugMarkerInsertEXT;};
+operator PFN_vkCmdDebugMarkerBeginEXT()const noexcept { return vkCmdDebugMarkerBeginEXT;};
+operator PFN_vkDebugMarkerSetObjectNameEXT()const noexcept { return vkDebugMarkerSetObjectNameEXT;};
+operator PFN_vkCmdDebugMarkerEndEXT()const noexcept { return vkCmdDebugMarkerEndEXT;};
+#endif
+#if defined(VK_AMD_buffer_marker) 
+operator PFN_vkCmdWriteBufferMarkerAMD()const noexcept { return vkCmdWriteBufferMarkerAMD;};
+#endif
+#if defined(VK_NV_optical_flow) 
+operator PFN_vkBindOpticalFlowSessionImageNV()const noexcept { return vkBindOpticalFlowSessionImageNV;};
+operator PFN_vkCmdOpticalFlowExecuteNV()const noexcept { return vkCmdOpticalFlowExecuteNV;};
+operator PFN_vkCreateOpticalFlowSessionNV()const noexcept { return vkCreateOpticalFlowSessionNV;};
+operator PFN_vkDestroyOpticalFlowSessionNV()const noexcept { return vkDestroyOpticalFlowSessionNV;};
+#endif
+#if defined(VK_EXT_opacity_micromap) 
+operator PFN_vkCreateMicromapEXT()const noexcept { return vkCreateMicromapEXT;};
+operator PFN_vkCopyMemoryToMicromapEXT()const noexcept { return vkCopyMemoryToMicromapEXT;};
+operator PFN_vkBuildMicromapsEXT()const noexcept { return vkBuildMicromapsEXT;};
+operator PFN_vkCmdCopyMicromapEXT()const noexcept { return vkCmdCopyMicromapEXT;};
+operator PFN_vkGetMicromapBuildSizesEXT()const noexcept { return vkGetMicromapBuildSizesEXT;};
+operator PFN_vkWriteMicromapsPropertiesEXT()const noexcept { return vkWriteMicromapsPropertiesEXT;};
+operator PFN_vkCopyMicromapEXT()const noexcept { return vkCopyMicromapEXT;};
+operator PFN_vkDestroyMicromapEXT()const noexcept { return vkDestroyMicromapEXT;};
+operator PFN_vkCmdBuildMicromapsEXT()const noexcept { return vkCmdBuildMicromapsEXT;};
+operator PFN_vkCopyMicromapToMemoryEXT()const noexcept { return vkCopyMicromapToMemoryEXT;};
+operator PFN_vkCmdCopyMicromapToMemoryEXT()const noexcept { return vkCmdCopyMicromapToMemoryEXT;};
+operator PFN_vkCmdCopyMemoryToMicromapEXT()const noexcept { return vkCmdCopyMemoryToMicromapEXT;};
+operator PFN_vkCmdWriteMicromapsPropertiesEXT()const noexcept { return vkCmdWriteMicromapsPropertiesEXT;};
+operator PFN_vkGetDeviceMicromapCompatibilityEXT()const noexcept { return vkGetDeviceMicromapCompatibilityEXT;};
+#endif
+#if defined(VK_KHR_get_memory_requirements2) 
+operator PFN_vkGetBufferMemoryRequirements2KHR()const noexcept { return vkGetBufferMemoryRequirements2KHR;};
+operator PFN_vkGetImageSparseMemoryRequirements2KHR()const noexcept { return vkGetImageSparseMemoryRequirements2KHR;};
+operator PFN_vkGetImageMemoryRequirements2KHR()const noexcept { return vkGetImageMemoryRequirements2KHR;};
+#endif
+#if defined(VK_FUCHSIA_buffer_collection) 
+operator PFN_vkGetBufferCollectionPropertiesFUCHSIA()const noexcept { return vkGetBufferCollectionPropertiesFUCHSIA;};
+operator PFN_vkDestroyBufferCollectionFUCHSIA()const noexcept { return vkDestroyBufferCollectionFUCHSIA;};
+operator PFN_vkCreateBufferCollectionFUCHSIA()const noexcept { return vkCreateBufferCollectionFUCHSIA;};
+operator PFN_vkSetBufferCollectionImageConstraintsFUCHSIA()const noexcept { return vkSetBufferCollectionImageConstraintsFUCHSIA;};
+operator PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA()const noexcept { return vkSetBufferCollectionBufferConstraintsFUCHSIA;};
+#endif
+#if defined(VK_NV_external_sci_sync) || defined(VK_NV_external_sci_sync2) 
+operator PFN_vkImportFenceSciSyncObjNV()const noexcept { return vkImportFenceSciSyncObjNV;};
+operator PFN_vkGetFenceSciSyncFenceNV()const noexcept { return vkGetFenceSciSyncFenceNV;};
+operator PFN_vkImportFenceSciSyncFenceNV()const noexcept { return vkImportFenceSciSyncFenceNV;};
+operator PFN_vkGetFenceSciSyncObjNV()const noexcept { return vkGetFenceSciSyncObjNV;};
+#endif
+#if defined(VK_KHR_map_memory2) 
+operator PFN_vkUnmapMemory2KHR()const noexcept { return vkUnmapMemory2KHR;};
+operator PFN_vkMapMemory2KHR()const noexcept { return vkMapMemory2KHR;};
+#endif
+#if defined(VK_AMD_shader_info) 
+operator PFN_vkGetShaderInfoAMD()const noexcept { return vkGetShaderInfoAMD;};
+#endif
+#if defined(VK_KHR_deferred_host_operations) 
+operator PFN_vkGetDeferredOperationMaxConcurrencyKHR()const noexcept { return vkGetDeferredOperationMaxConcurrencyKHR;};
+operator PFN_vkGetDeferredOperationResultKHR()const noexcept { return vkGetDeferredOperationResultKHR;};
+operator PFN_vkCreateDeferredOperationKHR()const noexcept { return vkCreateDeferredOperationKHR;};
+operator PFN_vkDestroyDeferredOperationKHR()const noexcept { return vkDestroyDeferredOperationKHR;};
+operator PFN_vkDeferredOperationJoinKHR()const noexcept { return vkDeferredOperationJoinKHR;};
+#endif
+#if defined(VK_NV_fragment_shading_rate_enums) 
+operator PFN_vkCmdSetFragmentShadingRateEnumNV()const noexcept { return vkCmdSetFragmentShadingRateEnumNV;};
+#endif
+#if defined(VK_NV_ray_tracing) 
+operator PFN_vkCompileDeferredNV()const noexcept { return vkCompileDeferredNV;};
+operator PFN_vkGetAccelerationStructureHandleNV()const noexcept { return vkGetAccelerationStructureHandleNV;};
+operator PFN_vkGetRayTracingShaderGroupHandlesNV()const noexcept { return vkGetRayTracingShaderGroupHandlesNV;};
+operator PFN_vkCmdTraceRaysNV()const noexcept { return vkCmdTraceRaysNV;};
+operator PFN_vkCmdWriteAccelerationStructuresPropertiesNV()const noexcept { return vkCmdWriteAccelerationStructuresPropertiesNV;};
+operator PFN_vkCreateAccelerationStructureNV()const noexcept { return vkCreateAccelerationStructureNV;};
+operator PFN_vkDestroyAccelerationStructureNV()const noexcept { return vkDestroyAccelerationStructureNV;};
+operator PFN_vkGetAccelerationStructureMemoryRequirementsNV()const noexcept { return vkGetAccelerationStructureMemoryRequirementsNV;};
+operator PFN_vkBindAccelerationStructureMemoryNV()const noexcept { return vkBindAccelerationStructureMemoryNV;};
+operator PFN_vkCmdBuildAccelerationStructureNV()const noexcept { return vkCmdBuildAccelerationStructureNV;};
+operator PFN_vkCmdCopyAccelerationStructureNV()const noexcept { return vkCmdCopyAccelerationStructureNV;};
+operator PFN_vkCreateRayTracingPipelinesNV()const noexcept { return vkCreateRayTracingPipelinesNV;};
+#endif
+#if defined(VK_KHR_synchronization2) 
+operator PFN_vkCmdResetEvent2KHR()const noexcept { return vkCmdResetEvent2KHR;};
+operator PFN_vkCmdWaitEvents2KHR()const noexcept { return vkCmdWaitEvents2KHR;};
+operator PFN_vkCmdSetEvent2KHR()const noexcept { return vkCmdSetEvent2KHR;};
+operator PFN_vkCmdWriteTimestamp2KHR()const noexcept { return vkCmdWriteTimestamp2KHR;};
+operator PFN_vkCmdPipelineBarrier2KHR()const noexcept { return vkCmdPipelineBarrier2KHR;};
+operator PFN_vkQueueSubmit2KHR()const noexcept { return vkQueueSubmit2KHR;};
+operator PFN_vkCmdWriteBufferMarker2AMD()const noexcept { return vkCmdWriteBufferMarker2AMD;};
+operator PFN_vkGetQueueCheckpointData2NV()const noexcept { return vkGetQueueCheckpointData2NV;};
+#endif
+#if defined(VK_KHR_video_queue) 
+operator PFN_vkCreateVideoSessionParametersKHR()const noexcept { return vkCreateVideoSessionParametersKHR;};
+operator PFN_vkCreateVideoSessionKHR()const noexcept { return vkCreateVideoSessionKHR;};
+operator PFN_vkBindVideoSessionMemoryKHR()const noexcept { return vkBindVideoSessionMemoryKHR;};
+operator PFN_vkUpdateVideoSessionParametersKHR()const noexcept { return vkUpdateVideoSessionParametersKHR;};
+operator PFN_vkDestroyVideoSessionKHR()const noexcept { return vkDestroyVideoSessionKHR;};
+operator PFN_vkGetVideoSessionMemoryRequirementsKHR()const noexcept { return vkGetVideoSessionMemoryRequirementsKHR;};
+operator PFN_vkDestroyVideoSessionParametersKHR()const noexcept { return vkDestroyVideoSessionParametersKHR;};
+operator PFN_vkCmdBeginVideoCodingKHR()const noexcept { return vkCmdBeginVideoCodingKHR;};
+operator PFN_vkCmdEndVideoCodingKHR()const noexcept { return vkCmdEndVideoCodingKHR;};
+operator PFN_vkCmdControlVideoCodingKHR()const noexcept { return vkCmdControlVideoCodingKHR;};
+#endif
+#if defined(VK_KHR_push_descriptor) || defined(VK_KHR_push_descriptor) || defined(VK_KHR_descriptor_update_template) 
+operator PFN_vkCmdPushDescriptorSetWithTemplateKHR()const noexcept { return vkCmdPushDescriptorSetWithTemplateKHR;};
+#endif
+#if defined(VK_KHR_descriptor_update_template) 
+operator PFN_vkUpdateDescriptorSetWithTemplateKHR()const noexcept { return vkUpdateDescriptorSetWithTemplateKHR;};
+operator PFN_vkCreateDescriptorUpdateTemplateKHR()const noexcept { return vkCreateDescriptorUpdateTemplateKHR;};
+operator PFN_vkDestroyDescriptorUpdateTemplateKHR()const noexcept { return vkDestroyDescriptorUpdateTemplateKHR;};
+#endif
+#if defined(VK_KHR_push_descriptor) 
+operator PFN_vkCmdPushDescriptorSetKHR()const noexcept { return vkCmdPushDescriptorSetKHR;};
+#endif
+#if defined(VK_NVX_binary_import) 
+operator PFN_vkCreateCuFunctionNVX()const noexcept { return vkCreateCuFunctionNVX;};
+operator PFN_vkCreateCuModuleNVX()const noexcept { return vkCreateCuModuleNVX;};
+operator PFN_vkDestroyCuModuleNVX()const noexcept { return vkDestroyCuModuleNVX;};
+operator PFN_vkDestroyCuFunctionNVX()const noexcept { return vkDestroyCuFunctionNVX;};
+operator PFN_vkCmdCuLaunchKernelNVX()const noexcept { return vkCmdCuLaunchKernelNVX;};
+#endif
+#if defined(VK_NV_shading_rate_image) 
+operator PFN_vkCmdSetViewportShadingRatePaletteNV()const noexcept { return vkCmdSetViewportShadingRatePaletteNV;};
+operator PFN_vkCmdSetCoarseSampleOrderNV()const noexcept { return vkCmdSetCoarseSampleOrderNV;};
+operator PFN_vkCmdBindShadingRateImageNV()const noexcept { return vkCmdBindShadingRateImageNV;};
+#endif
+#if defined(VK_KHR_buffer_device_address) 
+operator PFN_vkGetBufferDeviceAddressKHR()const noexcept { return vkGetBufferDeviceAddressKHR;};
+operator PFN_vkGetDeviceMemoryOpaqueCaptureAddressKHR()const noexcept { return vkGetDeviceMemoryOpaqueCaptureAddressKHR;};
+operator PFN_vkGetBufferOpaqueCaptureAddressKHR()const noexcept { return vkGetBufferOpaqueCaptureAddressKHR;};
+#endif
+#if defined(VK_VERSION_1_3) 
+operator PFN_vkCmdWriteTimestamp2()const noexcept { return vkCmdWriteTimestamp2;};
+operator PFN_vkCmdSetDepthCompareOp()const noexcept { return vkCmdSetDepthCompareOp;};
+operator PFN_vkCmdSetPrimitiveTopology()const noexcept { return vkCmdSetPrimitiveTopology;};
+operator PFN_vkGetDeviceBufferMemoryRequirements()const noexcept { return vkGetDeviceBufferMemoryRequirements;};
+operator PFN_vkCmdPipelineBarrier2()const noexcept { return vkCmdPipelineBarrier2;};
+operator PFN_vkCmdSetDepthWriteEnable()const noexcept { return vkCmdSetDepthWriteEnable;};
+operator PFN_vkCmdSetViewportWithCount()const noexcept { return vkCmdSetViewportWithCount;};
+operator PFN_vkCreatePrivateDataSlot()const noexcept { return vkCreatePrivateDataSlot;};
+operator PFN_vkDestroyPrivateDataSlot()const noexcept { return vkDestroyPrivateDataSlot;};
+operator PFN_vkSetPrivateData()const noexcept { return vkSetPrivateData;};
+operator PFN_vkGetPrivateData()const noexcept { return vkGetPrivateData;};
+operator PFN_vkCmdSetEvent2()const noexcept { return vkCmdSetEvent2;};
+operator PFN_vkCmdResetEvent2()const noexcept { return vkCmdResetEvent2;};
+operator PFN_vkCmdWaitEvents2()const noexcept { return vkCmdWaitEvents2;};
+operator PFN_vkQueueSubmit2()const noexcept { return vkQueueSubmit2;};
+operator PFN_vkCmdCopyBuffer2()const noexcept { return vkCmdCopyBuffer2;};
+operator PFN_vkCmdCopyImage2()const noexcept { return vkCmdCopyImage2;};
+operator PFN_vkCmdCopyBufferToImage2()const noexcept { return vkCmdCopyBufferToImage2;};
+operator PFN_vkCmdCopyImageToBuffer2()const noexcept { return vkCmdCopyImageToBuffer2;};
+operator PFN_vkCmdBlitImage2()const noexcept { return vkCmdBlitImage2;};
+operator PFN_vkCmdResolveImage2()const noexcept { return vkCmdResolveImage2;};
+operator PFN_vkCmdBeginRendering()const noexcept { return vkCmdBeginRendering;};
+operator PFN_vkCmdEndRendering()const noexcept { return vkCmdEndRendering;};
+operator PFN_vkCmdSetCullMode()const noexcept { return vkCmdSetCullMode;};
+operator PFN_vkCmdSetFrontFace()const noexcept { return vkCmdSetFrontFace;};
+operator PFN_vkCmdSetScissorWithCount()const noexcept { return vkCmdSetScissorWithCount;};
+operator PFN_vkCmdBindVertexBuffers2()const noexcept { return vkCmdBindVertexBuffers2;};
+operator PFN_vkCmdSetDepthTestEnable()const noexcept { return vkCmdSetDepthTestEnable;};
+operator PFN_vkCmdSetDepthBoundsTestEnable()const noexcept { return vkCmdSetDepthBoundsTestEnable;};
+operator PFN_vkCmdSetStencilTestEnable()const noexcept { return vkCmdSetStencilTestEnable;};
+operator PFN_vkCmdSetStencilOp()const noexcept { return vkCmdSetStencilOp;};
+operator PFN_vkCmdSetRasterizerDiscardEnable()const noexcept { return vkCmdSetRasterizerDiscardEnable;};
+operator PFN_vkCmdSetDepthBiasEnable()const noexcept { return vkCmdSetDepthBiasEnable;};
+operator PFN_vkCmdSetPrimitiveRestartEnable()const noexcept { return vkCmdSetPrimitiveRestartEnable;};
+operator PFN_vkGetDeviceImageMemoryRequirements()const noexcept { return vkGetDeviceImageMemoryRequirements;};
+operator PFN_vkGetDeviceImageSparseMemoryRequirements()const noexcept { return vkGetDeviceImageSparseMemoryRequirements;};
+#endif
+#if defined(VK_KHR_ray_tracing_pipeline) 
+operator PFN_vkCmdTraceRaysIndirectKHR()const noexcept { return vkCmdTraceRaysIndirectKHR;};
+operator PFN_vkCmdSetRayTracingPipelineStackSizeKHR()const noexcept { return vkCmdSetRayTracingPipelineStackSizeKHR;};
+operator PFN_vkGetRayTracingShaderGroupHandlesKHR()const noexcept { return vkGetRayTracingShaderGroupHandlesKHR;};
+operator PFN_vkGetRayTracingShaderGroupStackSizeKHR()const noexcept { return vkGetRayTracingShaderGroupStackSizeKHR;};
+operator PFN_vkCmdTraceRaysKHR()const noexcept { return vkCmdTraceRaysKHR;};
+operator PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR()const noexcept { return vkGetRayTracingCaptureReplayShaderGroupHandlesKHR;};
+operator PFN_vkCreateRayTracingPipelinesKHR()const noexcept { return vkCreateRayTracingPipelinesKHR;};
+#endif
+#if defined(VK_VERSION_1_2) 
+operator PFN_vkResetQueryPool()const noexcept { return vkResetQueryPool;};
+operator PFN_vkGetDeviceMemoryOpaqueCaptureAddress()const noexcept { return vkGetDeviceMemoryOpaqueCaptureAddress;};
+operator PFN_vkCmdBeginRenderPass2()const noexcept { return vkCmdBeginRenderPass2;};
+operator PFN_vkCmdDrawIndirectCount()const noexcept { return vkCmdDrawIndirectCount;};
+operator PFN_vkCmdDrawIndexedIndirectCount()const noexcept { return vkCmdDrawIndexedIndirectCount;};
+operator PFN_vkCreateRenderPass2()const noexcept { return vkCreateRenderPass2;};
+operator PFN_vkCmdNextSubpass2()const noexcept { return vkCmdNextSubpass2;};
+operator PFN_vkWaitSemaphores()const noexcept { return vkWaitSemaphores;};
+operator PFN_vkCmdEndRenderPass2()const noexcept { return vkCmdEndRenderPass2;};
+operator PFN_vkGetSemaphoreCounterValue()const noexcept { return vkGetSemaphoreCounterValue;};
+operator PFN_vkSignalSemaphore()const noexcept { return vkSignalSemaphore;};
+operator PFN_vkGetBufferDeviceAddress()const noexcept { return vkGetBufferDeviceAddress;};
+operator PFN_vkGetBufferOpaqueCaptureAddress()const noexcept { return vkGetBufferOpaqueCaptureAddress;};
+#endif
+#if defined(VK_NV_device_generated_commands) 
+operator PFN_vkCmdPreprocessGeneratedCommandsNV()const noexcept { return vkCmdPreprocessGeneratedCommandsNV;};
+operator PFN_vkCmdBindPipelineShaderGroupNV()const noexcept { return vkCmdBindPipelineShaderGroupNV;};
+operator PFN_vkDestroyIndirectCommandsLayoutNV()const noexcept { return vkDestroyIndirectCommandsLayoutNV;};
+operator PFN_vkGetGeneratedCommandsMemoryRequirementsNV()const noexcept { return vkGetGeneratedCommandsMemoryRequirementsNV;};
+operator PFN_vkCreateIndirectCommandsLayoutNV()const noexcept { return vkCreateIndirectCommandsLayoutNV;};
+operator PFN_vkCmdExecuteGeneratedCommandsNV()const noexcept { return vkCmdExecuteGeneratedCommandsNV;};
+#endif
+#if defined(VK_EXT_pipeline_properties) 
+operator PFN_vkGetPipelinePropertiesEXT()const noexcept { return vkGetPipelinePropertiesEXT;};
+#endif
+#if defined(VK_EXT_shader_module_identifier) 
+operator PFN_vkGetShaderModuleIdentifierEXT()const noexcept { return vkGetShaderModuleIdentifierEXT;};
+operator PFN_vkGetShaderModuleCreateInfoIdentifierEXT()const noexcept { return vkGetShaderModuleCreateInfoIdentifierEXT;};
+#endif
+#if defined(VK_NV_clip_space_w_scaling) 
+operator PFN_vkCmdSetViewportWScalingNV()const noexcept { return vkCmdSetViewportWScalingNV;};
+#endif
+#if defined(VK_HUAWEI_subpass_shading) 
+operator PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI()const noexcept { return vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI;};
+operator PFN_vkCmdSubpassShadingHUAWEI()const noexcept { return vkCmdSubpassShadingHUAWEI;};
+#endif
+#if defined(VK_INTEL_performance_query) 
+operator PFN_vkCmdSetPerformanceStreamMarkerINTEL()const noexcept { return vkCmdSetPerformanceStreamMarkerINTEL;};
+operator PFN_vkReleasePerformanceConfigurationINTEL()const noexcept { return vkReleasePerformanceConfigurationINTEL;};
+operator PFN_vkInitializePerformanceApiINTEL()const noexcept { return vkInitializePerformanceApiINTEL;};
+operator PFN_vkUninitializePerformanceApiINTEL()const noexcept { return vkUninitializePerformanceApiINTEL;};
+operator PFN_vkCmdSetPerformanceMarkerINTEL()const noexcept { return vkCmdSetPerformanceMarkerINTEL;};
+operator PFN_vkCmdSetPerformanceOverrideINTEL()const noexcept { return vkCmdSetPerformanceOverrideINTEL;};
+operator PFN_vkAcquirePerformanceConfigurationINTEL()const noexcept { return vkAcquirePerformanceConfigurationINTEL;};
+operator PFN_vkQueueSetPerformanceConfigurationINTEL()const noexcept { return vkQueueSetPerformanceConfigurationINTEL;};
+operator PFN_vkGetPerformanceParameterINTEL()const noexcept { return vkGetPerformanceParameterINTEL;};
+#endif
+#if defined(VK_EXT_shader_object) || defined(VK_EXT_extended_dynamic_state3) 
+operator PFN_vkCmdSetAlphaToCoverageEnableEXT()const noexcept { return vkCmdSetAlphaToCoverageEnableEXT;};
+operator PFN_vkCmdSetCoverageModulationModeNV()const noexcept { return vkCmdSetCoverageModulationModeNV;};
+operator PFN_vkCmdSetSampleMaskEXT()const noexcept { return vkCmdSetSampleMaskEXT;};
+operator PFN_vkCmdSetColorBlendEnableEXT()const noexcept { return vkCmdSetColorBlendEnableEXT;};
+operator PFN_vkCmdSetCoverageToColorLocationNV()const noexcept { return vkCmdSetCoverageToColorLocationNV;};
+operator PFN_vkCmdSetCoverageModulationTableNV()const noexcept { return vkCmdSetCoverageModulationTableNV;};
+operator PFN_vkCmdSetProvokingVertexModeEXT()const noexcept { return vkCmdSetProvokingVertexModeEXT;};
+operator PFN_vkCmdSetColorWriteMaskEXT()const noexcept { return vkCmdSetColorWriteMaskEXT;};
+operator PFN_vkCmdSetSampleLocationsEnableEXT()const noexcept { return vkCmdSetSampleLocationsEnableEXT;};
+operator PFN_vkCmdSetAlphaToOneEnableEXT()const noexcept { return vkCmdSetAlphaToOneEnableEXT;};
+operator PFN_vkCmdSetDepthClipNegativeOneToOneEXT()const noexcept { return vkCmdSetDepthClipNegativeOneToOneEXT;};
+operator PFN_vkCmdSetTessellationDomainOriginEXT()const noexcept { return vkCmdSetTessellationDomainOriginEXT;};
+operator PFN_vkCmdSetDepthClampEnableEXT()const noexcept { return vkCmdSetDepthClampEnableEXT;};
+operator PFN_vkCmdSetPolygonModeEXT()const noexcept { return vkCmdSetPolygonModeEXT;};
+operator PFN_vkCmdSetRasterizationSamplesEXT()const noexcept { return vkCmdSetRasterizationSamplesEXT;};
+operator PFN_vkCmdSetLogicOpEnableEXT()const noexcept { return vkCmdSetLogicOpEnableEXT;};
+operator PFN_vkCmdSetColorBlendEquationEXT()const noexcept { return vkCmdSetColorBlendEquationEXT;};
+operator PFN_vkCmdSetRasterizationStreamEXT()const noexcept { return vkCmdSetRasterizationStreamEXT;};
+operator PFN_vkCmdSetConservativeRasterizationModeEXT()const noexcept { return vkCmdSetConservativeRasterizationModeEXT;};
+operator PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT()const noexcept { return vkCmdSetExtraPrimitiveOverestimationSizeEXT;};
+operator PFN_vkCmdSetDepthClipEnableEXT()const noexcept { return vkCmdSetDepthClipEnableEXT;};
+operator PFN_vkCmdSetColorBlendAdvancedEXT()const noexcept { return vkCmdSetColorBlendAdvancedEXT;};
+operator PFN_vkCmdSetLineRasterizationModeEXT()const noexcept { return vkCmdSetLineRasterizationModeEXT;};
+operator PFN_vkCmdSetLineStippleEnableEXT()const noexcept { return vkCmdSetLineStippleEnableEXT;};
+operator PFN_vkCmdSetViewportWScalingEnableNV()const noexcept { return vkCmdSetViewportWScalingEnableNV;};
+operator PFN_vkCmdSetViewportSwizzleNV()const noexcept { return vkCmdSetViewportSwizzleNV;};
+operator PFN_vkCmdSetCoverageToColorEnableNV()const noexcept { return vkCmdSetCoverageToColorEnableNV;};
+operator PFN_vkCmdSetCoverageModulationTableEnableNV()const noexcept { return vkCmdSetCoverageModulationTableEnableNV;};
+operator PFN_vkCmdSetShadingRateImageEnableNV()const noexcept { return vkCmdSetShadingRateImageEnableNV;};
+operator PFN_vkCmdSetRepresentativeFragmentTestEnableNV()const noexcept { return vkCmdSetRepresentativeFragmentTestEnableNV;};
+operator PFN_vkCmdSetCoverageReductionModeNV()const noexcept { return vkCmdSetCoverageReductionModeNV;};
+#endif
+#if defined(VK_EXT_shader_object) || defined(VK_EXT_extended_dynamic_state) 
+operator PFN_vkCmdSetStencilTestEnableEXT()const noexcept { return vkCmdSetStencilTestEnableEXT;};
+operator PFN_vkCmdSetDepthTestEnableEXT()const noexcept { return vkCmdSetDepthTestEnableEXT;};
+operator PFN_vkCmdSetCullModeEXT()const noexcept { return vkCmdSetCullModeEXT;};
+operator PFN_vkCmdSetFrontFaceEXT()const noexcept { return vkCmdSetFrontFaceEXT;};
+operator PFN_vkCmdSetPrimitiveTopologyEXT()const noexcept { return vkCmdSetPrimitiveTopologyEXT;};
+operator PFN_vkCmdSetViewportWithCountEXT()const noexcept { return vkCmdSetViewportWithCountEXT;};
+operator PFN_vkCmdSetScissorWithCountEXT()const noexcept { return vkCmdSetScissorWithCountEXT;};
+operator PFN_vkCmdBindVertexBuffers2EXT()const noexcept { return vkCmdBindVertexBuffers2EXT;};
+operator PFN_vkCmdSetDepthWriteEnableEXT()const noexcept { return vkCmdSetDepthWriteEnableEXT;};
+operator PFN_vkCmdSetDepthCompareOpEXT()const noexcept { return vkCmdSetDepthCompareOpEXT;};
+operator PFN_vkCmdSetDepthBoundsTestEnableEXT()const noexcept { return vkCmdSetDepthBoundsTestEnableEXT;};
+operator PFN_vkCmdSetStencilOpEXT()const noexcept { return vkCmdSetStencilOpEXT;};
+#endif
+#if defined(VK_EXT_multi_draw) 
+operator PFN_vkCmdDrawMultiEXT()const noexcept { return vkCmdDrawMultiEXT;};
+operator PFN_vkCmdDrawMultiIndexedEXT()const noexcept { return vkCmdDrawMultiIndexedEXT;};
+#endif
+#if defined(VK_NV_external_memory_rdma) 
+operator PFN_vkGetMemoryRemoteAddressNV()const noexcept { return vkGetMemoryRemoteAddressNV;};
+#endif
+#if defined(VK_EXT_shader_object) 
+operator PFN_vkCreateShadersEXT()const noexcept { return vkCreateShadersEXT;};
+operator PFN_vkDestroyShaderEXT()const noexcept { return vkDestroyShaderEXT;};
+operator PFN_vkGetShaderBinaryDataEXT()const noexcept { return vkGetShaderBinaryDataEXT;};
+operator PFN_vkCmdBindShadersEXT()const noexcept { return vkCmdBindShadersEXT;};
+#endif
+#if defined(VK_KHR_bind_memory2) 
+operator PFN_vkBindBufferMemory2KHR()const noexcept { return vkBindBufferMemory2KHR;};
+operator PFN_vkBindImageMemory2KHR()const noexcept { return vkBindImageMemory2KHR;};
+#endif
+#if defined(VK_EXT_debug_utils) 
+operator PFN_vkQueueEndDebugUtilsLabelEXT()const noexcept { return vkQueueEndDebugUtilsLabelEXT;};
+operator PFN_vkQueueBeginDebugUtilsLabelEXT()const noexcept { return vkQueueBeginDebugUtilsLabelEXT;};
+operator PFN_vkCmdBeginDebugUtilsLabelEXT()const noexcept { return vkCmdBeginDebugUtilsLabelEXT;};
+operator PFN_vkSetDebugUtilsObjectNameEXT()const noexcept { return vkSetDebugUtilsObjectNameEXT;};
+operator PFN_vkQueueInsertDebugUtilsLabelEXT()const noexcept { return vkQueueInsertDebugUtilsLabelEXT;};
+operator PFN_vkSetDebugUtilsObjectTagEXT()const noexcept { return vkSetDebugUtilsObjectTagEXT;};
+operator PFN_vkCmdEndDebugUtilsLabelEXT()const noexcept { return vkCmdEndDebugUtilsLabelEXT;};
+operator PFN_vkCmdInsertDebugUtilsLabelEXT()const noexcept { return vkCmdInsertDebugUtilsLabelEXT;};
+#endif
+#if defined(VK_NV_low_latency2) 
+operator PFN_vkQueueNotifyOutOfBandNV()const noexcept { return vkQueueNotifyOutOfBandNV;};
+operator PFN_vkSetLatencySleepModeNV()const noexcept { return vkSetLatencySleepModeNV;};
+operator PFN_vkLatencySleepNV()const noexcept { return vkLatencySleepNV;};
+operator PFN_vkSetLatencyMarkerNV()const noexcept { return vkSetLatencyMarkerNV;};
+operator PFN_vkGetLatencyTimingsNV()const noexcept { return vkGetLatencyTimingsNV;};
+#endif
+#if defined(VK_EXT_display_control) 
+operator PFN_vkRegisterDeviceEventEXT()const noexcept { return vkRegisterDeviceEventEXT;};
+operator PFN_vkRegisterDisplayEventEXT()const noexcept { return vkRegisterDisplayEventEXT;};
+operator PFN_vkDisplayPowerControlEXT()const noexcept { return vkDisplayPowerControlEXT;};
+operator PFN_vkGetSwapchainCounterEXT()const noexcept { return vkGetSwapchainCounterEXT;};
+#endif
+#if defined(VK_KHR_sampler_ycbcr_conversion) 
+operator PFN_vkDestroySamplerYcbcrConversionKHR()const noexcept { return vkDestroySamplerYcbcrConversionKHR;};
+operator PFN_vkCreateSamplerYcbcrConversionKHR()const noexcept { return vkCreateSamplerYcbcrConversionKHR;};
+#endif
+#if defined(VK_KHR_pipeline_executable_properties) 
+operator PFN_vkGetPipelineExecutableStatisticsKHR()const noexcept { return vkGetPipelineExecutableStatisticsKHR;};
+operator PFN_vkGetPipelineExecutableInternalRepresentationsKHR()const noexcept { return vkGetPipelineExecutableInternalRepresentationsKHR;};
+operator PFN_vkGetPipelineExecutablePropertiesKHR()const noexcept { return vkGetPipelineExecutablePropertiesKHR;};
+#endif
+#if defined(VK_AMDX_shader_enqueue) 
+operator PFN_vkCreateExecutionGraphPipelinesAMDX()const noexcept { return vkCreateExecutionGraphPipelinesAMDX;};
+operator PFN_vkGetExecutionGraphPipelineNodeIndexAMDX()const noexcept { return vkGetExecutionGraphPipelineNodeIndexAMDX;};
+operator PFN_vkCmdDispatchGraphIndirectCountAMDX()const noexcept { return vkCmdDispatchGraphIndirectCountAMDX;};
+operator PFN_vkGetExecutionGraphPipelineScratchSizeAMDX()const noexcept { return vkGetExecutionGraphPipelineScratchSizeAMDX;};
+operator PFN_vkCmdDispatchGraphAMDX()const noexcept { return vkCmdDispatchGraphAMDX;};
+operator PFN_vkCmdInitializeGraphScratchMemoryAMDX()const noexcept { return vkCmdInitializeGraphScratchMemoryAMDX;};
+operator PFN_vkCmdDispatchGraphIndirectAMDX()const noexcept { return vkCmdDispatchGraphIndirectAMDX;};
+#endif
+#if defined(VK_KHR_acceleration_structure) 
+operator PFN_vkCopyAccelerationStructureToMemoryKHR()const noexcept { return vkCopyAccelerationStructureToMemoryKHR;};
+operator PFN_vkCopyAccelerationStructureKHR()const noexcept { return vkCopyAccelerationStructureKHR;};
+operator PFN_vkGetAccelerationStructureBuildSizesKHR()const noexcept { return vkGetAccelerationStructureBuildSizesKHR;};
+operator PFN_vkWriteAccelerationStructuresPropertiesKHR()const noexcept { return vkWriteAccelerationStructuresPropertiesKHR;};
+operator PFN_vkBuildAccelerationStructuresKHR()const noexcept { return vkBuildAccelerationStructuresKHR;};
+operator PFN_vkCopyMemoryToAccelerationStructureKHR()const noexcept { return vkCopyMemoryToAccelerationStructureKHR;};
+operator PFN_vkCmdCopyAccelerationStructureKHR()const noexcept { return vkCmdCopyAccelerationStructureKHR;};
+operator PFN_vkCmdWriteAccelerationStructuresPropertiesKHR()const noexcept { return vkCmdWriteAccelerationStructuresPropertiesKHR;};
+operator PFN_vkDestroyAccelerationStructureKHR()const noexcept { return vkDestroyAccelerationStructureKHR;};
+operator PFN_vkGetDeviceAccelerationStructureCompatibilityKHR()const noexcept { return vkGetDeviceAccelerationStructureCompatibilityKHR;};
+operator PFN_vkGetAccelerationStructureDeviceAddressKHR()const noexcept { return vkGetAccelerationStructureDeviceAddressKHR;};
+operator PFN_vkCreateAccelerationStructureKHR()const noexcept { return vkCreateAccelerationStructureKHR;};
+operator PFN_vkCmdBuildAccelerationStructuresKHR()const noexcept { return vkCmdBuildAccelerationStructuresKHR;};
+operator PFN_vkCmdBuildAccelerationStructuresIndirectKHR()const noexcept { return vkCmdBuildAccelerationStructuresIndirectKHR;};
+operator PFN_vkCmdCopyAccelerationStructureToMemoryKHR()const noexcept { return vkCmdCopyAccelerationStructureToMemoryKHR;};
+operator PFN_vkCmdCopyMemoryToAccelerationStructureKHR()const noexcept { return vkCmdCopyMemoryToAccelerationStructureKHR;};
+#endif
+#if defined(VK_QNX_external_memory_screen_buffer) 
+operator PFN_vkGetScreenBufferPropertiesQNX()const noexcept { return vkGetScreenBufferPropertiesQNX;};
+#endif
+#if defined(VK_NV_external_memory_win32) 
+operator PFN_vkGetMemoryWin32HandleNV()const noexcept { return vkGetMemoryWin32HandleNV;};
+#endif
+#if defined(VK_NV_memory_decompression) 
+operator PFN_vkCmdDecompressMemoryNV()const noexcept { return vkCmdDecompressMemoryNV;};
+operator PFN_vkCmdDecompressMemoryIndirectCountNV()const noexcept { return vkCmdDecompressMemoryIndirectCountNV;};
+#endif
+#if defined(VK_KHR_dynamic_rendering) 
+operator PFN_vkCmdEndRenderingKHR()const noexcept { return vkCmdEndRenderingKHR;};
+operator PFN_vkCmdBeginRenderingKHR()const noexcept { return vkCmdBeginRenderingKHR;};
+#endif
+#if defined(VK_EXT_pageable_device_local_memory) 
+operator PFN_vkSetDeviceMemoryPriorityEXT()const noexcept { return vkSetDeviceMemoryPriorityEXT;};
+#endif
+#if defined(VK_ANDROID_external_memory_android_hardware_buffer) 
+operator PFN_vkGetAndroidHardwareBufferPropertiesANDROID()const noexcept { return vkGetAndroidHardwareBufferPropertiesANDROID;};
+operator PFN_vkGetMemoryAndroidHardwareBufferANDROID()const noexcept { return vkGetMemoryAndroidHardwareBufferANDROID;};
+#endif
+#if defined(VK_EXT_host_image_copy) 
+operator PFN_vkCopyMemoryToImageEXT()const noexcept { return vkCopyMemoryToImageEXT;};
+operator PFN_vkCopyImageToMemoryEXT()const noexcept { return vkCopyImageToMemoryEXT;};
+operator PFN_vkCopyImageToImageEXT()const noexcept { return vkCopyImageToImageEXT;};
+operator PFN_vkTransitionImageLayoutEXT()const noexcept { return vkTransitionImageLayoutEXT;};
+#endif
+#if defined(VK_EXT_shader_object) || defined(VK_EXT_extended_dynamic_state2) 
+operator PFN_vkCmdSetPrimitiveRestartEnableEXT()const noexcept { return vkCmdSetPrimitiveRestartEnableEXT;};
+operator PFN_vkCmdSetRasterizerDiscardEnableEXT()const noexcept { return vkCmdSetRasterizerDiscardEnableEXT;};
+operator PFN_vkCmdSetPatchControlPointsEXT()const noexcept { return vkCmdSetPatchControlPointsEXT;};
+operator PFN_vkCmdSetDepthBiasEnableEXT()const noexcept { return vkCmdSetDepthBiasEnableEXT;};
+operator PFN_vkCmdSetLogicOpEXT()const noexcept { return vkCmdSetLogicOpEXT;};
+#endif
+#if defined(VK_EXT_external_memory_host) 
+operator PFN_vkGetMemoryHostPointerPropertiesEXT()const noexcept { return vkGetMemoryHostPointerPropertiesEXT;};
+#endif
+#if defined(VK_KHR_external_semaphore_fd) 
+operator PFN_vkImportSemaphoreFdKHR()const noexcept { return vkImportSemaphoreFdKHR;};
+operator PFN_vkGetSemaphoreFdKHR()const noexcept { return vkGetSemaphoreFdKHR;};
+#endif
+#if defined(VK_KHR_performance_query) 
+operator PFN_vkReleaseProfilingLockKHR()const noexcept { return vkReleaseProfilingLockKHR;};
+operator PFN_vkAcquireProfilingLockKHR()const noexcept { return vkAcquireProfilingLockKHR;};
+#endif
+#if defined(VK_HUAWEI_cluster_culling_shader) 
+operator PFN_vkCmdDrawClusterIndirectHUAWEI()const noexcept { return vkCmdDrawClusterIndirectHUAWEI;};
+operator PFN_vkCmdDrawClusterHUAWEI()const noexcept { return vkCmdDrawClusterHUAWEI;};
+#endif
+#if defined(VK_NV_external_memory_sci_buf) 
+operator PFN_vkGetMemorySciBufNV()const noexcept { return vkGetMemorySciBufNV;};
+#endif
+#if defined(VK_KHR_external_memory_win32) 
+operator PFN_vkGetMemoryWin32HandleKHR()const noexcept { return vkGetMemoryWin32HandleKHR;};
+operator PFN_vkGetMemoryWin32HandlePropertiesKHR()const noexcept { return vkGetMemoryWin32HandlePropertiesKHR;};
+#endif
+#if defined(VK_EXT_mesh_shader) 
+operator PFN_vkCmdDrawMeshTasksEXT()const noexcept { return vkCmdDrawMeshTasksEXT;};
+operator PFN_vkCmdDrawMeshTasksIndirectEXT()const noexcept { return vkCmdDrawMeshTasksIndirectEXT;};
+operator PFN_vkCmdDrawMeshTasksIndirectCountEXT()const noexcept { return vkCmdDrawMeshTasksIndirectCountEXT;};
+#endif
+#if defined(VK_EXT_full_screen_exclusive) 
+operator PFN_vkReleaseFullScreenExclusiveModeEXT()const noexcept { return vkReleaseFullScreenExclusiveModeEXT;};
+operator PFN_vkAcquireFullScreenExclusiveModeEXT()const noexcept { return vkAcquireFullScreenExclusiveModeEXT;};
+#endif
+#if defined(VK_EXT_private_data) 
+operator PFN_vkSetPrivateDataEXT()const noexcept { return vkSetPrivateDataEXT;};
+operator PFN_vkDestroyPrivateDataSlotEXT()const noexcept { return vkDestroyPrivateDataSlotEXT;};
+operator PFN_vkCreatePrivateDataSlotEXT()const noexcept { return vkCreatePrivateDataSlotEXT;};
+operator PFN_vkGetPrivateDataEXT()const noexcept { return vkGetPrivateDataEXT;};
+#endif
+#if defined(VK_HUAWEI_invocation_mask) 
+operator PFN_vkCmdBindInvocationMaskHUAWEI()const noexcept { return vkCmdBindInvocationMaskHUAWEI;};
+#endif
+#if defined(VK_QCOM_tile_properties) 
+operator PFN_vkGetDynamicRenderingTilePropertiesQCOM()const noexcept { return vkGetDynamicRenderingTilePropertiesQCOM;};
+operator PFN_vkGetFramebufferTilePropertiesQCOM()const noexcept { return vkGetFramebufferTilePropertiesQCOM;};
+#endif
+#if defined(VK_KHR_external_fence_win32) 
+operator PFN_vkGetFenceWin32HandleKHR()const noexcept { return vkGetFenceWin32HandleKHR;};
+operator PFN_vkImportFenceWin32HandleKHR()const noexcept { return vkImportFenceWin32HandleKHR;};
+#endif
+#if defined(VK_KHR_create_renderpass2) 
+operator PFN_vkCmdBeginRenderPass2KHR()const noexcept { return vkCmdBeginRenderPass2KHR;};
+operator PFN_vkCmdEndRenderPass2KHR()const noexcept { return vkCmdEndRenderPass2KHR;};
+operator PFN_vkCmdNextSubpass2KHR()const noexcept { return vkCmdNextSubpass2KHR;};
+operator PFN_vkCreateRenderPass2KHR()const noexcept { return vkCreateRenderPass2KHR;};
+#endif
+#if defined(VK_EXT_depth_bias_control) 
+operator PFN_vkCmdSetDepthBias2EXT()const noexcept { return vkCmdSetDepthBias2EXT;};
+#endif
+#if defined(VK_KHR_copy_commands2) 
+operator PFN_vkCmdCopyImageToBuffer2KHR()const noexcept { return vkCmdCopyImageToBuffer2KHR;};
+operator PFN_vkCmdCopyBuffer2KHR()const noexcept { return vkCmdCopyBuffer2KHR;};
+operator PFN_vkCmdCopyImage2KHR()const noexcept { return vkCmdCopyImage2KHR;};
+operator PFN_vkCmdCopyBufferToImage2KHR()const noexcept { return vkCmdCopyBufferToImage2KHR;};
+operator PFN_vkCmdBlitImage2KHR()const noexcept { return vkCmdBlitImage2KHR;};
+operator PFN_vkCmdResolveImage2KHR()const noexcept { return vkCmdResolveImage2KHR;};
+#endif
+#if defined(VK_EXT_color_write_enable) 
+operator PFN_vkCmdSetColorWriteEnableEXT()const noexcept { return vkCmdSetColorWriteEnableEXT;};
+#endif
+#if defined(VK_NVX_image_view_handle) 
+operator PFN_vkGetImageViewAddressNVX()const noexcept { return vkGetImageViewAddressNVX;};
+operator PFN_vkGetImageViewHandleNVX()const noexcept { return vkGetImageViewHandleNVX;};
+#endif
+#if defined(VK_KHR_video_encode_queue) 
+operator PFN_vkGetEncodedVideoSessionParametersKHR()const noexcept { return vkGetEncodedVideoSessionParametersKHR;};
+operator PFN_vkCmdEncodeVideoKHR()const noexcept { return vkCmdEncodeVideoKHR;};
+#endif
+#if defined(VK_EXT_host_query_reset) 
+operator PFN_vkResetQueryPoolEXT()const noexcept { return vkResetQueryPoolEXT;};
+#endif
+#if defined(VK_ANDROID_native_buffer) 
+operator PFN_vkGetSwapchainGrallocUsageANDROID()const noexcept { return vkGetSwapchainGrallocUsageANDROID;};
+operator PFN_vkAcquireImageANDROID()const noexcept { return vkAcquireImageANDROID;};
+operator PFN_vkQueueSignalReleaseImageANDROID()const noexcept { return vkQueueSignalReleaseImageANDROID;};
+operator PFN_vkGetSwapchainGrallocUsage2ANDROID()const noexcept { return vkGetSwapchainGrallocUsage2ANDROID;};
+#endif
+#if defined(VK_NV_external_sci_sync) 
+operator PFN_vkGetSemaphoreSciSyncObjNV()const noexcept { return vkGetSemaphoreSciSyncObjNV;};
+operator PFN_vkImportSemaphoreSciSyncObjNV()const noexcept { return vkImportSemaphoreSciSyncObjNV;};
+#endif
+#if defined(VK_KHR_external_memory_fd) 
+operator PFN_vkGetMemoryFdPropertiesKHR()const noexcept { return vkGetMemoryFdPropertiesKHR;};
+operator PFN_vkGetMemoryFdKHR()const noexcept { return vkGetMemoryFdKHR;};
+#endif
+#if defined(VK_EXT_transform_feedback) 
+operator PFN_vkCmdEndQueryIndexedEXT()const noexcept { return vkCmdEndQueryIndexedEXT;};
+operator PFN_vkCmdDrawIndirectByteCountEXT()const noexcept { return vkCmdDrawIndirectByteCountEXT;};
+operator PFN_vkCmdEndTransformFeedbackEXT()const noexcept { return vkCmdEndTransformFeedbackEXT;};
+operator PFN_vkCmdBindTransformFeedbackBuffersEXT()const noexcept { return vkCmdBindTransformFeedbackBuffersEXT;};
+operator PFN_vkCmdBeginTransformFeedbackEXT()const noexcept { return vkCmdBeginTransformFeedbackEXT;};
+operator PFN_vkCmdBeginQueryIndexedEXT()const noexcept { return vkCmdBeginQueryIndexedEXT;};
+#endif
+#if defined(VK_NV_copy_memory_indirect) 
+operator PFN_vkCmdCopyMemoryToImageIndirectNV()const noexcept { return vkCmdCopyMemoryToImageIndirectNV;};
+operator PFN_vkCmdCopyMemoryIndirectNV()const noexcept { return vkCmdCopyMemoryIndirectNV;};
+#endif
+#if defined(VK_KHR_external_semaphore_win32) 
+operator PFN_vkImportSemaphoreWin32HandleKHR()const noexcept { return vkImportSemaphoreWin32HandleKHR;};
+operator PFN_vkGetSemaphoreWin32HandleKHR()const noexcept { return vkGetSemaphoreWin32HandleKHR;};
+#endif
+#if defined(VK_EXT_validation_cache) 
+operator PFN_vkCreateValidationCacheEXT()const noexcept { return vkCreateValidationCacheEXT;};
+operator PFN_vkGetValidationCacheDataEXT()const noexcept { return vkGetValidationCacheDataEXT;};
+operator PFN_vkDestroyValidationCacheEXT()const noexcept { return vkDestroyValidationCacheEXT;};
+operator PFN_vkMergeValidationCachesEXT()const noexcept { return vkMergeValidationCachesEXT;};
+#endif
+#if defined(VK_KHR_timeline_semaphore) 
+operator PFN_vkWaitSemaphoresKHR()const noexcept { return vkWaitSemaphoresKHR;};
+operator PFN_vkGetSemaphoreCounterValueKHR()const noexcept { return vkGetSemaphoreCounterValueKHR;};
+operator PFN_vkSignalSemaphoreKHR()const noexcept { return vkSignalSemaphoreKHR;};
+#endif
+#if defined(VK_KHR_swapchain) 
+operator PFN_vkQueuePresentKHR()const noexcept { return vkQueuePresentKHR;};
+operator PFN_vkCreateSwapchainKHR()const noexcept { return vkCreateSwapchainKHR;};
+operator PFN_vkDestroySwapchainKHR()const noexcept { return vkDestroySwapchainKHR;};
+operator PFN_vkGetSwapchainImagesKHR()const noexcept { return vkGetSwapchainImagesKHR;};
+operator PFN_vkAcquireNextImageKHR()const noexcept { return vkAcquireNextImageKHR;};
+#endif
+#if defined(VK_KHR_draw_indirect_count) 
+operator PFN_vkCmdDrawIndirectCountKHR()const noexcept { return vkCmdDrawIndirectCountKHR;};
+operator PFN_vkCmdDrawIndexedIndirectCountKHR()const noexcept { return vkCmdDrawIndexedIndirectCountKHR;};
+#endif
+#if defined(VK_KHR_ray_tracing_maintenance1) 
+operator PFN_vkCmdTraceRaysIndirect2KHR()const noexcept { return vkCmdTraceRaysIndirect2KHR;};
+#endif
+#if defined(VK_KHR_fragment_shading_rate) 
+operator PFN_vkCmdSetFragmentShadingRateKHR()const noexcept { return vkCmdSetFragmentShadingRateKHR;};
+#endif
+#if defined(VKSC_VERSION_1_0) 
+operator PFN_vkGetCommandPoolMemoryConsumption()const noexcept { return vkGetCommandPoolMemoryConsumption;};
+operator PFN_vkGetFaultData()const noexcept { return vkGetFaultData;};
+#endif
+#if defined(VK_KHR_maintenance5) 
+operator PFN_vkGetDeviceImageSubresourceLayoutKHR()const noexcept { return vkGetDeviceImageSubresourceLayoutKHR;};
+operator PFN_vkCmdBindIndexBuffer2KHR()const noexcept { return vkCmdBindIndexBuffer2KHR;};
+operator PFN_vkGetRenderingAreaGranularityKHR()const noexcept { return vkGetRenderingAreaGranularityKHR;};
+operator PFN_vkGetImageSubresourceLayout2KHR()const noexcept { return vkGetImageSubresourceLayout2KHR;};
+#endif
+#if defined(VK_KHR_swapchain) || defined(VK_KHR_device_group) 
+operator PFN_vkGetDeviceGroupPresentCapabilitiesKHR()const noexcept { return vkGetDeviceGroupPresentCapabilitiesKHR;};
+operator PFN_vkGetDeviceGroupSurfacePresentModesKHR()const noexcept { return vkGetDeviceGroupSurfacePresentModesKHR;};
+operator PFN_vkAcquireNextImage2KHR()const noexcept { return vkAcquireNextImage2KHR;};
+#endif
+#if defined(VK_KHR_display_swapchain) 
+operator PFN_vkCreateSharedSwapchainsKHR()const noexcept { return vkCreateSharedSwapchainsKHR;};
+#endif
+#if defined(VK_KHR_maintenance3) 
+operator PFN_vkGetDescriptorSetLayoutSupportKHR()const noexcept { return vkGetDescriptorSetLayoutSupportKHR;};
+#endif
+#if defined(VK_NV_device_generated_commands_compute) 
+operator PFN_vkCmdUpdatePipelineIndirectBufferNV()const noexcept { return vkCmdUpdatePipelineIndirectBufferNV;};
+operator PFN_vkGetPipelineIndirectDeviceAddressNV()const noexcept { return vkGetPipelineIndirectDeviceAddressNV;};
+operator PFN_vkGetPipelineIndirectMemoryRequirementsNV()const noexcept { return vkGetPipelineIndirectMemoryRequirementsNV;};
+#endif
+#if defined(VK_EXT_conditional_rendering) 
+operator PFN_vkCmdEndConditionalRenderingEXT()const noexcept { return vkCmdEndConditionalRenderingEXT;};
+operator PFN_vkCmdBeginConditionalRenderingEXT()const noexcept { return vkCmdBeginConditionalRenderingEXT;};
+#endif
+#if defined(VK_KHR_video_decode_queue) 
+operator PFN_vkCmdDecodeVideoKHR()const noexcept { return vkCmdDecodeVideoKHR;};
+#endif
+#if defined(VK_EXT_hdr_metadata) 
+operator PFN_vkSetHdrMetadataEXT()const noexcept { return vkSetHdrMetadataEXT;};
+#endif
+#if defined(VK_KHR_maintenance4) 
+operator PFN_vkGetDeviceBufferMemoryRequirementsKHR()const noexcept { return vkGetDeviceBufferMemoryRequirementsKHR;};
+operator PFN_vkGetDeviceImageMemoryRequirementsKHR()const noexcept { return vkGetDeviceImageMemoryRequirementsKHR;};
+operator PFN_vkGetDeviceImageSparseMemoryRequirementsKHR()const noexcept { return vkGetDeviceImageSparseMemoryRequirementsKHR;};
+#endif
+#if defined(VK_EXT_shader_object) || defined(VK_EXT_vertex_input_dynamic_state) 
+operator PFN_vkCmdSetVertexInputEXT()const noexcept { return vkCmdSetVertexInputEXT;};
+#endif
+#if defined(VK_KHR_shared_presentable_image) 
+operator PFN_vkGetSwapchainStatusKHR()const noexcept { return vkGetSwapchainStatusKHR;};
+#endif
+#if defined(VK_EXT_discard_rectangles) 
+operator PFN_vkCmdSetDiscardRectangleEXT()const noexcept { return vkCmdSetDiscardRectangleEXT;};
+operator PFN_vkCmdSetDiscardRectangleModeEXT()const noexcept { return vkCmdSetDiscardRectangleModeEXT;};
+operator PFN_vkCmdSetDiscardRectangleEnableEXT()const noexcept { return vkCmdSetDiscardRectangleEnableEXT;};
+#endif
+#if defined(VK_EXT_host_image_copy) || defined(VK_EXT_image_compression_control) 
+operator PFN_vkGetImageSubresourceLayout2EXT()const noexcept { return vkGetImageSubresourceLayout2EXT;};
+#endif
+#if defined(VK_EXT_sample_locations) 
+operator PFN_vkCmdSetSampleLocationsEXT()const noexcept { return vkCmdSetSampleLocationsEXT;};
+#endif
+#if defined(VK_FUCHSIA_external_memory) 
+operator PFN_vkGetMemoryZirconHandleFUCHSIA()const noexcept { return vkGetMemoryZirconHandleFUCHSIA;};
+operator PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA()const noexcept { return vkGetMemoryZirconHandlePropertiesFUCHSIA;};
+#endif
+#if defined(VK_EXT_full_screen_exclusive) || defined(VK_EXT_full_screen_exclusive) 
+operator PFN_vkGetDeviceGroupSurfacePresentModes2EXT()const noexcept { return vkGetDeviceGroupSurfacePresentModes2EXT;};
+#endif
+#if defined(VK_NV_mesh_shader) 
+operator PFN_vkCmdDrawMeshTasksNV()const noexcept { return vkCmdDrawMeshTasksNV;};
+operator PFN_vkCmdDrawMeshTasksIndirectNV()const noexcept { return vkCmdDrawMeshTasksIndirectNV;};
+operator PFN_vkCmdDrawMeshTasksIndirectCountNV()const noexcept { return vkCmdDrawMeshTasksIndirectCountNV;};
+#endif
+#if defined(VK_AMD_draw_indirect_count) 
+operator PFN_vkCmdDrawIndirectCountAMD()const noexcept { return vkCmdDrawIndirectCountAMD;};
+operator PFN_vkCmdDrawIndexedIndirectCountAMD()const noexcept { return vkCmdDrawIndexedIndirectCountAMD;};
+#endif
+#if defined(VK_KHR_maintenance1) 
+operator PFN_vkTrimCommandPoolKHR()const noexcept { return vkTrimCommandPoolKHR;};
+#endif
+#if defined(VK_NV_device_diagnostic_checkpoints) 
+operator PFN_vkGetQueueCheckpointDataNV()const noexcept { return vkGetQueueCheckpointDataNV;};
+operator PFN_vkCmdSetCheckpointNV()const noexcept { return vkCmdSetCheckpointNV;};
+#endif
+#if defined(VK_GOOGLE_display_timing) 
+operator PFN_vkGetRefreshCycleDurationGOOGLE()const noexcept { return vkGetRefreshCycleDurationGOOGLE;};
+operator PFN_vkGetPastPresentationTimingGOOGLE()const noexcept { return vkGetPastPresentationTimingGOOGLE;};
+#endif
+#if defined(VK_AMD_display_native_hdr) 
+operator PFN_vkSetLocalDimmingAMD()const noexcept { return vkSetLocalDimmingAMD;};
+#endif
+#if defined(VK_KHR_external_fence_fd) 
+operator PFN_vkImportFenceFdKHR()const noexcept { return vkImportFenceFdKHR;};
+operator PFN_vkGetFenceFdKHR()const noexcept { return vkGetFenceFdKHR;};
+#endif
+#if defined(VK_KHR_present_wait) 
+operator PFN_vkWaitForPresentKHR()const noexcept { return vkWaitForPresentKHR;};
+#endif
+#if defined(VK_EXT_metal_objects) 
+operator PFN_vkExportMetalObjectsEXT()const noexcept { return vkExportMetalObjectsEXT;};
+#endif
+#if defined(VK_EXT_swapchain_maintenance1) 
+operator PFN_vkReleaseSwapchainImagesEXT()const noexcept { return vkReleaseSwapchainImagesEXT;};
+#endif
+#if defined(VK_EXT_image_drm_format_modifier) 
+operator PFN_vkGetImageDrmFormatModifierPropertiesEXT()const noexcept { return vkGetImageDrmFormatModifierPropertiesEXT;};
+#endif
+#if defined(VK_EXT_calibrated_timestamps) 
+operator PFN_vkGetCalibratedTimestampsEXT()const noexcept { return vkGetCalibratedTimestampsEXT;};
+#endif
+#if defined(VK_EXT_attachment_feedback_loop_dynamic_state) 
+operator PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT()const noexcept { return vkCmdSetAttachmentFeedbackLoopEnableEXT;};
+#endif
+#if defined(VK_NV_scissor_exclusive) 
+operator PFN_vkCmdSetExclusiveScissorEnableNV()const noexcept { return vkCmdSetExclusiveScissorEnableNV;};
+operator PFN_vkCmdSetExclusiveScissorNV()const noexcept { return vkCmdSetExclusiveScissorNV;};
+#endif
+#if defined(VK_EXT_buffer_device_address) 
+operator PFN_vkGetBufferDeviceAddressEXT()const noexcept { return vkGetBufferDeviceAddressEXT;};
+#endif
+#if defined(VK_EXT_line_rasterization) 
+operator PFN_vkCmdSetLineStippleEXT()const noexcept { return vkCmdSetLineStippleEXT;};
+#endif
+#if defined(VK_FUCHSIA_external_semaphore) 
+operator PFN_vkGetSemaphoreZirconHandleFUCHSIA()const noexcept { return vkGetSemaphoreZirconHandleFUCHSIA;};
+operator PFN_vkImportSemaphoreZirconHandleFUCHSIA()const noexcept { return vkImportSemaphoreZirconHandleFUCHSIA;};
+#endif
+#if defined(VK_KHR_object_refresh) 
+operator PFN_vkCmdRefreshObjectsKHR()const noexcept { return vkCmdRefreshObjectsKHR;};
+#endif
+#if defined(VK_EXT_device_fault) 
+operator PFN_vkGetDeviceFaultInfoEXT()const noexcept { return vkGetDeviceFaultInfoEXT;};
+#endif
+#if defined(VK_NV_external_sci_sync2) 
+operator PFN_vkCreateSemaphoreSciSyncPoolNV()const noexcept { return vkCreateSemaphoreSciSyncPoolNV;};
+operator PFN_vkDestroySemaphoreSciSyncPoolNV()const noexcept { return vkDestroySemaphoreSciSyncPoolNV;};
+#endif
+#if defined(VK_VALVE_descriptor_set_host_mapping) 
+operator PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE()const noexcept { return vkGetDescriptorSetLayoutHostMappingInfoVALVE;};
+operator PFN_vkGetDescriptorSetHostMappingVALVE()const noexcept { return vkGetDescriptorSetHostMappingVALVE;};
+#endif
+
+public:
+#if defined(VK_VERSION_1_0) 
 PFN_vkDestroyDevice vkDestroyDevice;
 PFN_vkResetEvent vkResetEvent;
 PFN_vkMapMemory vkMapMemory;
@@ -1415,13 +2454,6 @@ PFN_vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate;
 PFN_vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate;
 PFN_vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate;
 #endif
-#if defined(VK_EXT_debug_marker) 
-PFN_vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT;
-PFN_vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT;
-PFN_vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT;
-PFN_vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT;
-PFN_vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT;
-#endif
 #if defined(VK_EXT_descriptor_buffer) 
 PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT;
 PFN_vkCmdSetDescriptorBufferOffsetsEXT vkCmdSetDescriptorBufferOffsetsEXT;
@@ -1434,6 +2466,13 @@ PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT vkCmdBindDescriptorBufferEmbedd
 PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT vkGetBufferOpaqueCaptureDescriptorDataEXT;
 PFN_vkGetImageOpaqueCaptureDescriptorDataEXT vkGetImageOpaqueCaptureDescriptorDataEXT;
 PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT vkGetImageViewOpaqueCaptureDescriptorDataEXT;
+#endif
+#if defined(VK_EXT_debug_marker) 
+PFN_vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT;
+PFN_vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT;
+PFN_vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT;
+PFN_vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT;
+PFN_vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT;
 #endif
 #if defined(VK_AMD_buffer_marker) 
 PFN_vkCmdWriteBufferMarkerAMD vkCmdWriteBufferMarkerAMD;
@@ -1482,15 +2521,15 @@ PFN_vkGetFenceSciSyncObjNV vkGetFenceSciSyncObjNV;
 PFN_vkUnmapMemory2KHR vkUnmapMemory2KHR;
 PFN_vkMapMemory2KHR vkMapMemory2KHR;
 #endif
+#if defined(VK_AMD_shader_info) 
+PFN_vkGetShaderInfoAMD vkGetShaderInfoAMD;
+#endif
 #if defined(VK_KHR_deferred_host_operations) 
 PFN_vkGetDeferredOperationMaxConcurrencyKHR vkGetDeferredOperationMaxConcurrencyKHR;
 PFN_vkGetDeferredOperationResultKHR vkGetDeferredOperationResultKHR;
 PFN_vkCreateDeferredOperationKHR vkCreateDeferredOperationKHR;
 PFN_vkDestroyDeferredOperationKHR vkDestroyDeferredOperationKHR;
 PFN_vkDeferredOperationJoinKHR vkDeferredOperationJoinKHR;
-#endif
-#if defined(VK_AMD_shader_info) 
-PFN_vkGetShaderInfoAMD vkGetShaderInfoAMD;
 #endif
 #if defined(VK_NV_fragment_shading_rate_enums) 
 PFN_vkCmdSetFragmentShadingRateEnumNV vkCmdSetFragmentShadingRateEnumNV;
@@ -1531,13 +2570,16 @@ PFN_vkCmdBeginVideoCodingKHR vkCmdBeginVideoCodingKHR;
 PFN_vkCmdEndVideoCodingKHR vkCmdEndVideoCodingKHR;
 PFN_vkCmdControlVideoCodingKHR vkCmdControlVideoCodingKHR;
 #endif
+#if defined(VK_KHR_push_descriptor) || defined(VK_KHR_push_descriptor) || defined(VK_KHR_descriptor_update_template) 
+PFN_vkCmdPushDescriptorSetWithTemplateKHR vkCmdPushDescriptorSetWithTemplateKHR;
+#endif
 #if defined(VK_KHR_descriptor_update_template) 
 PFN_vkUpdateDescriptorSetWithTemplateKHR vkUpdateDescriptorSetWithTemplateKHR;
 PFN_vkCreateDescriptorUpdateTemplateKHR vkCreateDescriptorUpdateTemplateKHR;
 PFN_vkDestroyDescriptorUpdateTemplateKHR vkDestroyDescriptorUpdateTemplateKHR;
 #endif
-#if defined(VK_KHR_push_descriptor) || defined(VK_KHR_push_descriptor) || defined(VK_KHR_descriptor_update_template) 
-PFN_vkCmdPushDescriptorSetWithTemplateKHR vkCmdPushDescriptorSetWithTemplateKHR;
+#if defined(VK_KHR_push_descriptor) 
+PFN_vkCmdPushDescriptorSetKHR vkCmdPushDescriptorSetKHR;
 #endif
 #if defined(VK_NVX_binary_import) 
 PFN_vkCreateCuFunctionNVX vkCreateCuFunctionNVX;
@@ -1545,9 +2587,6 @@ PFN_vkCreateCuModuleNVX vkCreateCuModuleNVX;
 PFN_vkDestroyCuModuleNVX vkDestroyCuModuleNVX;
 PFN_vkDestroyCuFunctionNVX vkDestroyCuFunctionNVX;
 PFN_vkCmdCuLaunchKernelNVX vkCmdCuLaunchKernelNVX;
-#endif
-#if defined(VK_KHR_push_descriptor) 
-PFN_vkCmdPushDescriptorSetKHR vkCmdPushDescriptorSetKHR;
 #endif
 #if defined(VK_NV_shading_rate_image) 
 PFN_vkCmdSetViewportShadingRatePaletteNV vkCmdSetViewportShadingRatePaletteNV;
@@ -1629,12 +2668,19 @@ PFN_vkGetGeneratedCommandsMemoryRequirementsNV vkGetGeneratedCommandsMemoryRequi
 PFN_vkCreateIndirectCommandsLayoutNV vkCreateIndirectCommandsLayoutNV;
 PFN_vkCmdExecuteGeneratedCommandsNV vkCmdExecuteGeneratedCommandsNV;
 #endif
+#if defined(VK_EXT_pipeline_properties) 
+PFN_vkGetPipelinePropertiesEXT vkGetPipelinePropertiesEXT;
+#endif
 #if defined(VK_EXT_shader_module_identifier) 
 PFN_vkGetShaderModuleIdentifierEXT vkGetShaderModuleIdentifierEXT;
 PFN_vkGetShaderModuleCreateInfoIdentifierEXT vkGetShaderModuleCreateInfoIdentifierEXT;
 #endif
-#if defined(VK_EXT_pipeline_properties) 
-PFN_vkGetPipelinePropertiesEXT vkGetPipelinePropertiesEXT;
+#if defined(VK_NV_clip_space_w_scaling) 
+PFN_vkCmdSetViewportWScalingNV vkCmdSetViewportWScalingNV;
+#endif
+#if defined(VK_HUAWEI_subpass_shading) 
+PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI;
+PFN_vkCmdSubpassShadingHUAWEI vkCmdSubpassShadingHUAWEI;
 #endif
 #if defined(VK_INTEL_performance_query) 
 PFN_vkCmdSetPerformanceStreamMarkerINTEL vkCmdSetPerformanceStreamMarkerINTEL;
@@ -1646,13 +2692,6 @@ PFN_vkCmdSetPerformanceOverrideINTEL vkCmdSetPerformanceOverrideINTEL;
 PFN_vkAcquirePerformanceConfigurationINTEL vkAcquirePerformanceConfigurationINTEL;
 PFN_vkQueueSetPerformanceConfigurationINTEL vkQueueSetPerformanceConfigurationINTEL;
 PFN_vkGetPerformanceParameterINTEL vkGetPerformanceParameterINTEL;
-#endif
-#if defined(VK_HUAWEI_subpass_shading) 
-PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI;
-PFN_vkCmdSubpassShadingHUAWEI vkCmdSubpassShadingHUAWEI;
-#endif
-#if defined(VK_NV_clip_space_w_scaling) 
-PFN_vkCmdSetViewportWScalingNV vkCmdSetViewportWScalingNV;
 #endif
 #if defined(VK_EXT_shader_object) || defined(VK_EXT_extended_dynamic_state3) 
 PFN_vkCmdSetAlphaToCoverageEnableEXT vkCmdSetAlphaToCoverageEnableEXT;
@@ -1705,14 +2744,14 @@ PFN_vkCmdSetStencilOpEXT vkCmdSetStencilOpEXT;
 PFN_vkCmdDrawMultiEXT vkCmdDrawMultiEXT;
 PFN_vkCmdDrawMultiIndexedEXT vkCmdDrawMultiIndexedEXT;
 #endif
+#if defined(VK_NV_external_memory_rdma) 
+PFN_vkGetMemoryRemoteAddressNV vkGetMemoryRemoteAddressNV;
+#endif
 #if defined(VK_EXT_shader_object) 
 PFN_vkCreateShadersEXT vkCreateShadersEXT;
 PFN_vkDestroyShaderEXT vkDestroyShaderEXT;
 PFN_vkGetShaderBinaryDataEXT vkGetShaderBinaryDataEXT;
 PFN_vkCmdBindShadersEXT vkCmdBindShadersEXT;
-#endif
-#if defined(VK_NV_external_memory_rdma) 
-PFN_vkGetMemoryRemoteAddressNV vkGetMemoryRemoteAddressNV;
 #endif
 #if defined(VK_KHR_bind_memory2) 
 PFN_vkBindBufferMemory2KHR vkBindBufferMemory2KHR;
@@ -1896,13 +2935,13 @@ PFN_vkAcquireImageANDROID vkAcquireImageANDROID;
 PFN_vkQueueSignalReleaseImageANDROID vkQueueSignalReleaseImageANDROID;
 PFN_vkGetSwapchainGrallocUsage2ANDROID vkGetSwapchainGrallocUsage2ANDROID;
 #endif
-#if defined(VK_KHR_external_memory_fd) 
-PFN_vkGetMemoryFdPropertiesKHR vkGetMemoryFdPropertiesKHR;
-PFN_vkGetMemoryFdKHR vkGetMemoryFdKHR;
-#endif
 #if defined(VK_NV_external_sci_sync) 
 PFN_vkGetSemaphoreSciSyncObjNV vkGetSemaphoreSciSyncObjNV;
 PFN_vkImportSemaphoreSciSyncObjNV vkImportSemaphoreSciSyncObjNV;
+#endif
+#if defined(VK_KHR_external_memory_fd) 
+PFN_vkGetMemoryFdPropertiesKHR vkGetMemoryFdPropertiesKHR;
+PFN_vkGetMemoryFdKHR vkGetMemoryFdKHR;
 #endif
 #if defined(VK_EXT_transform_feedback) 
 PFN_vkCmdEndQueryIndexedEXT vkCmdEndQueryIndexedEXT;
@@ -1916,15 +2955,15 @@ PFN_vkCmdBeginQueryIndexedEXT vkCmdBeginQueryIndexedEXT;
 PFN_vkCmdCopyMemoryToImageIndirectNV vkCmdCopyMemoryToImageIndirectNV;
 PFN_vkCmdCopyMemoryIndirectNV vkCmdCopyMemoryIndirectNV;
 #endif
+#if defined(VK_KHR_external_semaphore_win32) 
+PFN_vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR;
+PFN_vkGetSemaphoreWin32HandleKHR vkGetSemaphoreWin32HandleKHR;
+#endif
 #if defined(VK_EXT_validation_cache) 
 PFN_vkCreateValidationCacheEXT vkCreateValidationCacheEXT;
 PFN_vkGetValidationCacheDataEXT vkGetValidationCacheDataEXT;
 PFN_vkDestroyValidationCacheEXT vkDestroyValidationCacheEXT;
 PFN_vkMergeValidationCachesEXT vkMergeValidationCachesEXT;
-#endif
-#if defined(VK_KHR_external_semaphore_win32) 
-PFN_vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR;
-PFN_vkGetSemaphoreWin32HandleKHR vkGetSemaphoreWin32HandleKHR;
 #endif
 #if defined(VK_KHR_timeline_semaphore) 
 PFN_vkWaitSemaphoresKHR vkWaitSemaphoresKHR;
