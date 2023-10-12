@@ -78,7 +78,7 @@ add_executable (${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
 	PRIVATE 
 		 "entry_main.cpp"
- "format.h" "context.h"  "generator.h" "generator.cpp" "context.cpp" "wisvk/vk_libinit.h")
+ "format.h" "context.h"  "generator.h" "generator.cpp" "context.cpp")
 if(WISVK_USE_FMT)
 	target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 endif()
@@ -111,6 +111,8 @@ if(WISVK_INSTALL)
 	set( WISVK_HEADERS
 		${OUTPUT_FOLDER}/vk_handle_traits.hpp
 		${OUTPUT_FOLDER}/vk_managed_handles.hpp
+		${OUTPUT_FOLDER}/vk_loader.hpp
+		${OUTPUT_FOLDER}/vk_libinit.hpp
 	)
 	install( 
 		FILES 
