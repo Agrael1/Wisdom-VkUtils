@@ -298,6 +298,39 @@ std::string MakeHandleTraits(const std::unordered_map<std::string_view, wis::Han
     return output;
 }
 
+std::string MakeHandleTraits(const wis::Context& context)
+{
+    std::string output;
+    std::unordered_map<std::string_view, std::vector<std::string_view>> handle_to_ext;
+
+    handle_to_ext.reserve(context.handles.size());
+    std::vector<std::string_view> to_erase;
+
+    for (auto&& [fname, f] : context.features) {
+        for (auto&& h : f.handles) {
+            auto& hnd = context.GetHandle(h);
+            handle_to_ext[hnd.name].push_back(fname);
+            if (hnd.name != h)
+                handle_to_ext[h].push_back(fname);
+        }
+    }
+    for (auto&& [ename, e] : context.extensions) {
+        for (auto&& h : e.handles) {
+            auto& hnd = context.GetHandle(h);
+            handle_to_ext[hnd.name].push_back(ename);
+            if (hnd.name != h)
+                handle_to_ext[h].push_back(ename);
+        }
+    }
+
+    output += MakeAliasTypedefs("using {hnd} = {alias};\n", handle_to_ext, context.handles);
+    output += "\n";
+
+    output += MakeHandleTraits(context.handles, handle_to_ext);
+    output += "\n";
+    return output;
+}
+
 void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& stream)
 {
     std::string output{
@@ -429,35 +462,3 @@ namespace wis {
     stream << output + "}\n";
 }
 
-std::string wis::Generator::MakeHandleTraits(const Context& context)
-{
-    std::string output;
-    std::unordered_map<std::string_view, std::vector<std::string_view>> handle_to_ext;
-
-    handle_to_ext.reserve(context.handles.size());
-    std::vector<std::string_view> to_erase;
-
-    for (auto&& [fname, f] : context.features) {
-        for (auto&& h : f.handles) {
-            auto& hnd = context.GetHandle(h);
-            handle_to_ext[hnd.name].push_back(fname);
-            if (hnd.name != h)
-                handle_to_ext[h].push_back(fname);
-        }
-    }
-    for (auto&& [ename, e] : context.extensions) {
-        for (auto&& h : e.handles) {
-            auto& hnd = context.GetHandle(h);
-            handle_to_ext[hnd.name].push_back(ename);
-            if (hnd.name != h)
-                handle_to_ext[h].push_back(ename);
-        }
-    }
-
-    output += MakeAliasTypedefs("using {hnd} = {alias};\n", handle_to_ext, context.handles);
-    output += "\n";
-
-    output += ::MakeHandleTraits(context.handles, handle_to_ext);
-    output += "\n";
-    return output;
-}

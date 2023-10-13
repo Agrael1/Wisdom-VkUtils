@@ -2,7 +2,6 @@
 #include <type_traits>
 #include <vulkan/vulkan.h>
 
-
 namespace wis {
 class empty_type
 {
@@ -25,23 +24,23 @@ public:
         return nullptr;
     }
 };
-#if !(defined(VK_VERSION_1_1) )
-#if defined(VK_KHR_descriptor_update_template) 
+#if !(defined(VK_VERSION_1_1))
+#if defined(VK_KHR_descriptor_update_template)
 using VkDescriptorUpdateTemplate = VkDescriptorUpdateTemplateKHR;
 #endif
 #endif
-#if !(defined(VK_VERSION_1_1) )
-#if defined(VK_KHR_sampler_ycbcr_conversion) 
+#if !(defined(VK_VERSION_1_1))
+#if defined(VK_KHR_sampler_ycbcr_conversion)
 using VkSamplerYcbcrConversion = VkSamplerYcbcrConversionKHR;
 #endif
 #endif
-#if !(defined(VK_VERSION_1_3) )
-#if defined(VK_EXT_private_data) 
+#if !(defined(VK_VERSION_1_3))
+#if defined(VK_EXT_private_data)
 using VkPrivateDataSlot = VkPrivateDataSlotEXT;
 #endif
 #endif
 
-#if defined(VK_KHR_swapchain) 
+#if defined(VK_KHR_swapchain)
 template<>
 class handle_traits<VkSwapchainKHR>
 {
@@ -57,9 +56,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_VERSION_1_0) 
+#if defined(VK_VERSION_1_0)
 template<>
 class handle_traits<VkBufferView>
 {
@@ -74,7 +72,6 @@ public:
         return vkDestroyBufferView;
     }
 };
-
 
 template<>
 class handle_traits<VkInstance>
@@ -91,7 +88,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkQueue>
 {
@@ -106,7 +102,6 @@ public:
         return nullptr;
     }
 };
-
 
 template<>
 class handle_traits<VkPhysicalDevice>
@@ -123,7 +118,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkBuffer>
 {
@@ -138,7 +132,6 @@ public:
         return vkDestroyBuffer;
     }
 };
-
 
 template<>
 class handle_traits<VkSemaphore>
@@ -155,7 +148,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkDevice>
 {
@@ -170,7 +162,6 @@ public:
         return vkDestroyDevice;
     }
 };
-
 
 template<>
 class handle_traits<VkCommandPool>
@@ -187,7 +178,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkCommandBuffer>
 {
@@ -202,7 +192,6 @@ public:
         return vkFreeCommandBuffers;
     }
 };
-
 
 template<>
 class handle_traits<VkRenderPass>
@@ -219,7 +208,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkDeviceMemory>
 {
@@ -234,7 +222,6 @@ public:
         return vkFreeMemory;
     }
 };
-
 
 template<>
 class handle_traits<VkImage>
@@ -251,7 +238,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkImageView>
 {
@@ -266,7 +252,6 @@ public:
         return vkDestroyImageView;
     }
 };
-
 
 template<>
 class handle_traits<VkShaderModule>
@@ -283,7 +268,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkPipeline>
 {
@@ -298,7 +282,6 @@ public:
         return vkDestroyPipeline;
     }
 };
-
 
 template<>
 class handle_traits<VkPipelineLayout>
@@ -315,7 +298,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkSampler>
 {
@@ -330,7 +312,6 @@ public:
         return vkDestroySampler;
     }
 };
-
 
 template<>
 class handle_traits<VkDescriptorSet>
@@ -347,7 +328,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkDescriptorPool>
 {
@@ -362,7 +342,6 @@ public:
         return vkDestroyDescriptorPool;
     }
 };
-
 
 template<>
 class handle_traits<VkDescriptorSetLayout>
@@ -379,7 +358,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkFence>
 {
@@ -394,7 +372,6 @@ public:
         return vkDestroyFence;
     }
 };
-
 
 template<>
 class handle_traits<VkEvent>
@@ -411,7 +388,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkQueryPool>
 {
@@ -426,7 +402,6 @@ public:
         return vkDestroyQueryPool;
     }
 };
-
 
 template<>
 class handle_traits<VkFramebuffer>
@@ -443,7 +418,6 @@ public:
     }
 };
 
-
 template<>
 class handle_traits<VkPipelineCache>
 {
@@ -459,9 +433,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_EXT_validation_cache) 
+#if defined(VK_EXT_validation_cache)
 template<>
 class handle_traits<VkValidationCacheEXT>
 {
@@ -477,9 +450,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_NVX_binary_import) 
+#if defined(VK_NVX_binary_import)
 template<>
 class handle_traits<VkCuModuleNVX>
 {
@@ -494,7 +466,6 @@ public:
         return vkDestroyCuModuleNVX;
     }
 };
-
 
 template<>
 class handle_traits<VkCuFunctionNVX>
@@ -511,9 +482,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_EXT_debug_report) 
+#if defined(VK_EXT_debug_report)
 template<>
 class handle_traits<VkDebugReportCallbackEXT>
 {
@@ -529,9 +499,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_VERSION_1_1) || defined(VK_KHR_sampler_ycbcr_conversion) 
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_sampler_ycbcr_conversion)
 template<>
 class handle_traits<VkSamplerYcbcrConversion>
 {
@@ -547,9 +516,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_NV_device_generated_commands) 
+#if defined(VK_NV_device_generated_commands)
 template<>
 class handle_traits<VkIndirectCommandsLayoutNV>
 {
@@ -565,9 +533,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_INTEL_performance_query) 
+#if defined(VK_INTEL_performance_query)
 template<>
 class handle_traits<VkPerformanceConfigurationINTEL>
 {
@@ -583,9 +550,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_EXT_opacity_micromap) 
+#if defined(VK_EXT_opacity_micromap)
 template<>
 class handle_traits<VkMicromapEXT>
 {
@@ -601,9 +567,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_KHR_display) 
+#if defined(VK_KHR_display)
 template<>
 class handle_traits<VkDisplayModeKHR>
 {
@@ -618,7 +583,6 @@ public:
         return nullptr;
     }
 };
-
 
 template<>
 class handle_traits<VkDisplayKHR>
@@ -635,9 +599,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_EXT_debug_utils) 
+#if defined(VK_EXT_debug_utils)
 template<>
 class handle_traits<VkDebugUtilsMessengerEXT>
 {
@@ -653,9 +616,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_EXT_shader_object) 
+#if defined(VK_EXT_shader_object)
 template<>
 class handle_traits<VkShaderEXT>
 {
@@ -671,9 +633,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template) 
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
 template<>
 class handle_traits<VkDescriptorUpdateTemplate>
 {
@@ -689,9 +650,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_KHR_deferred_host_operations) 
+#if defined(VK_KHR_deferred_host_operations)
 template<>
 class handle_traits<VkDeferredOperationKHR>
 {
@@ -707,9 +667,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_KHR_acceleration_structure) 
+#if defined(VK_KHR_acceleration_structure)
 template<>
 class handle_traits<VkAccelerationStructureKHR>
 {
@@ -725,9 +684,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_NV_ray_tracing) 
+#if defined(VK_NV_ray_tracing)
 template<>
 class handle_traits<VkAccelerationStructureNV>
 {
@@ -743,9 +701,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_FUCHSIA_buffer_collection) 
+#if defined(VK_FUCHSIA_buffer_collection)
 template<>
 class handle_traits<VkBufferCollectionFUCHSIA>
 {
@@ -761,9 +718,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_VERSION_1_3) || defined(VK_EXT_private_data) 
+#if defined(VK_VERSION_1_3) || defined(VK_EXT_private_data)
 template<>
 class handle_traits<VkPrivateDataSlot>
 {
@@ -779,9 +735,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_KHR_video_queue) 
+#if defined(VK_KHR_video_queue)
 template<>
 class handle_traits<VkVideoSessionParametersKHR>
 {
@@ -796,7 +751,6 @@ public:
         return vkDestroyVideoSessionParametersKHR;
     }
 };
-
 
 template<>
 class handle_traits<VkVideoSessionKHR>
@@ -813,9 +767,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_NV_optical_flow) 
+#if defined(VK_NV_optical_flow)
 template<>
 class handle_traits<VkOpticalFlowSessionNV>
 {
@@ -831,9 +784,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_KHR_surface) 
+#if defined(VK_KHR_surface)
 template<>
 class handle_traits<VkSurfaceKHR>
 {
@@ -849,9 +801,8 @@ public:
     }
 };
 
-
 #endif
-#if defined(VK_NV_external_sci_sync2) 
+#if defined(VK_NV_external_sci_sync2)
 template<>
 class handle_traits<VkSemaphoreSciSyncPoolNV>
 {
@@ -867,7 +818,6 @@ public:
     }
 };
 
-
 #endif
 
-}
+} // namespace wis
