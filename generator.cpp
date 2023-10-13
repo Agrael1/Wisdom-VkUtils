@@ -78,7 +78,7 @@ std::string MakeCommandInit(std::string_view init_format, std::string_view cmd,
                             std::span<const std::string_view> aliases)
 {
     using mapty = std::pair<std::string_view, std::string_view>;
-    std::string output;
+    std::string output = wis::format("static constexpr std::array {}_strings{{\n", cmd);
     std::unordered_set<std::string_view> left_features{ cmd_features.begin(), cmd_features.end() };
 
     for (auto&& a : aliases) {
@@ -90,19 +90,23 @@ std::string MakeCommandInit(std::string_view init_format, std::string_view cmd,
         }
     }
     output += "#if " + MakeGuard(left_features) + '\n';
-    output += Replace(init_format, std::array{
-                                           mapty{ "{cmd}", cmd },
-                                           mapty{ "{type}", cmd },
-                                   });
+    output += wis::format("\t\"{}\",\n", cmd);
+    output += "#endif\n";
 
     for (auto&& a : aliases) {
-        output += "#elif " + MakeGuard(features.at(a)) + '\n';
-        output += Replace(init_format, std::array{
-                                               mapty{ "{cmd}", cmd },
-                                               mapty{ "{type}", a },
-                                       });
+        output += "#if " + MakeGuard(features.at(a)) + '\n';
+        output += wis::format("\t\"{}\",\n", a);
+        output += "#endif\n";
     }
-    output += "#endif\n";
+    output += "};\n";
+
+    output += wis::format("for(auto {}_it : {}_strings)\n if({})\n break;\n",
+                          cmd,
+                          cmd,
+                          Replace(init_format, std::array{
+                                                       mapty{ "{cmd}", cmd },
+                                                       mapty{ "{type}", std::format("{}_it", cmd) },
+                                               }));
 
     return output;
 }
@@ -120,7 +124,7 @@ std::string MakeGlobalCommands(const std::unordered_set<std::string_view>& comma
         output += "#if " + MakeGuard(feature) + '\n';
         for (auto& i : cmds) {
             if (auto it = commands_to_aliases.find(i); it != commands_to_aliases.end()) {
-                output += MakeCommandInit("\t{cmd} = token.GetProcAddress<decltype({type})>(\"{type}\");\n", i, feature, features, it->second);
+                output += MakeCommandInit("{cmd} = token.GetProcAddress<decltype({cmd})>({type})", i, feature, features, it->second);
                 continue;
             }
             output += wis::format("\t{} = token.GetProcAddress<decltype({})>(\"{}\");\n", i, i, i);
@@ -144,7 +148,7 @@ std::string MakeInstanceCommands(const std::unordered_set<std::string_view>& com
         output += "#if " + MakeGuard(feature) + '\n';
         for (auto& i : cmds) {
             if (auto it = commands_to_aliases.find(i); it != commands_to_aliases.end()) {
-                output += MakeCommandInit("\t{cmd} = (PFN_{cmd})global_table.vkGetInstanceProcAddr(instance, \"{type}\");\n", i, feature, features, it->second);
+                output += MakeCommandInit("{cmd} = (PFN_{cmd})global_table.vkGetInstanceProcAddr(instance, {type})", i, feature, features, it->second);
                 continue;
             }
             output += wis::format("\t{} = (PFN_{})global_table.vkGetInstanceProcAddr(instance, \"{}\");\n", i, i, i);
@@ -168,7 +172,7 @@ std::string MakeDeviceCommands(const std::unordered_set<std::string_view>& comma
         output += "#if " + MakeGuard(feature) + '\n';
         for (auto& i : cmds) {
             if (auto it = commands_to_aliases.find(i); it != commands_to_aliases.end()) {
-                output += MakeCommandInit("\t{cmd} = (PFN_{cmd})global_table.vkGetDeviceProcAddr(device, \"{type}\");\n", i, feature, features, it->second);
+                output += MakeCommandInit("{cmd} = (PFN_{cmd})global_table.vkGetDeviceProcAddr(device, {type})", i, feature, features, it->second);
                 continue;
             }
             output += wis::format("\t{} = (PFN_{})global_table.vkGetDeviceProcAddr(device, \"{}\");\n", i, i, i);
@@ -371,6 +375,7 @@ public:
 void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream)
 {
     std::string output{ R"(#pragma once
+#include <array>
 #include <vulkan/vulkan.h>
 #include "vk_libinit.hpp"
 
@@ -461,4 +466,3 @@ namespace wis {
 
     stream << output + "}\n";
 }
-
