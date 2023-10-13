@@ -10,9 +10,8 @@ Contains only parts of the API that are actually improving the development exper
 - Supports loading of Vulkan functions from a dynamic library
 - Does not require linking to the Vulkan library
 - Does not pollute the global namespace with Vulkan functions
-- Functions are loaded on demand
-- Supports feature switching with `#undef` macros
-- Loads functions depending on header version replacing new commands with extension ones if necessary
+- Functions are loaded using best effort approach, if a function is not available, it will try to load it from an extension
+- Loads functions depending on header version replacing new commands with extension ones if possible
 
 ## Managed handle implementation (vk_managed_handles.hpp) 
 - Provides a shared_ptr like handle implementation for Vulkan handles with parent-child relationships
