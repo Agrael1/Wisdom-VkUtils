@@ -141,8 +141,14 @@ configure_package_config_file(
 
 install(EXPORT ${PROJECT_NAME}Targets
         FILE ${PROJECT_NAME}Targets.cmake
-        NAMESPACE ${PROJECT_NAME}::
+        NAMESPACE wis::
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+export(
+    TARGETS ${PROJECT_NAME}
+    NAMESPACE wis::
+    FILE ${PROJECT_NAME}Targets.cmake
+)
 
 install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
               "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
