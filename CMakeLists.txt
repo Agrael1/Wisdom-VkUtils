@@ -82,7 +82,7 @@ if(NOT WISVK_ONLY_HEADERS)
 	target_sources(${PROJECT_NAME}
 		PRIVATE 
 			 "entry_main.cpp"
-	 "format.h" "context.h"  "generator.h" "generator.cpp" "context.cpp")
+	 "format.h" "context.h"  "generator.h" "generator.cpp" "context.cpp"  )
 	if(WISVK_USE_FMT)
 		target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 	endif()

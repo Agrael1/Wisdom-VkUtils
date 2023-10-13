@@ -23,7 +23,7 @@ struct FeatureEqual {
     }
 };
 
-auto SortByFeature(const std::unordered_set<std::string_view>& commands,
+auto SortByFeature(const auto& commands,
                    const std::unordered_map<std::string_view, std::vector<std::string_view>>& command_to_features)
 {
     // stores the commands under the same features
@@ -47,6 +47,18 @@ std::string MakeGuard(auto& features)
     return output;
 }
 
+template<size_t size>
+std::string Replace(std::string_view og, const std::array<std::pair<std::string_view, std::string_view>, size>& map)
+{
+    std::string out{ og };
+    for (auto&& [a, b] : map) {
+        for (auto pos = out.find(a); pos != std::string::npos; pos = out.find(a)) {
+            out.replace(pos, a.length(), b);
+        }
+    }
+    return out;
+}
+
 std::string MakeTable(auto& feature_blocks)
 {
     std::string output;
@@ -58,18 +70,6 @@ std::string MakeTable(auto& feature_blocks)
         output += "#endif\n";
     }
     return output;
-}
-
-template<size_t size>
-std::string Replace(std::string_view og, const std::array<std::pair<std::string_view, std::string_view>, size>& map)
-{
-    std::string out{ og };
-    for (auto&& [a, b] : map) {
-        for (auto pos = out.find(a); pos != std::string::npos; pos = out.find(a)) {
-            out.replace(pos, a.length(), b);
-        }
-    }
-    return out;
 }
 
 std::string MakeCommandInit(std::string_view init_format, std::string_view cmd,
@@ -114,16 +114,16 @@ std::string MakeGlobalCommands(const std::unordered_set<std::string_view>& comma
     auto feature_blocks = SortByFeature(commands, features);
 
     std::string output{ "struct VkGlobalTable{\n" };
-    output += "void Init(LibToken token) noexcept{\n";
+    output += "void Init(LibTokenView token) noexcept{\n";
 
     for (auto& [feature, cmds] : feature_blocks) {
         output += "#if " + MakeGuard(feature) + '\n';
         for (auto& i : cmds) {
             if (auto it = commands_to_aliases.find(i); it != commands_to_aliases.end()) {
-                output += MakeCommandInit("\t{cmd} = token.GetProcAddress<decltype({type})>();\n", i, feature, features, it->second);
+                output += MakeCommandInit("\t{cmd} = token.GetProcAddress<decltype({type})>(\"{type}\");\n", i, feature, features, it->second);
                 continue;
             }
-            output += wis::format("\t{} = token.GetProcAddress<decltype({})>();\n", i, i);
+            output += wis::format("\t{} = token.GetProcAddress<decltype({})>(\"{}\");\n", i, i, i);
         }
         output += "#endif\n";
     }
@@ -211,6 +211,93 @@ std::string MakeAliasTypedefs(const std::unordered_map<std::string_view, std::ve
     return output;
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+std::string MakeAliasTypedefs(std::string_view format,
+                              const std::unordered_map<std::string_view, std::vector<std::string_view>>& features,
+                              const std::unordered_map<std::string_view, wis::Handle>& handles)
+{
+    using mapty = std::pair<std::string_view, std::string_view>;
+    std::string output;
+    for (auto&& [hname, handle] : handles) {
+        if (handle.aliases.empty())
+            continue;
+
+        auto& cmd_features = features.at(hname);
+        std::unordered_set<std::string_view> left_features{ cmd_features.begin(), cmd_features.end() };
+
+        for (auto&& a : handle.aliases) {
+            auto a_features = std::span{ features.at(a) };
+            for (auto&& f : a_features) {
+                if (left_features.contains(f)) {
+                    left_features.erase(f);
+                }
+            }
+        }
+        output += wis::format("#if !({})\n", MakeGuard(left_features));
+        const char* first = "#if ";
+        const char* last = "#elif ";
+
+        for (auto&& a : handle.aliases) {
+            output += first + MakeGuard(features.at(a)) + '\n';
+
+            output += Replace(format, std::array{
+                                              mapty{ "{hnd}", hname },
+                                              mapty{ "{alias}", a },
+                                      });
+            first = last;
+        }
+        if (first == last)
+            output += "#endif\n";
+        output += "#endif\n";
+    }
+    return output;
+}
+
+std::string MakeHandleTrait(const wis::Handle& handle)
+{
+    return wis::format(
+            R"(template<>
+class handle_traits<{}>
+{{
+public:
+    using parent = {};
+    using deleter_parent = {};
+    using deleter_pool = {};
+    using deleter_pfn = {};
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {{
+        return {};
+    }}
+}};
+
+)",
+            handle.name,
+            handle.parent ? handle.parent->name : "empty_type",
+            handle.destroy_parent ? handle.destroy_parent->name : "empty_type",
+            handle.pool ? handle.pool->name : "empty_type",
+            handle.destroy_command ? wis::format("function_pointer_t<decltype({})>", handle.destroy_command->name) : "nullptr_t",
+            handle.destroy_command ? handle.destroy_command->name : "nullptr");
+}
+
+std::string MakeHandleTraits(const std::unordered_map<std::string_view, wis::Handle>& handles,
+                             const std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
+{
+    auto feature_blocks = SortByFeature(handles | std::views::keys, features);
+    std::string output;
+
+    for (auto& [feature, fhandles] : feature_blocks) {
+        output += "#if " + MakeGuard(feature) + '\n';
+        for (auto& i : fhandles) {
+            output += wis::format("{}\n", MakeHandleTrait(handles.at(i)));
+        }
+        output += "#endif\n";
+    }
+
+    return output;
+}
+
 void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& stream)
 {
     std::string output{
@@ -265,6 +352,7 @@ namespace wis {
     global_commands.emplace("vkGetInstanceProcAddr");
     global_commands.emplace("vkGetDeviceProcAddr");
     global_commands.emplace("vkCreateInstance");
+    global_commands.emplace("vkDestroyInstance");
 
     std::vector<std::string_view> to_erase;
     command_to_features.reserve(context.commands.size());
@@ -345,94 +433,31 @@ std::string wis::Generator::MakeHandleTraits(const Context& context)
 {
     std::string output;
     std::unordered_map<std::string_view, std::vector<std::string_view>> handle_to_ext;
+
     handle_to_ext.reserve(context.handles.size());
     std::vector<std::string_view> to_erase;
 
     for (auto&& [fname, f] : context.features) {
         for (auto&& h : f.handles) {
-            handle_to_ext[h].push_back(fname);
+            auto& hnd = context.GetHandle(h);
+            handle_to_ext[hnd.name].push_back(fname);
+            if (hnd.name != h)
+                handle_to_ext[h].push_back(fname);
         }
     }
     for (auto&& [ename, e] : context.extensions) {
         for (auto&& h : e.handles) {
-            handle_to_ext[h].push_back(ename);
+            auto& hnd = context.GetHandle(h);
+            handle_to_ext[hnd.name].push_back(ename);
+            if (hnd.name != h)
+                handle_to_ext[h].push_back(ename);
         }
     }
 
-    for (auto& [hname, extst] : handle_to_ext) {
-        if (extst.size() == 1) {
-            continue;
-        }
-        auto& handle = context.handles.at(hname);
-        output += "#if ";
-        for (auto& i : extst) {
-            output += wis::format("defined({}) || ", i);
-        }
-        output.pop_back();
-        output.pop_back();
-        output.pop_back();
+    output += MakeAliasTypedefs("using {hnd} = {alias};\n", handle_to_ext, context.handles);
+    output += "\n";
 
-        output += wis::format("\n{}\n#endif\n\n", MakeHandleTrait(handle));
-        to_erase.push_back(hname);
-    }
-    for (auto& i : to_erase | std::views::reverse) {
-        handle_to_ext.erase(i);
-    }
-
-    for (auto&& [fname, f] : context.features) {
-        if (f.handles.empty()) {
-            continue;
-        }
-        output += wis::format("#ifdef {}\n", fname);
-        for (auto hname : f.handles) {
-            if (!handle_to_ext.contains(hname)) {
-                continue;
-            }
-            auto& handle = context.handles.at(hname);
-            output += wis::format("{}\n", MakeHandleTrait(handle));
-        }
-        output += "#endif\n\n";
-    }
-    for (auto&& [fname, f] : context.extensions) {
-        if (f.handles.empty()) {
-            continue;
-        }
-        output += wis::format("#ifdef {}\n", fname);
-        for (auto hname : f.handles) {
-            if (!handle_to_ext.contains(hname)) {
-                continue;
-            }
-            auto& handle = context.handles.at(hname);
-            output += wis::format("{}\n", MakeHandleTrait(handle));
-        }
-        output += "#endif\n\n";
-    }
+    output += ::MakeHandleTraits(context.handles, handle_to_ext);
+    output += "\n";
     return output;
-}
-
-std::string wis::Generator::MakeHandleTrait(const Handle& handle)
-{
-    return wis::format(
-            R"(template<>
-class handle_traits<{}>
-{{
-public:
-    using parent = {};
-    using deleter_parent = {};
-    using deleter_pool = {};
-    using deleter_pfn = {};
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {{
-        return {};
-    }}
-}};
-
-)",
-            handle.name,
-            handle.parent ? handle.parent->name : "empty_type",
-            handle.destroy_parent ? handle.destroy_parent->name : "empty_type",
-            handle.pool ? handle.pool->name : "empty_type",
-            handle.destroy_command ? wis::format("function_pointer_t<decltype({})>", handle.destroy_command->name) : "nullptr_t",
-            handle.destroy_command ? handle.destroy_command->name : "nullptr");
 }

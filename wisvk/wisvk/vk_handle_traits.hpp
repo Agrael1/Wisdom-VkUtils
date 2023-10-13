@@ -25,7 +25,57 @@ public:
         return nullptr;
     }
 };
-#ifdef VK_VERSION_1_0
+#if !(defined(VK_VERSION_1_1) )
+#if defined(VK_KHR_descriptor_update_template) 
+using VkDescriptorUpdateTemplate = VkDescriptorUpdateTemplateKHR;
+#endif
+#endif
+#if !(defined(VK_VERSION_1_1) )
+#if defined(VK_KHR_sampler_ycbcr_conversion) 
+using VkSamplerYcbcrConversion = VkSamplerYcbcrConversionKHR;
+#endif
+#endif
+#if !(defined(VK_VERSION_1_3) )
+#if defined(VK_EXT_private_data) 
+using VkPrivateDataSlot = VkPrivateDataSlotEXT;
+#endif
+#endif
+
+#if defined(VK_KHR_swapchain) 
+template<>
+class handle_traits<VkSwapchainKHR>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroySwapchainKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroySwapchainKHR;
+    }
+};
+
+
+#endif
+#if defined(VK_VERSION_1_0) 
+template<>
+class handle_traits<VkBufferView>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyBufferView)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyBufferView;
+    }
+};
+
+
 template<>
 class handle_traits<VkInstance>
 {
@@ -38,38 +88,6 @@ public:
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
         return vkDestroyInstance;
-    }
-};
-
-
-template<>
-class handle_traits<VkPhysicalDevice>
-{
-public:
-    using parent = VkInstance;
-    using deleter_parent = empty_type;
-    using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return nullptr;
-    }
-};
-
-
-template<>
-class handle_traits<VkDevice>
-{
-public:
-    using parent = VkPhysicalDevice;
-    using deleter_parent = empty_type;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDevice)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyDevice;
     }
 };
 
@@ -91,81 +109,17 @@ public:
 
 
 template<>
-class handle_traits<VkDeviceMemory>
+class handle_traits<VkPhysicalDevice>
 {
 public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
+    using parent = VkInstance;
+    using deleter_parent = empty_type;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkFreeMemory)>;
+    using deleter_pfn = nullptr_t;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkFreeMemory;
-    }
-};
-
-
-template<>
-class handle_traits<VkFence>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyFence)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyFence;
-    }
-};
-
-
-template<>
-class handle_traits<VkSemaphore>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroySemaphore)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroySemaphore;
-    }
-};
-
-
-template<>
-class handle_traits<VkEvent>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyEvent)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyEvent;
-    }
-};
-
-
-template<>
-class handle_traits<VkQueryPool>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyQueryPool)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyQueryPool;
+        return nullptr;
     }
 };
 
@@ -187,17 +141,97 @@ public:
 
 
 template<>
-class handle_traits<VkBufferView>
+class handle_traits<VkSemaphore>
 {
 public:
     using parent = VkDevice;
     using deleter_parent = VkDevice;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyBufferView)>;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroySemaphore)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkDestroyBufferView;
+        return vkDestroySemaphore;
+    }
+};
+
+
+template<>
+class handle_traits<VkDevice>
+{
+public:
+    using parent = VkPhysicalDevice;
+    using deleter_parent = empty_type;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDevice)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyDevice;
+    }
+};
+
+
+template<>
+class handle_traits<VkCommandPool>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyCommandPool)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyCommandPool;
+    }
+};
+
+
+template<>
+class handle_traits<VkCommandBuffer>
+{
+public:
+    using parent = VkCommandPool;
+    using deleter_parent = VkDevice;
+    using deleter_pool = VkCommandPool;
+    using deleter_pfn = function_pointer_t<decltype(vkFreeCommandBuffers)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkFreeCommandBuffers;
+    }
+};
+
+
+template<>
+class handle_traits<VkRenderPass>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyRenderPass)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyRenderPass;
+    }
+};
+
+
+template<>
+class handle_traits<VkDeviceMemory>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkFreeMemory)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkFreeMemory;
     }
 };
 
@@ -251,22 +285,6 @@ public:
 
 
 template<>
-class handle_traits<VkPipelineCache>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyPipelineCache)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyPipelineCache;
-    }
-};
-
-
-template<>
 class handle_traits<VkPipeline>
 {
 public:
@@ -315,22 +333,6 @@ public:
 
 
 template<>
-class handle_traits<VkDescriptorPool>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDescriptorPool)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyDescriptorPool;
-    }
-};
-
-
-template<>
 class handle_traits<VkDescriptorSet>
 {
 public:
@@ -342,6 +344,22 @@ public:
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
         return vkFreeDescriptorSets;
+    }
+};
+
+
+template<>
+class handle_traits<VkDescriptorPool>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDescriptorPool)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyDescriptorPool;
     }
 };
 
@@ -363,6 +381,54 @@ public:
 
 
 template<>
+class handle_traits<VkFence>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyFence)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyFence;
+    }
+};
+
+
+template<>
+class handle_traits<VkEvent>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyEvent)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyEvent;
+    }
+};
+
+
+template<>
+class handle_traits<VkQueryPool>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyQueryPool)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyQueryPool;
+    }
+};
+
+
+template<>
 class handle_traits<VkFramebuffer>
 {
 public:
@@ -379,294 +445,41 @@ public:
 
 
 template<>
-class handle_traits<VkRenderPass>
+class handle_traits<VkPipelineCache>
 {
 public:
     using parent = VkDevice;
     using deleter_parent = VkDevice;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyRenderPass)>;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyPipelineCache)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkDestroyRenderPass;
+        return vkDestroyPipelineCache;
     }
 };
 
 
+#endif
+#if defined(VK_EXT_validation_cache) 
 template<>
-class handle_traits<VkCommandPool>
+class handle_traits<VkValidationCacheEXT>
 {
 public:
     using parent = VkDevice;
     using deleter_parent = VkDevice;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyCommandPool)>;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyValidationCacheEXT)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkDestroyCommandPool;
-    }
-};
-
-
-template<>
-class handle_traits<VkCommandBuffer>
-{
-public:
-    using parent = VkCommandPool;
-    using deleter_parent = VkDevice;
-    using deleter_pool = VkCommandPool;
-    using deleter_pfn = function_pointer_t<decltype(vkFreeCommandBuffers)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkFreeCommandBuffers;
+        return vkDestroyValidationCacheEXT;
     }
 };
 
 
 #endif
-
-#ifdef VK_VERSION_1_1
-template<>
-class handle_traits<VkSamplerYcbcrConversion>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroySamplerYcbcrConversion)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroySamplerYcbcrConversion;
-    }
-};
-
-
-template<>
-class handle_traits<VkDescriptorUpdateTemplate>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDescriptorUpdateTemplate)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyDescriptorUpdateTemplate;
-    }
-};
-
-
-#endif
-
-#ifdef VK_VERSION_1_3
-template<>
-class handle_traits<VkPrivateDataSlot>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyPrivateDataSlot)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyPrivateDataSlot;
-    }
-};
-
-
-#endif
-
-#ifdef VK_KHR_surface
-template<>
-class handle_traits<VkSurfaceKHR>
-{
-public:
-    using parent = VkInstance;
-    using deleter_parent = VkInstance;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroySurfaceKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroySurfaceKHR;
-    }
-};
-
-
-#endif
-
-#ifdef VK_KHR_swapchain
-template<>
-class handle_traits<VkSwapchainKHR>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkReleaseFullScreenExclusiveModeEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkReleaseFullScreenExclusiveModeEXT;
-    }
-};
-
-
-#endif
-
-#ifdef VK_KHR_display
-template<>
-class handle_traits<VkDisplayKHR>
-{
-public:
-    using parent = VkPhysicalDevice;
-    using deleter_parent = VkPhysicalDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkReleaseDisplayEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkReleaseDisplayEXT;
-    }
-};
-
-
-template<>
-class handle_traits<VkDisplayModeKHR>
-{
-public:
-    using parent = VkDisplayKHR;
-    using deleter_parent = empty_type;
-    using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return nullptr;
-    }
-};
-
-
-#endif
-
-#ifdef VK_KHR_deferred_host_operations
-template<>
-class handle_traits<VkDeferredOperationKHR>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDeferredOperationKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyDeferredOperationKHR;
-    }
-};
-
-
-#endif
-
-#ifdef VK_EXT_debug_report
-template<>
-class handle_traits<VkDebugReportCallbackEXT>
-{
-public:
-    using parent = VkInstance;
-    using deleter_parent = VkInstance;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDebugReportCallbackEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyDebugReportCallbackEXT;
-    }
-};
-
-
-#endif
-
-#ifdef VK_EXT_shader_object
-template<>
-class handle_traits<VkShaderEXT>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyShaderEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyShaderEXT;
-    }
-};
-
-
-#endif
-
-#ifdef VK_EXT_debug_utils
-template<>
-class handle_traits<VkDebugUtilsMessengerEXT>
-{
-public:
-    using parent = VkInstance;
-    using deleter_parent = VkInstance;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDebugUtilsMessengerEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyDebugUtilsMessengerEXT;
-    }
-};
-
-
-#endif
-
-#ifdef VK_KHR_video_queue
-template<>
-class handle_traits<VkVideoSessionKHR>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyVideoSessionKHR;
-    }
-};
-
-
-template<>
-class handle_traits<VkVideoSessionParametersKHR>
-{
-public:
-    using parent = VkVideoSessionKHR;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionParametersKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyVideoSessionParametersKHR;
-    }
-};
-
-
-#endif
-
-#ifdef VK_NVX_binary_import
+#if defined(VK_NVX_binary_import) 
 template<>
 class handle_traits<VkCuModuleNVX>
 {
@@ -700,122 +513,43 @@ public:
 
 
 #endif
-
-#ifdef VK_FUCHSIA_buffer_collection
+#if defined(VK_EXT_debug_report) 
 template<>
-class handle_traits<VkBufferCollectionFUCHSIA>
+class handle_traits<VkDebugReportCallbackEXT>
 {
 public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
+    using parent = VkInstance;
+    using deleter_parent = VkInstance;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyBufferCollectionFUCHSIA)>;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDebugReportCallbackEXT)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkDestroyBufferCollectionFUCHSIA;
+        return vkDestroyDebugReportCallbackEXT;
     }
 };
 
 
 #endif
-
-#ifdef VK_NV_optical_flow
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_sampler_ycbcr_conversion) 
 template<>
-class handle_traits<VkOpticalFlowSessionNV>
+class handle_traits<VkSamplerYcbcrConversion>
 {
 public:
     using parent = VkDevice;
     using deleter_parent = VkDevice;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyOpticalFlowSessionNV)>;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroySamplerYcbcrConversion)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkDestroyOpticalFlowSessionNV;
+        return vkDestroySamplerYcbcrConversion;
     }
 };
 
 
 #endif
-
-#ifdef VK_EXT_validation_cache
-template<>
-class handle_traits<VkValidationCacheEXT>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyValidationCacheEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyValidationCacheEXT;
-    }
-};
-
-
-#endif
-
-#ifdef VK_NV_ray_tracing
-template<>
-class handle_traits<VkAccelerationStructureNV>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyAccelerationStructureNV)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyAccelerationStructureNV;
-    }
-};
-
-
-#endif
-
-#ifdef VK_INTEL_performance_query
-template<>
-class handle_traits<VkPerformanceConfigurationINTEL>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkReleasePerformanceConfigurationINTEL)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkReleasePerformanceConfigurationINTEL;
-    }
-};
-
-
-#endif
-
-#ifdef VK_KHR_acceleration_structure
-template<>
-class handle_traits<VkAccelerationStructureKHR>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyAccelerationStructureKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyAccelerationStructureKHR;
-    }
-};
-
-
-#endif
-
-#ifdef VK_NV_device_generated_commands
+#if defined(VK_NV_device_generated_commands) 
 template<>
 class handle_traits<VkIndirectCommandsLayoutNV>
 {
@@ -833,27 +567,25 @@ public:
 
 
 #endif
-
-#ifdef VK_NV_external_sci_sync2
+#if defined(VK_INTEL_performance_query) 
 template<>
-class handle_traits<VkSemaphoreSciSyncPoolNV>
+class handle_traits<VkPerformanceConfigurationINTEL>
 {
 public:
     using parent = VkDevice;
     using deleter_parent = VkDevice;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroySemaphoreSciSyncPoolNV)>;
+    using deleter_pfn = function_pointer_t<decltype(vkReleasePerformanceConfigurationINTEL)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
-        return vkDestroySemaphoreSciSyncPoolNV;
+        return vkReleasePerformanceConfigurationINTEL;
     }
 };
 
 
 #endif
-
-#ifdef VK_EXT_opacity_micromap
+#if defined(VK_EXT_opacity_micromap) 
 template<>
 class handle_traits<VkMicromapEXT>
 {
@@ -866,6 +598,272 @@ public:
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
         return vkDestroyMicromapEXT;
+    }
+};
+
+
+#endif
+#if defined(VK_KHR_display) 
+template<>
+class handle_traits<VkDisplayModeKHR>
+{
+public:
+    using parent = VkDisplayKHR;
+    using deleter_parent = empty_type;
+    using deleter_pool = empty_type;
+    using deleter_pfn = nullptr_t;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return nullptr;
+    }
+};
+
+
+template<>
+class handle_traits<VkDisplayKHR>
+{
+public:
+    using parent = VkPhysicalDevice;
+    using deleter_parent = VkPhysicalDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkReleaseDisplayEXT)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkReleaseDisplayEXT;
+    }
+};
+
+
+#endif
+#if defined(VK_EXT_debug_utils) 
+template<>
+class handle_traits<VkDebugUtilsMessengerEXT>
+{
+public:
+    using parent = VkInstance;
+    using deleter_parent = VkInstance;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDebugUtilsMessengerEXT)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyDebugUtilsMessengerEXT;
+    }
+};
+
+
+#endif
+#if defined(VK_EXT_shader_object) 
+template<>
+class handle_traits<VkShaderEXT>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyShaderEXT)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyShaderEXT;
+    }
+};
+
+
+#endif
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template) 
+template<>
+class handle_traits<VkDescriptorUpdateTemplate>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDescriptorUpdateTemplate)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyDescriptorUpdateTemplate;
+    }
+};
+
+
+#endif
+#if defined(VK_KHR_deferred_host_operations) 
+template<>
+class handle_traits<VkDeferredOperationKHR>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDeferredOperationKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyDeferredOperationKHR;
+    }
+};
+
+
+#endif
+#if defined(VK_KHR_acceleration_structure) 
+template<>
+class handle_traits<VkAccelerationStructureKHR>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyAccelerationStructureKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyAccelerationStructureKHR;
+    }
+};
+
+
+#endif
+#if defined(VK_NV_ray_tracing) 
+template<>
+class handle_traits<VkAccelerationStructureNV>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyAccelerationStructureNV)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyAccelerationStructureNV;
+    }
+};
+
+
+#endif
+#if defined(VK_FUCHSIA_buffer_collection) 
+template<>
+class handle_traits<VkBufferCollectionFUCHSIA>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyBufferCollectionFUCHSIA)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyBufferCollectionFUCHSIA;
+    }
+};
+
+
+#endif
+#if defined(VK_VERSION_1_3) || defined(VK_EXT_private_data) 
+template<>
+class handle_traits<VkPrivateDataSlot>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyPrivateDataSlot)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyPrivateDataSlot;
+    }
+};
+
+
+#endif
+#if defined(VK_KHR_video_queue) 
+template<>
+class handle_traits<VkVideoSessionParametersKHR>
+{
+public:
+    using parent = VkVideoSessionKHR;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionParametersKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyVideoSessionParametersKHR;
+    }
+};
+
+
+template<>
+class handle_traits<VkVideoSessionKHR>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyVideoSessionKHR;
+    }
+};
+
+
+#endif
+#if defined(VK_NV_optical_flow) 
+template<>
+class handle_traits<VkOpticalFlowSessionNV>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyOpticalFlowSessionNV)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyOpticalFlowSessionNV;
+    }
+};
+
+
+#endif
+#if defined(VK_KHR_surface) 
+template<>
+class handle_traits<VkSurfaceKHR>
+{
+public:
+    using parent = VkInstance;
+    using deleter_parent = VkInstance;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroySurfaceKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroySurfaceKHR;
+    }
+};
+
+
+#endif
+#if defined(VK_NV_external_sci_sync2) 
+template<>
+class handle_traits<VkSemaphoreSciSyncPoolNV>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroySemaphoreSciSyncPoolNV)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroySemaphoreSciSyncPoolNV;
     }
 };
 

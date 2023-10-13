@@ -17,7 +17,7 @@ extern "C" {
 #endif
 __declspec(dllimport) HMODULE __stdcall LoadLibraryA(LPCSTR);
 __declspec(dllimport) FARPROC __stdcall GetProcAddress(HMODULE, LPCSTR);
-__declspec(dllimport) int __stdcall FreeLibraryA(HMODULE);
+__declspec(dllimport) int __stdcall FreeLibrary(HMODULE);
 #ifdef __cplusplus
 }
 #endif
@@ -50,7 +50,7 @@ inline void* InitializeVulkanLibrary() noexcept
 inline void UninitializeVulkanLibrary(void* library) noexcept
 {
 #if defined(_WIN32)
-    FreeLibraryA((HMODULE)library);
+    FreeLibrary((HMODULE)library);
 #else
     dlclose(library);
 #endif
@@ -87,6 +87,38 @@ public:
     constexpr static std::string_view value = name();
 };
 
+struct LibTokenView {
+    LibTokenView(void* library) noexcept
+        : m_library(library)
+    {
+    }
+
+public:
+    bool is_valid() const noexcept
+    {
+        return m_library != nullptr;
+    }
+    operator bool() const noexcept
+    {
+        return is_valid();
+    }
+
+    template<typename PFN>
+    PFN GetProcAddress(const char* fname) const noexcept
+    {
+#if defined(__unix__) || defined(__APPLE__) || defined(__QNXNTO__) || defined(__Fuchsia__)
+        return (PFN)dlsym(m_library, fname);
+#elif defined(_WIN32)
+        return (PFN)::GetProcAddress((HMODULE)m_library, fname);
+#else
+#error unsupported platform
+#endif
+    }
+
+public:
+    void* m_library = nullptr;
+};
+
 struct LibToken {
     LibToken() noexcept
         : m_library(InitializeVulkanLibrary())
@@ -97,7 +129,10 @@ struct LibToken {
     {
         UninitializeVulkanLibrary(m_library);
     }
-
+    operator LibTokenView() const noexcept
+    {
+        return LibTokenView(m_library);
+    }
 public:
     bool is_valid() const noexcept
     {
@@ -124,4 +159,5 @@ public:
 public:
     void* m_library = nullptr;
 };
+
 } // namespace wis

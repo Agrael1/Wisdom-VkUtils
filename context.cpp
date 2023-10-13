@@ -65,23 +65,35 @@ void wis::Context::ReadTypes(const tinyxml2::XMLElement& types)
 
 void wis::Context::ReadType(const tinyxml2::XMLElement& type)
 {
-    auto attributes = GetAttributes(type);
-    auto category = attributes.find("category");
-    if (category == attributes.end() || category->second != "handle")
+    using namespace std::string_view_literals;
+    auto category = type.FindAttribute("category");
+    if (!category || category->Value() != "handle"sv)
         return;
 
-    if (attributes.contains("alias")) {
-        handle_aliases[attributes["alias"]] = attributes["name"];
+    auto alias = type.FindAttribute("alias");
+    auto name = type.FindAttribute("name");
+    if (alias && name) {
+        alias_to_handle[name->Value()] = alias->Value();
+        auto& handle = handles[alias->Value()];
+        handle.aliases.emplace_back(name->Value());
         return;
     }
 
-    auto parent = attributes.find("parent");
-    std::string_view parent_name = parent != attributes.end() ? parent->second : "";
-    auto name = type.FirstChildElement("name");
-    if (name == nullptr)
+    auto el_name = type.FirstChildElement("name");
+
+    auto xname = el_name->GetText();
+
+    if (el_name == nullptr)
         throw std::runtime_error("Type without name");
 
-    handle_parents[name->GetText()] = parent_name;
+    auto& handle = handles[el_name->GetText()];
+    handle.name = el_name->GetText();
+
+    auto parent = type.FindAttribute("parent");
+    if (!parent)
+        return;
+
+    handle.parent = &handles[parent->Value()];
 }
 
 // Commands
@@ -157,27 +169,13 @@ void wis::Context::ReadRequire(const tinyxml2::XMLElement& require, Feature& fea
     }
     for (auto child = require.FirstChildElement("type"); child != nullptr; child = child->NextSiblingElement("type")) {
         std::string_view name = child->FindAttribute("name")->Value();
-        if (handle_parents.contains(name) || handle_aliases.contains(name))
+        if (handles.contains(name) || alias_to_handle.contains(name))
             feature.handles.emplace_back(name);
     }
 }
 
 void wis::Context::ComposeHandleInfo()
 {
-    // Create all handles
-    for (auto& [name, parent] : handle_parents) {
-        auto& xhandle = handles[name];
-        xhandle.name = name;
-    }
-
-    // Set parents
-    for (auto& [name, parent] : handle_parents) {
-        auto& xhandle = handles[name];
-        if (parent.empty())
-            continue;
-        xhandle.parent = &handles[parent];
-    }
-
     // Search for destruction commands
     for (auto& [name, command] : commands) {
         // Free
@@ -186,9 +184,12 @@ void wis::Context::ComposeHandleInfo()
             auto& destroy_parent = handles[command.param_types[0]];
             auto dhandle = std::ranges::find_if(std::views::reverse(command.param_types), [this](std::string_view a) { return handles.contains(a); });
             if (dhandle == command.param_types.rend())
-                throw std::runtime_error("Free command without handle parameter");
+                continue; // skip
 
             auto& destroy_handle = handles[*dhandle];
+            if (destroy_handle.destroy_command && !name.ends_with(dhandle->substr(2)))// drop Vk prefix
+                continue; // already set (Free command)
+
             destroy_handle.destroy_command = &command;
             destroy_handle.destroy_parent = destroy_handle.name == destroy_parent.name ? nullptr : &destroy_parent;
 
@@ -204,10 +205,10 @@ void wis::Context::ComposeHandleInfo()
 
             auto dhandle = std::ranges::find_if(std::views::reverse(command.param_types), [this](std::string_view a) { return handles.contains(a); });
             if (dhandle == command.param_types.rend())
-                throw std::runtime_error("Free command without handle parameter");
+                continue;
 
             auto& destroy_handle = handles[*dhandle];
-            if (destroy_handle.destroy_command != nullptr)
+            if (destroy_handle.destroy_command && !name.ends_with(dhandle->substr(2)))// drop Vk prefix
                 continue; // already set (Free command)
 
             destroy_handle.destroy_command = &command;

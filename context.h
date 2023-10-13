@@ -21,6 +21,9 @@ struct Handle {
     Handle* destroy_parent = nullptr;
     Handle* pool = nullptr;
     Command* destroy_command = nullptr;
+    std::vector<std::string_view> aliases;
+
+public:
     bool IsChildOf(std::string_view parent_name) const noexcept
     {
         if (name == parent_name)
@@ -41,8 +44,16 @@ struct Command {
     std::vector<std::string_view> param_types;
     const Handle* GetAttachedHandle(const Context& ctx) const noexcept;
     bool IsGlobal(const Context& ctx) const noexcept { return !GetAttachedHandle(ctx); }
-    bool IsInstance(const Context& ctx) const noexcept { return GetAttachedHandle(ctx) && GetAttachedHandle(ctx)->IsChildOf("VkInstance"); }
-    bool IsDevice(const Context& ctx) const noexcept { return GetAttachedHandle(ctx) && GetAttachedHandle(ctx)->IsChildOf("VkDevice"); }
+    bool IsInstance(const Context& ctx) const noexcept
+    {
+        auto* handle = GetAttachedHandle(ctx);
+        return handle && handle->IsChildOf("VkInstance");
+    }
+    bool IsDevice(const Context& ctx) const noexcept
+    {
+        auto* handle = GetAttachedHandle(ctx);
+        return handle && handle->IsChildOf("VkDevice");
+    }
 };
 
 class Context
@@ -58,6 +69,16 @@ public:
         }
         if (auto it = alias_to_command.find(cmd); it != alias_to_command.end()) {
             return commands.at(it->second);
+        }
+        throw std::runtime_error("Command not found");
+    }
+    auto& GetHandle(std::string_view hnd) const
+    {
+        if (auto it = handles.find(hnd); it != handles.end()) {
+            return it->second;
+        }
+        if (auto it = alias_to_handle.find(hnd); it != alias_to_handle.end()) {
+            return handles.at(it->second);
         }
         throw std::runtime_error("Command not found");
     }
@@ -92,9 +113,9 @@ private:
     void ComposeHandleInfo();
 
 public:
-    std::unordered_map<std::string_view, std::string_view> handle_parents;
-    std::unordered_map<std::string_view, std::string_view> handle_aliases;
+    std::unordered_map<std::string_view, std::string_view> alias_to_handle;
     std::unordered_map<std::string_view, std::string_view> alias_to_command;
+
     std::unordered_map<std::string_view, std::vector<std::string_view>> command_to_aliases;
 
     std::unordered_map<std::string_view, Feature> features;

@@ -402,16 +402,17 @@ using PFN_vkGetImageSubresourceLayout2KHR = PFN_vkGetImageSubresourceLayout2EXT;
 #endif
 
 struct VkGlobalTable{
-void Init(LibToken token) noexcept{
+void Init(LibTokenView token) noexcept{
 #if defined(VK_VERSION_1_0) 
-	vkGetInstanceProcAddr = token.GetProcAddress<decltype(vkGetInstanceProcAddr)>();
-	vkGetDeviceProcAddr = token.GetProcAddress<decltype(vkGetDeviceProcAddr)>();
-	vkEnumerateInstanceLayerProperties = token.GetProcAddress<decltype(vkEnumerateInstanceLayerProperties)>();
-	vkEnumerateInstanceExtensionProperties = token.GetProcAddress<decltype(vkEnumerateInstanceExtensionProperties)>();
-	vkCreateInstance = token.GetProcAddress<decltype(vkCreateInstance)>();
+	vkGetInstanceProcAddr = token.GetProcAddress<decltype(vkGetInstanceProcAddr)>("vkGetInstanceProcAddr");
+	vkGetDeviceProcAddr = token.GetProcAddress<decltype(vkGetDeviceProcAddr)>("vkGetDeviceProcAddr");
+	vkEnumerateInstanceLayerProperties = token.GetProcAddress<decltype(vkEnumerateInstanceLayerProperties)>("vkEnumerateInstanceLayerProperties");
+	vkEnumerateInstanceExtensionProperties = token.GetProcAddress<decltype(vkEnumerateInstanceExtensionProperties)>("vkEnumerateInstanceExtensionProperties");
+	vkCreateInstance = token.GetProcAddress<decltype(vkCreateInstance)>("vkCreateInstance");
+	vkDestroyInstance = token.GetProcAddress<decltype(vkDestroyInstance)>("vkDestroyInstance");
 #endif
 #if defined(VK_VERSION_1_1) 
-	vkEnumerateInstanceVersion = token.GetProcAddress<decltype(vkEnumerateInstanceVersion)>();
+	vkEnumerateInstanceVersion = token.GetProcAddress<decltype(vkEnumerateInstanceVersion)>("vkEnumerateInstanceVersion");
 #endif
 }
 public:
@@ -421,6 +422,7 @@ PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr;
 PFN_vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties;
 PFN_vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties;
 PFN_vkCreateInstance vkCreateInstance;
+PFN_vkDestroyInstance vkDestroyInstance;
 #endif
 #if defined(VK_VERSION_1_1) 
 PFN_vkEnumerateInstanceVersion vkEnumerateInstanceVersion;
@@ -429,15 +431,9 @@ PFN_vkEnumerateInstanceVersion vkEnumerateInstanceVersion;
 
 struct VkInstanceTable{
 void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
-#if defined(VK_EXT_calibrated_timestamps) 
-	vkGetPhysicalDeviceCalibrateableTimeDomainsEXT = (PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceCalibrateableTimeDomainsEXT");
-#endif
-#if defined(VK_KHR_xlib_surface) 
-	vkCreateXlibSurfaceKHR = (PFN_vkCreateXlibSurfaceKHR)global_table.vkGetInstanceProcAddr(instance, "vkCreateXlibSurfaceKHR");
-	vkGetPhysicalDeviceXlibPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR");
-#endif
-#if defined(VK_EXT_display_surface_counter) 
-	vkGetPhysicalDeviceSurfaceCapabilities2EXT = (PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilities2EXT");
+#if defined(VK_KHR_xcb_surface) 
+	vkGetPhysicalDeviceXcbPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR");
+	vkCreateXcbSurfaceKHR = (PFN_vkCreateXcbSurfaceKHR)global_table.vkGetInstanceProcAddr(instance, "vkCreateXcbSurfaceKHR");
 #endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_device_group_creation) 
 #if defined(VK_VERSION_1_1) 
@@ -451,8 +447,7 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 	vkGetPhysicalDeviceDirectFBPresentationSupportEXT = (PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
 #endif
 #if defined(VK_VERSION_1_0) 
-	vkGetPhysicalDeviceMemoryProperties = (PFN_vkGetPhysicalDeviceMemoryProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceMemoryProperties");
-	vkDestroyInstance = (PFN_vkDestroyInstance)global_table.vkGetInstanceProcAddr(instance, "vkDestroyInstance");
+	vkCreateDevice = (PFN_vkCreateDevice)global_table.vkGetInstanceProcAddr(instance, "vkCreateDevice");
 	vkGetPhysicalDeviceProperties = (PFN_vkGetPhysicalDeviceProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceProperties");
 	vkEnumeratePhysicalDevices = (PFN_vkEnumeratePhysicalDevices)global_table.vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDevices");
 	vkEnumerateDeviceLayerProperties = (PFN_vkEnumerateDeviceLayerProperties)global_table.vkGetInstanceProcAddr(instance, "vkEnumerateDeviceLayerProperties");
@@ -460,9 +455,16 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 	vkGetPhysicalDeviceFormatProperties = (PFN_vkGetPhysicalDeviceFormatProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceFormatProperties");
 	vkGetPhysicalDeviceImageFormatProperties = (PFN_vkGetPhysicalDeviceImageFormatProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceImageFormatProperties");
 	vkGetPhysicalDeviceQueueFamilyProperties = (PFN_vkGetPhysicalDeviceQueueFamilyProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceQueueFamilyProperties");
-	vkCreateDevice = (PFN_vkCreateDevice)global_table.vkGetInstanceProcAddr(instance, "vkCreateDevice");
+	vkGetPhysicalDeviceMemoryProperties = (PFN_vkGetPhysicalDeviceMemoryProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceMemoryProperties");
 	vkEnumerateDeviceExtensionProperties = (PFN_vkEnumerateDeviceExtensionProperties)global_table.vkGetInstanceProcAddr(instance, "vkEnumerateDeviceExtensionProperties");
 	vkGetPhysicalDeviceSparseImageFormatProperties = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSparseImageFormatProperties");
+#endif
+#if defined(VK_KHR_object_refresh) 
+	vkGetPhysicalDeviceRefreshableObjectTypesKHR = (PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceRefreshableObjectTypesKHR");
+#endif
+#if defined(VK_KHR_performance_query) 
+	vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = (PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR)global_table.vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
+	vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = (PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
 #endif
 #if defined(VK_KHR_cooperative_matrix) 
 	vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR = (PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR");
@@ -532,9 +534,12 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 	vkGetPhysicalDeviceSparseImageFormatProperties2 = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties2)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSparseImageFormatProperties2KHR");
 #endif
 #endif
-#if defined(VK_KHR_xcb_surface) 
-	vkGetPhysicalDeviceXcbPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR");
-	vkCreateXcbSurfaceKHR = (PFN_vkCreateXcbSurfaceKHR)global_table.vkGetInstanceProcAddr(instance, "vkCreateXcbSurfaceKHR");
+#if defined(VK_KHR_xlib_surface) 
+	vkCreateXlibSurfaceKHR = (PFN_vkCreateXlibSurfaceKHR)global_table.vkGetInstanceProcAddr(instance, "vkCreateXlibSurfaceKHR");
+	vkGetPhysicalDeviceXlibPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR");
+#endif
+#if defined(VK_EXT_display_surface_counter) 
+	vkGetPhysicalDeviceSurfaceCapabilities2EXT = (PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilities2EXT");
 #endif
 #if defined(VK_MVK_macos_surface) 
 	vkCreateMacOSSurfaceMVK = (PFN_vkCreateMacOSSurfaceMVK)global_table.vkGetInstanceProcAddr(instance, "vkCreateMacOSSurfaceMVK");
@@ -614,13 +619,6 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 #if defined(VK_KHR_android_surface) 
 	vkCreateAndroidSurfaceKHR = (PFN_vkCreateAndroidSurfaceKHR)global_table.vkGetInstanceProcAddr(instance, "vkCreateAndroidSurfaceKHR");
 #endif
-#if defined(VK_KHR_performance_query) 
-	vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = (PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR)global_table.vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
-	vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = (PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
-#endif
-#if defined(VK_KHR_object_refresh) 
-	vkGetPhysicalDeviceRefreshableObjectTypesKHR = (PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceRefreshableObjectTypesKHR");
-#endif
 #if defined(VK_KHR_video_queue) 
 	vkGetPhysicalDeviceVideoCapabilitiesKHR = (PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceVideoCapabilitiesKHR");
 	vkGetPhysicalDeviceVideoFormatPropertiesKHR = (PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceVideoFormatPropertiesKHR");
@@ -639,6 +637,9 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 #endif
 #if defined(VK_MVK_ios_surface) 
 	vkCreateIOSSurfaceMVK = (PFN_vkCreateIOSSurfaceMVK)global_table.vkGetInstanceProcAddr(instance, "vkCreateIOSSurfaceMVK");
+#endif
+#if defined(VK_EXT_calibrated_timestamps) 
+	vkGetPhysicalDeviceCalibrateableTimeDomainsEXT = (PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT)global_table.vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceCalibrateableTimeDomainsEXT");
 #endif
 #if defined(VK_QNX_screen_surface) 
 	vkCreateScreenSurfaceQNX = (PFN_vkCreateScreenSurfaceQNX)global_table.vkGetInstanceProcAddr(instance, "vkCreateScreenSurfaceQNX");
@@ -670,15 +671,9 @@ void Init(VkInstance instance, VkGlobalTable global_table) noexcept{
 #endif
 }
 public:
-#if defined(VK_EXT_calibrated_timestamps) 
-PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT vkGetPhysicalDeviceCalibrateableTimeDomainsEXT;
-#endif
-#if defined(VK_KHR_xlib_surface) 
-PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
-PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR;
-#endif
-#if defined(VK_EXT_display_surface_counter) 
-PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT;
+#if defined(VK_KHR_xcb_surface) 
+PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR;
+PFN_vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR;
 #endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_device_group_creation) 
 PFN_vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups;
@@ -688,8 +683,7 @@ PFN_vkCreateDirectFBSurfaceEXT vkCreateDirectFBSurfaceEXT;
 PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT vkGetPhysicalDeviceDirectFBPresentationSupportEXT;
 #endif
 #if defined(VK_VERSION_1_0) 
-PFN_vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties;
-PFN_vkDestroyInstance vkDestroyInstance;
+PFN_vkCreateDevice vkCreateDevice;
 PFN_vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties;
 PFN_vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices;
 PFN_vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties;
@@ -697,9 +691,16 @@ PFN_vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures;
 PFN_vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties;
 PFN_vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties;
 PFN_vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties;
-PFN_vkCreateDevice vkCreateDevice;
+PFN_vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties;
 PFN_vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties;
 PFN_vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties;
+#endif
+#if defined(VK_KHR_object_refresh) 
+PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR vkGetPhysicalDeviceRefreshableObjectTypesKHR;
+#endif
+#if defined(VK_KHR_performance_query) 
+PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR;
+PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR;
 #endif
 #if defined(VK_KHR_cooperative_matrix) 
 PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR;
@@ -741,9 +742,12 @@ PFN_vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProp
 PFN_vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2;
 PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2;
 #endif
-#if defined(VK_KHR_xcb_surface) 
-PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR;
-PFN_vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR;
+#if defined(VK_KHR_xlib_surface) 
+PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
+PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR;
+#endif
+#if defined(VK_EXT_display_surface_counter) 
+PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT;
 #endif
 #if defined(VK_MVK_macos_surface) 
 PFN_vkCreateMacOSSurfaceMVK vkCreateMacOSSurfaceMVK;
@@ -807,13 +811,6 @@ PFN_vkGetDisplayPlaneCapabilities2KHR vkGetDisplayPlaneCapabilities2KHR;
 #if defined(VK_KHR_android_surface) 
 PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
 #endif
-#if defined(VK_KHR_performance_query) 
-PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR;
-PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR;
-#endif
-#if defined(VK_KHR_object_refresh) 
-PFN_vkGetPhysicalDeviceRefreshableObjectTypesKHR vkGetPhysicalDeviceRefreshableObjectTypesKHR;
-#endif
 #if defined(VK_KHR_video_queue) 
 PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR vkGetPhysicalDeviceVideoCapabilitiesKHR;
 PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR vkGetPhysicalDeviceVideoFormatPropertiesKHR;
@@ -832,6 +829,9 @@ PFN_vkCreateStreamDescriptorSurfaceGGP vkCreateStreamDescriptorSurfaceGGP;
 #endif
 #if defined(VK_MVK_ios_surface) 
 PFN_vkCreateIOSSurfaceMVK vkCreateIOSSurfaceMVK;
+#endif
+#if defined(VK_EXT_calibrated_timestamps) 
+PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT vkGetPhysicalDeviceCalibrateableTimeDomainsEXT;
 #endif
 #if defined(VK_QNX_screen_surface) 
 PFN_vkCreateScreenSurfaceQNX vkCreateScreenSurfaceQNX;
