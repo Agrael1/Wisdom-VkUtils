@@ -9,7 +9,7 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("VkUtils")
+project ("wisvk")
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(WTOP ON)
@@ -27,7 +27,6 @@ endif()
 
 
 option(WISVK_ONLY_HEADERS "Use fmtlib for formatting" OFF)
-option(WISVK_INSTALL "Enable installation of VkUtils." ON)
 option(WISVK_RUN_GENERATOR "Run VkUtils generator to generate newest headers." ${WTOP})
 option(WISVK_LOAD_SPEC "Download fresh spec from Khronos" ${WTOP})
 option(WISVK_BUILD_EXAMPLES "Build examples" ${WTOP})
@@ -78,17 +77,17 @@ if(NOT WISVK_ONLY_HEADERS)
 	
 	
 	
-	add_executable (${PROJECT_NAME})
-	target_sources(${PROJECT_NAME}
+	add_executable (${PROJECT_NAME}_generator)
+	target_sources(${PROJECT_NAME}_generator
 		PRIVATE 
 			 "entry_main.cpp"
 	 "format.h" "context.h"  "generator.h" "generator.cpp" "context.cpp"  )
 	if(WISVK_USE_FMT)
-		target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+		target_link_libraries(${PROJECT_NAME}_generator PRIVATE fmt::fmt)
 	endif()
 	
-	target_link_libraries(${PROJECT_NAME} PRIVATE tinyxml2::tinyxml2)
-	target_compile_definitions(${PROJECT_NAME} 
+	target_link_libraries(${PROJECT_NAME}_generator PRIVATE tinyxml2::tinyxml2)
+	target_compile_definitions(${PROJECT_NAME}_generator
 		PRIVATE 
 			VK_SPEC="${VK_SPEC}"
 			CLANG_FORMAT_EXECUTABLE="${CLANG_FORMAT_EXECUTABLE}"
@@ -97,34 +96,59 @@ if(NOT WISVK_ONLY_HEADERS)
 	)
 	
 	
-	set_target_properties( ${PROJECT_NAME} PROPERTIES
+	set_target_properties( ${PROJECT_NAME}_generator PROPERTIES
 		CXX_STANDARD 20
 		CXX_STANDARD_REQUIRED ON
 	)
 endif(NOT WISVK_ONLY_HEADERS)
 
-add_library(wisvk INTERFACE)
-add_library(wis::wisvk ALIAS wisvk)
-target_include_directories(wisvk INTERFACE 
-	"${CMAKE_CURRENT_SOURCE_DIR}/wisvk"
+add_library(${PROJECT_NAME} INTERFACE)
+add_library(wis::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+target_include_directories(${PROJECT_NAME} INTERFACE 
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/wisvk>
+	$<INSTALL_INTERFACE:include>
 )
 
 if(WISVK_BUILD_EXAMPLES)
 	add_subdirectory(examples)
 endif()
 
-if(WISVK_INSTALL)
-	include( GNUInstallDirs )
-	set( WISVK_HEADERS
-		${OUTPUT_FOLDER}/vk_handle_traits.hpp
-		${OUTPUT_FOLDER}/vk_managed_handles.hpp
-		${OUTPUT_FOLDER}/vk_loader.hpp
-		${OUTPUT_FOLDER}/vk_libinit.hpp
-	)
-	install( 
-		FILES 
-			${WISVK_HEADERS} 
-		DESTINATION 
-			${CMAKE_INSTALL_INCLUDEDIR}/wisvk 
-	)
+# install
+include( GNUInstallDirs )
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    VERSION 1.0
+    COMPATIBILITY SameMajorVersion
+)
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in")
+	file(WRITE "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in" "@PACKAGE_INIT@\n\ninclude(\"${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake\")\ncheck_required_components(\"@PROJECT_NAME@\")")
 endif()
+configure_package_config_file(
+  "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION
+  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+
+install(EXPORT ${PROJECT_NAME}Targets
+        FILE ${PROJECT_NAME}Targets.cmake
+        NAMESPACE ${PROJECT_NAME}::
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+              "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+
+install(DIRECTORY ${CMAKE_INSTALL_INCLUDEDIR}/wisvk	DESTINATION include)
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
+include(CPack)

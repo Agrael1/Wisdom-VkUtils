@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+include("C:/Users/Agrae/source/repos/Wisdom-VkUtils/@PROJECT_NAME@Targets.cmake")
+check_required_components("@PROJECT_NAME@")
