@@ -16,7 +16,8 @@ template<typename HandleType>
 constexpr inline bool has_pool_v = !std::is_same_v<pool_of_t<HandleType>, empty_type>;
 
 template<typename HandleType>
-constexpr inline bool has_header_v = !std::is_same_v<typename handle_traits<HandleType>::deleter_pfn, empty_type>;
+constexpr inline bool has_header_v = !std::is_same_v<typename handle_traits<HandleType>::deleter_pfn, nullptr_t>;
+
 
 template<typename HandleType>
 class single_deleter
