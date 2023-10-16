@@ -305,10 +305,8 @@ public:
     managed_handle_base& operator=(const managed_handle_base& o) noexcept = delete;
 
     managed_handle_base(managed_handle_base&& o) noexcept
-        : m_header(o.m_header), m_handle(o.m_handle)
+        : m_header(std::move(o.m_header)), m_handle(std::exchange(o.m_handle, nullptr))
     {
-        o.m_header = nullptr;
-        o.m_handle = nullptr;
     }
 
     managed_handle_base& operator=(managed_handle_base&& o) noexcept
