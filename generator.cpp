@@ -272,7 +272,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {{
+#ifndef WISVK_NO_DEFAULT_DELETER
         return {};
+#else
+        return nullptr;
+#endif
     }}
 }};
 

@@ -1966,6 +1966,14 @@ struct VkDeviceTable {
             if (vkTrimCommandPool = (PFN_vkTrimCommandPool)global_table.vkGetDeviceProcAddr(device, vkTrimCommandPool_it))
                 break;
 #endif
+#if defined(VK_NV_cuda_kernel_launch)
+        vkDestroyCudaModuleNV = (PFN_vkDestroyCudaModuleNV)global_table.vkGetDeviceProcAddr(device, "vkDestroyCudaModuleNV");
+        vkCreateCudaFunctionNV = (PFN_vkCreateCudaFunctionNV)global_table.vkGetDeviceProcAddr(device, "vkCreateCudaFunctionNV");
+        vkCreateCudaModuleNV = (PFN_vkCreateCudaModuleNV)global_table.vkGetDeviceProcAddr(device, "vkCreateCudaModuleNV");
+        vkGetCudaModuleCacheNV = (PFN_vkGetCudaModuleCacheNV)global_table.vkGetDeviceProcAddr(device, "vkGetCudaModuleCacheNV");
+        vkDestroyCudaFunctionNV = (PFN_vkDestroyCudaFunctionNV)global_table.vkGetDeviceProcAddr(device, "vkDestroyCudaFunctionNV");
+        vkCmdCudaLaunchKernelNV = (PFN_vkCmdCudaLaunchKernelNV)global_table.vkGetDeviceProcAddr(device, "vkCmdCudaLaunchKernelNV");
+#endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
         static constexpr std::array vkCreateDescriptorUpdateTemplate_strings
         {
@@ -2423,15 +2431,15 @@ struct VkDeviceTable {
             if (vkGetImageSubresourceLayout2KHR = (PFN_vkGetImageSubresourceLayout2KHR)global_table.vkGetDeviceProcAddr(device, vkGetImageSubresourceLayout2KHR_it))
                 break;
 #endif
+#if defined(VK_EXT_device_fault)
+        vkGetDeviceFaultInfoEXT = (PFN_vkGetDeviceFaultInfoEXT)global_table.vkGetDeviceProcAddr(device, "vkGetDeviceFaultInfoEXT");
+#endif
 #if defined(VK_FUCHSIA_external_semaphore)
         vkGetSemaphoreZirconHandleFUCHSIA = (PFN_vkGetSemaphoreZirconHandleFUCHSIA)global_table.vkGetDeviceProcAddr(device, "vkGetSemaphoreZirconHandleFUCHSIA");
         vkImportSemaphoreZirconHandleFUCHSIA = (PFN_vkImportSemaphoreZirconHandleFUCHSIA)global_table.vkGetDeviceProcAddr(device, "vkImportSemaphoreZirconHandleFUCHSIA");
 #endif
 #if defined(VK_KHR_object_refresh)
         vkCmdRefreshObjectsKHR = (PFN_vkCmdRefreshObjectsKHR)global_table.vkGetDeviceProcAddr(device, "vkCmdRefreshObjectsKHR");
-#endif
-#if defined(VK_EXT_device_fault)
-        vkGetDeviceFaultInfoEXT = (PFN_vkGetDeviceFaultInfoEXT)global_table.vkGetDeviceProcAddr(device, "vkGetDeviceFaultInfoEXT");
 #endif
 #if defined(VK_NV_external_sci_sync2)
         vkCreateSemaphoreSciSyncPoolNV = (PFN_vkCreateSemaphoreSciSyncPoolNV)global_table.vkGetDeviceProcAddr(device, "vkCreateSemaphoreSciSyncPoolNV");
@@ -2972,6 +2980,14 @@ public:
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_maintenance1)
     PFN_vkTrimCommandPool vkTrimCommandPool;
 #endif
+#if defined(VK_NV_cuda_kernel_launch)
+    PFN_vkDestroyCudaModuleNV vkDestroyCudaModuleNV;
+    PFN_vkCreateCudaFunctionNV vkCreateCudaFunctionNV;
+    PFN_vkCreateCudaModuleNV vkCreateCudaModuleNV;
+    PFN_vkGetCudaModuleCacheNV vkGetCudaModuleCacheNV;
+    PFN_vkDestroyCudaFunctionNV vkDestroyCudaFunctionNV;
+    PFN_vkCmdCudaLaunchKernelNV vkCmdCudaLaunchKernelNV;
+#endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
     PFN_vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate;
     PFN_vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate;
@@ -3173,15 +3189,15 @@ public:
 #if defined(VK_EXT_host_image_copy) || defined(VK_EXT_image_compression_control) || defined(VK_KHR_maintenance5)
     PFN_vkGetImageSubresourceLayout2KHR vkGetImageSubresourceLayout2KHR;
 #endif
+#if defined(VK_EXT_device_fault)
+    PFN_vkGetDeviceFaultInfoEXT vkGetDeviceFaultInfoEXT;
+#endif
 #if defined(VK_FUCHSIA_external_semaphore)
     PFN_vkGetSemaphoreZirconHandleFUCHSIA vkGetSemaphoreZirconHandleFUCHSIA;
     PFN_vkImportSemaphoreZirconHandleFUCHSIA vkImportSemaphoreZirconHandleFUCHSIA;
 #endif
 #if defined(VK_KHR_object_refresh)
     PFN_vkCmdRefreshObjectsKHR vkCmdRefreshObjectsKHR;
-#endif
-#if defined(VK_EXT_device_fault)
-    PFN_vkGetDeviceFaultInfoEXT vkGetDeviceFaultInfoEXT;
 #endif
 #if defined(VK_NV_external_sci_sync2)
     PFN_vkCreateSemaphoreSciSyncPoolNV vkCreateSemaphoreSciSyncPoolNV;
