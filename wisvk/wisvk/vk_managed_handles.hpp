@@ -1,6 +1,7 @@
 #pragma once
 #include "vk_handle_traits.hpp"
 #include <atomic>
+#include <utility>
 
 namespace wis {
 template<typename HandleType>
