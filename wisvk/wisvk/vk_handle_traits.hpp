@@ -434,23 +434,6 @@ public:
 };
 
 #endif
-#if defined(VK_EXT_validation_cache)
-template<>
-class handle_traits<VkValidationCacheEXT>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyValidationCacheEXT)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-        return vkDestroyValidationCacheEXT;
-    }
-};
-
-#endif
 #if defined(VK_NVX_binary_import)
 template<>
 class handle_traits<VkCuModuleNVX>
@@ -479,6 +462,38 @@ public:
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
         return vkDestroyCuFunctionNVX;
+    }
+};
+
+#endif
+#if defined(VK_NV_cuda_kernel_launch)
+template<>
+class handle_traits<VkCudaFunctionNV>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyCudaFunctionNV)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyCudaFunctionNV;
+    }
+};
+
+template<>
+class handle_traits<VkCudaModuleNV>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyCudaModuleNV)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyCudaModuleNV;
     }
 };
 
@@ -630,6 +645,23 @@ public:
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
         return vkDestroyShaderEXT;
+    }
+};
+
+#endif
+#if defined(VK_EXT_validation_cache)
+template<>
+class handle_traits<VkValidationCacheEXT>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyValidationCacheEXT)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+        return vkDestroyValidationCacheEXT;
     }
 };
 

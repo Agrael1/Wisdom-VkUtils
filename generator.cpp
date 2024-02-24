@@ -372,6 +372,108 @@ public:
     stream << output;
 }
 
+
+std::string MakeMovableHandle(const wis::Handle& handle)
+{
+    return wis::format("using {} = wis::movable_handle<::{}>;", handle.name, handle.name);
+}
+
+std::string MakeMovableHandles(const std::unordered_map<std::string_view, wis::Handle>& handles,
+                             const std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
+{
+    auto feature_blocks = SortByFeature(handles | std::views::keys, features);
+    std::string output;
+
+    for (auto& [feature, fhandles] : feature_blocks) {
+        output += "#if " + MakeGuard(feature) + '\n';
+        for (auto& i : fhandles) {
+            output += wis::format("{}\n", MakeMovableHandle(handles.at(i)));
+        }
+        output += "#endif\n";
+    }
+
+    return output;
+}
+std::string MakeMovableHandlesImpl(const wis::Context& context)
+{
+    std::string output;
+    std::unordered_map<std::string_view, std::vector<std::string_view>> handle_to_ext;
+
+    handle_to_ext.reserve(context.handles.size());
+    std::vector<std::string_view> to_erase;
+
+    for (auto&& [fname, f] : context.features) {
+        for (auto&& h : f.handles) {
+            auto& hnd = context.GetHandle(h);
+            handle_to_ext[hnd.name].push_back(fname);
+            if (hnd.name != h)
+                handle_to_ext[h].push_back(fname);
+        }
+    }
+    for (auto&& [ename, e] : context.extensions) {
+        for (auto&& h : e.handles) {
+            auto& hnd = context.GetHandle(h);
+            handle_to_ext[hnd.name].push_back(ename);
+            if (hnd.name != h)
+                handle_to_ext[h].push_back(ename);
+        }
+    }
+
+    output += MakeMovableHandles(context.handles, handle_to_ext);
+    output += "\n";
+    return output;
+}
+
+void wis::Generator::GenerateMovableHandles(const Context& context, std::ostream& stream)
+{
+    std::string output{
+        R"(#pragma once
+#include <type_traits>
+#include <utility>
+#include <vulkan/vulkan.h>
+
+
+namespace wis {
+template<typename HandleType>
+struct movable_handle
+{
+    HandleType handle;
+
+    constexpr movable_handle() = default;
+    constexpr explicit movable_handle(HandleType h) noexcept : handle(h) {}
+    constexpr movable_handle(nullptr_t) noexcept : handle(nullptr) {}
+    movable_handle(const movable_handle&) = delete;
+    constexpr movable_handle(movable_handle&& h)noexcept
+    : handle(std::exchange(h.handle, nullptr)) {}
+
+    movable_handle& operator=(const movable_handle&) = delete;
+    constexpr movable_handle& operator=(movable_handle&& h)noexcept
+    {
+        handle = std::exchange(h.handle, nullptr);
+        return *this;
+    }
+    constexpr movable_handle& operator=(HandleType h) noexcept
+    {
+        handle = h.handle;
+        return *this;
+    }
+
+    constexpr operator HandleType() const noexcept
+    {
+        return handle;
+    }
+    constexpr auto* operator&() noexcept
+    {
+        return &handle;
+    }
+};
+)"
+    };
+    output += MakeMovableHandlesImpl(context);
+    output += "}\n";
+    stream << output;
+}
+
 void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream)
 {
     std::string output{ R"(#pragma once

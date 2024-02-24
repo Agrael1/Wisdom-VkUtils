@@ -151,11 +151,9 @@ public:
 
     template<typename... Args>
     shared_handle_base(HandleType handle, Args&&... control_args) noexcept
-        : m_control(reinterpret_cast<control_block<HeaderType>*>(std::malloc(sizeof(control_block<HeaderType>))))
+        : m_control(new(std::nothrow) control_block<HeaderType>(std::forward<Args>(control_args)...))
         , m_handle(handle)
     {
-        // placement new for noexcept construction
-        new (m_control) control_block<HeaderType>(std::forward<Args>(control_args)...);
     }
 
     shared_handle_base(const shared_handle_base& o) noexcept
@@ -210,8 +208,7 @@ public:
     {
         if (m_control)
             reset();
-        m_control = reinterpret_cast<control_block<HeaderType>*>(std::malloc(sizeof(control_block<HeaderType>)));
-        new (m_control) control_block<HeaderType>(std::forward<Args>(control_args)...);
+        m_control = new (std::nothrow) control_block<HeaderType>(std::forward<Args>(control_args)...);
         return &m_handle;
     }
 
@@ -222,7 +219,7 @@ public:
 
     explicit operator bool() const noexcept
     {
-        return m_handle != nullptr;
+        return m_handle != nullptr && m_control != nullptr;
     }
 
     void reset() noexcept

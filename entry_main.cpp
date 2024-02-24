@@ -58,7 +58,7 @@ void FormatFiles(std::span<const char* const> files)
     }
 
     try {
-        constexpr std::array files{ OUTPUT_FOLDER "/vk_handle_traits.hpp", OUTPUT_FOLDER "/vk_loader.hpp" };
+        constexpr std::array files{ OUTPUT_FOLDER "/vk_handle_traits.hpp", OUTPUT_FOLDER "/vk_loader.hpp", OUTPUT_FOLDER "/vk_movable.hpp" };
 
         std::cout << "Parsing...\n";
         wis::Context ctx(doc);
@@ -71,6 +71,15 @@ void FormatFiles(std::span<const char* const> files)
 
         wis::Generator gen;
         gen.GenerateHandleTraits(ctx, out_managed);
+
+        std::ofstream out_move(files[2]);
+        if (!out_move.is_open()) {
+            std::cout << "Wisdom Vk Utils: Failed to open output file\n";
+            return -1;
+        }
+
+        gen.GenerateMovableHandles(ctx, out_move);
+
 
         std::ofstream out_loader(files[1]);
         if (!out_loader.is_open()) {
