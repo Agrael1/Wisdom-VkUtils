@@ -379,8 +379,8 @@ protected:
     }
 
 protected:
-    HeaderType m_header;
-    HandleType m_handle;
+    HeaderType m_header{};
+    HandleType m_handle{};
 };
 
 template<typename HandleType>
