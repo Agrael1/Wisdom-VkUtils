@@ -52,7 +52,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroySwapchainKHR;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -69,7 +73,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyBufferView;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -84,7 +92,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyInstance;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -99,7 +111,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return nullptr;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -114,7 +130,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return nullptr;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -129,7 +149,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyBuffer;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -144,7 +168,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroySemaphore;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -159,7 +187,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDevice;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -174,7 +206,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyCommandPool;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -189,7 +225,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkFreeCommandBuffers;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -204,7 +244,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyRenderPass;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -219,7 +263,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkFreeMemory;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -234,7 +282,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyImage;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -249,7 +301,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyImageView;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -264,7 +320,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyShaderModule;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -279,7 +339,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyPipeline;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -294,7 +358,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyPipelineLayout;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -309,7 +377,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroySampler;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -324,7 +396,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkFreeDescriptorSets;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -339,7 +415,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDescriptorPool;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -354,7 +434,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDescriptorSetLayout;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -369,7 +453,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyFence;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -384,7 +472,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyEvent;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -399,7 +491,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyQueryPool;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -414,7 +510,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyFramebuffer;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -429,7 +529,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyPipelineCache;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -446,7 +550,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyCuModuleNVX;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -461,7 +569,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyCuFunctionNVX;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -478,7 +590,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyCudaFunctionNV;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -493,7 +609,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyCudaModuleNV;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -510,7 +630,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDebugReportCallbackEXT;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -527,7 +651,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroySamplerYcbcrConversion;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -544,7 +672,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyIndirectCommandsLayoutNV;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -561,7 +693,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkReleasePerformanceConfigurationINTEL;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -578,7 +714,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyMicromapEXT;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -595,7 +735,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return nullptr;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -610,7 +754,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkReleaseDisplayEXT;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -627,7 +775,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDebugUtilsMessengerEXT;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -644,7 +796,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyShaderEXT;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -661,7 +817,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyValidationCacheEXT;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -678,7 +838,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDescriptorUpdateTemplate;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -695,7 +859,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyDeferredOperationKHR;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -712,7 +880,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyAccelerationStructureKHR;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -729,7 +901,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyAccelerationStructureNV;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -746,7 +922,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyBufferCollectionFUCHSIA;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -763,7 +943,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyPrivateDataSlot;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -780,7 +964,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyVideoSessionParametersKHR;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -795,7 +983,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyVideoSessionKHR;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -812,7 +1004,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyOpticalFlowSessionNV;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -829,7 +1025,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroySurfaceKHR;
+#else
+        return nullptr;
+#endif
     }
 };
 
@@ -846,7 +1046,11 @@ public:
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
+#ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroySemaphoreSciSyncPoolNV;
+#else
+        return nullptr;
+#endif
     }
 };
 

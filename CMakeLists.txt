@@ -26,7 +26,7 @@ else()
 endif()
 
 
-option(WISVK_ONLY_HEADERS "Use fmtlib for formatting" OFF)
+option(WISVK_ONLY_HEADERS "Only use generated headers" OFF)
 option(WISVK_RUN_GENERATOR "Run VkUtils generator to generate newest headers." ${WTOP})
 option(WISVK_LOAD_SPEC "Download fresh spec from Khronos" ${WTOP})
 option(WISVK_BUILD_EXAMPLES "Build examples" ${WTOP})
