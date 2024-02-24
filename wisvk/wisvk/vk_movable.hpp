@@ -38,6 +38,7 @@ struct movable_handle {
         return &handle;
     }
 };
+namespace h {
 #if defined(VK_KHR_swapchain)
 using VkSwapchainKHR = wis::movable_handle<::VkSwapchainKHR>;
 #endif
@@ -136,4 +137,5 @@ using VkSurfaceKHR = wis::movable_handle<::VkSurfaceKHR>;
 using VkSemaphoreSciSyncPoolNV = wis::movable_handle<::VkSemaphoreSciSyncPoolNV>;
 #endif
 
+} // namespace h
 } // namespace wis

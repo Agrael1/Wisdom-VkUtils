@@ -471,10 +471,11 @@ struct movable_handle
         return &handle;
     }
 };
+namespace h{
 )"
     };
     output += MakeMovableHandlesImpl(context);
-    output += "}\n";
+    output += "}}\n";
     stream << output;
 }
 
