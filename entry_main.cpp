@@ -89,6 +89,7 @@ void FormatFiles(std::span<const char* const> files)
 
         gen.GenerateLoader(ctx, out_loader);
 
+        out_move.close();
         out_managed.close();
         out_loader.close();
         FormatFiles(files);
