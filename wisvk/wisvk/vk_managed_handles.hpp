@@ -325,6 +325,20 @@ public:
     {
         return m_handle;
     }
+    HandleType release() noexcept
+    {
+        return std::exchange(m_handle, nullptr);
+    }
+
+    template<typename... Args>
+    HandleType* put(Args&&... control_args) noexcept
+    {
+        if (m_handle)
+            reset();
+
+        m_header = HeaderType(std::forward<Args>(control_args)...);
+        return &m_handle;
+    }
 
     HandleType operator*() const noexcept
     {
