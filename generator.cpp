@@ -458,7 +458,7 @@ struct movable_handle
     }
     constexpr movable_handle& operator=(HandleType h) noexcept
     {
-        handle = h.handle;
+        handle = h;
         return *this;
     }
 

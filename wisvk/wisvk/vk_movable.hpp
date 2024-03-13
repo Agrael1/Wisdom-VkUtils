@@ -6,7 +6,7 @@
 namespace wis {
 template<typename HandleType>
 struct movable_handle {
-    HandleType handle;
+    HandleType handle{ VK_NULL_HANDLE };
 
     constexpr movable_handle() = default;
     constexpr explicit movable_handle(HandleType h) noexcept
@@ -25,7 +25,7 @@ struct movable_handle {
     }
     constexpr movable_handle& operator=(HandleType h) noexcept
     {
-        handle = h.handle;
+        handle = h;
         return *this;
     }
 
