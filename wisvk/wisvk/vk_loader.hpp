@@ -465,7 +465,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkEnumeratePhysicalDeviceGroups_it : vkEnumeratePhysicalDeviceGroups_strings)
-            if (vkEnumeratePhysicalDeviceGroups = (PFN_vkEnumeratePhysicalDeviceGroups)global_table.vkGetInstanceProcAddr(instance, vkEnumeratePhysicalDeviceGroups_it))
+            if ((vkEnumeratePhysicalDeviceGroups = (PFN_vkEnumeratePhysicalDeviceGroups)global_table.vkGetInstanceProcAddr(instance, vkEnumeratePhysicalDeviceGroups_it)))
                 break;
 #endif
 #if defined(VK_EXT_directfb_surface)
@@ -519,7 +519,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceQueueFamilyProperties2_it : vkGetPhysicalDeviceQueueFamilyProperties2_strings)
-            if (vkGetPhysicalDeviceQueueFamilyProperties2 = (PFN_vkGetPhysicalDeviceQueueFamilyProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceQueueFamilyProperties2_it))
+            if ((vkGetPhysicalDeviceQueueFamilyProperties2 = (PFN_vkGetPhysicalDeviceQueueFamilyProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceQueueFamilyProperties2_it)))
                 break;
         static constexpr std::array vkGetPhysicalDeviceFeatures2_strings
         {
@@ -531,7 +531,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceFeatures2_it : vkGetPhysicalDeviceFeatures2_strings)
-            if (vkGetPhysicalDeviceFeatures2 = (PFN_vkGetPhysicalDeviceFeatures2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceFeatures2_it))
+            if ((vkGetPhysicalDeviceFeatures2 = (PFN_vkGetPhysicalDeviceFeatures2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceFeatures2_it)))
                 break;
         static constexpr std::array vkGetPhysicalDeviceProperties2_strings
         {
@@ -543,7 +543,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceProperties2_it : vkGetPhysicalDeviceProperties2_strings)
-            if (vkGetPhysicalDeviceProperties2 = (PFN_vkGetPhysicalDeviceProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceProperties2_it))
+            if ((vkGetPhysicalDeviceProperties2 = (PFN_vkGetPhysicalDeviceProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceProperties2_it)))
                 break;
         static constexpr std::array vkGetPhysicalDeviceFormatProperties2_strings
         {
@@ -555,7 +555,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceFormatProperties2_it : vkGetPhysicalDeviceFormatProperties2_strings)
-            if (vkGetPhysicalDeviceFormatProperties2 = (PFN_vkGetPhysicalDeviceFormatProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceFormatProperties2_it))
+            if ((vkGetPhysicalDeviceFormatProperties2 = (PFN_vkGetPhysicalDeviceFormatProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceFormatProperties2_it)))
                 break;
         static constexpr std::array vkGetPhysicalDeviceImageFormatProperties2_strings
         {
@@ -567,7 +567,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceImageFormatProperties2_it : vkGetPhysicalDeviceImageFormatProperties2_strings)
-            if (vkGetPhysicalDeviceImageFormatProperties2 = (PFN_vkGetPhysicalDeviceImageFormatProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceImageFormatProperties2_it))
+            if ((vkGetPhysicalDeviceImageFormatProperties2 = (PFN_vkGetPhysicalDeviceImageFormatProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceImageFormatProperties2_it)))
                 break;
         static constexpr std::array vkGetPhysicalDeviceMemoryProperties2_strings
         {
@@ -579,7 +579,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceMemoryProperties2_it : vkGetPhysicalDeviceMemoryProperties2_strings)
-            if (vkGetPhysicalDeviceMemoryProperties2 = (PFN_vkGetPhysicalDeviceMemoryProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceMemoryProperties2_it))
+            if ((vkGetPhysicalDeviceMemoryProperties2 = (PFN_vkGetPhysicalDeviceMemoryProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceMemoryProperties2_it)))
                 break;
         static constexpr std::array vkGetPhysicalDeviceSparseImageFormatProperties2_strings
         {
@@ -591,7 +591,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceSparseImageFormatProperties2_it : vkGetPhysicalDeviceSparseImageFormatProperties2_strings)
-            if (vkGetPhysicalDeviceSparseImageFormatProperties2 = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceSparseImageFormatProperties2_it))
+            if ((vkGetPhysicalDeviceSparseImageFormatProperties2 = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties2)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceSparseImageFormatProperties2_it)))
                 break;
 #endif
 #if defined(VK_NV_optical_flow)
@@ -640,7 +640,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceExternalBufferProperties_it : vkGetPhysicalDeviceExternalBufferProperties_strings)
-            if (vkGetPhysicalDeviceExternalBufferProperties = (PFN_vkGetPhysicalDeviceExternalBufferProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceExternalBufferProperties_it))
+            if ((vkGetPhysicalDeviceExternalBufferProperties = (PFN_vkGetPhysicalDeviceExternalBufferProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceExternalBufferProperties_it)))
                 break;
 #endif
 #if defined(VK_NV_cooperative_matrix)
@@ -657,7 +657,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceExternalSemaphoreProperties_it : vkGetPhysicalDeviceExternalSemaphoreProperties_strings)
-            if (vkGetPhysicalDeviceExternalSemaphoreProperties = (PFN_vkGetPhysicalDeviceExternalSemaphoreProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceExternalSemaphoreProperties_it))
+            if ((vkGetPhysicalDeviceExternalSemaphoreProperties = (PFN_vkGetPhysicalDeviceExternalSemaphoreProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceExternalSemaphoreProperties_it)))
                 break;
 #endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_external_fence_capabilities)
@@ -671,7 +671,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceExternalFenceProperties_it : vkGetPhysicalDeviceExternalFenceProperties_strings)
-            if (vkGetPhysicalDeviceExternalFenceProperties = (PFN_vkGetPhysicalDeviceExternalFenceProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceExternalFenceProperties_it))
+            if ((vkGetPhysicalDeviceExternalFenceProperties = (PFN_vkGetPhysicalDeviceExternalFenceProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceExternalFenceProperties_it)))
                 break;
 #endif
 #if defined(VK_VERSION_1_3) || defined(VK_EXT_tooling_info)
@@ -685,7 +685,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceToolProperties_it : vkGetPhysicalDeviceToolProperties_strings)
-            if (vkGetPhysicalDeviceToolProperties = (PFN_vkGetPhysicalDeviceToolProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceToolProperties_it))
+            if ((vkGetPhysicalDeviceToolProperties = (PFN_vkGetPhysicalDeviceToolProperties)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceToolProperties_it)))
                 break;
 #endif
 #if defined(VK_KHR_wayland_surface)
@@ -756,7 +756,7 @@ struct VkInstanceTable {
 #endif
         };
         for (auto vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_it : vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_strings)
-            if (vkGetPhysicalDeviceCalibrateableTimeDomainsKHR = (PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_it))
+            if ((vkGetPhysicalDeviceCalibrateableTimeDomainsKHR = (PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR)global_table.vkGetInstanceProcAddr(instance, vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_it)))
                 break;
 #endif
 #if defined(VK_QNX_screen_surface)
@@ -1142,7 +1142,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkBindBufferMemory2_it : vkBindBufferMemory2_strings)
-            if (vkBindBufferMemory2 = (PFN_vkBindBufferMemory2)global_table.vkGetDeviceProcAddr(device, vkBindBufferMemory2_it))
+            if ((vkBindBufferMemory2 = (PFN_vkBindBufferMemory2)global_table.vkGetDeviceProcAddr(device, vkBindBufferMemory2_it)))
                 break;
         static constexpr std::array vkBindImageMemory2_strings
         {
@@ -1154,7 +1154,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkBindImageMemory2_it : vkBindImageMemory2_strings)
-            if (vkBindImageMemory2 = (PFN_vkBindImageMemory2)global_table.vkGetDeviceProcAddr(device, vkBindImageMemory2_it))
+            if ((vkBindImageMemory2 = (PFN_vkBindImageMemory2)global_table.vkGetDeviceProcAddr(device, vkBindImageMemory2_it)))
                 break;
 #endif
 #if defined(VK_EXT_descriptor_buffer)
@@ -1260,7 +1260,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdWriteTimestamp2_it : vkCmdWriteTimestamp2_strings)
-            if (vkCmdWriteTimestamp2 = (PFN_vkCmdWriteTimestamp2)global_table.vkGetDeviceProcAddr(device, vkCmdWriteTimestamp2_it))
+            if ((vkCmdWriteTimestamp2 = (PFN_vkCmdWriteTimestamp2)global_table.vkGetDeviceProcAddr(device, vkCmdWriteTimestamp2_it)))
                 break;
         static constexpr std::array vkCmdPipelineBarrier2_strings
         {
@@ -1272,7 +1272,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdPipelineBarrier2_it : vkCmdPipelineBarrier2_strings)
-            if (vkCmdPipelineBarrier2 = (PFN_vkCmdPipelineBarrier2)global_table.vkGetDeviceProcAddr(device, vkCmdPipelineBarrier2_it))
+            if ((vkCmdPipelineBarrier2 = (PFN_vkCmdPipelineBarrier2)global_table.vkGetDeviceProcAddr(device, vkCmdPipelineBarrier2_it)))
                 break;
         static constexpr std::array vkCmdSetEvent2_strings
         {
@@ -1284,7 +1284,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetEvent2_it : vkCmdSetEvent2_strings)
-            if (vkCmdSetEvent2 = (PFN_vkCmdSetEvent2)global_table.vkGetDeviceProcAddr(device, vkCmdSetEvent2_it))
+            if ((vkCmdSetEvent2 = (PFN_vkCmdSetEvent2)global_table.vkGetDeviceProcAddr(device, vkCmdSetEvent2_it)))
                 break;
         static constexpr std::array vkCmdResetEvent2_strings
         {
@@ -1296,7 +1296,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdResetEvent2_it : vkCmdResetEvent2_strings)
-            if (vkCmdResetEvent2 = (PFN_vkCmdResetEvent2)global_table.vkGetDeviceProcAddr(device, vkCmdResetEvent2_it))
+            if ((vkCmdResetEvent2 = (PFN_vkCmdResetEvent2)global_table.vkGetDeviceProcAddr(device, vkCmdResetEvent2_it)))
                 break;
         static constexpr std::array vkCmdWaitEvents2_strings
         {
@@ -1308,7 +1308,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdWaitEvents2_it : vkCmdWaitEvents2_strings)
-            if (vkCmdWaitEvents2 = (PFN_vkCmdWaitEvents2)global_table.vkGetDeviceProcAddr(device, vkCmdWaitEvents2_it))
+            if ((vkCmdWaitEvents2 = (PFN_vkCmdWaitEvents2)global_table.vkGetDeviceProcAddr(device, vkCmdWaitEvents2_it)))
                 break;
         static constexpr std::array vkQueueSubmit2_strings
         {
@@ -1320,7 +1320,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkQueueSubmit2_it : vkQueueSubmit2_strings)
-            if (vkQueueSubmit2 = (PFN_vkQueueSubmit2)global_table.vkGetDeviceProcAddr(device, vkQueueSubmit2_it))
+            if ((vkQueueSubmit2 = (PFN_vkQueueSubmit2)global_table.vkGetDeviceProcAddr(device, vkQueueSubmit2_it)))
                 break;
 #endif
 #if defined(VK_KHR_ray_tracing_pipeline)
@@ -1346,7 +1346,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkResetQueryPool_it : vkResetQueryPool_strings)
-            if (vkResetQueryPool = (PFN_vkResetQueryPool)global_table.vkGetDeviceProcAddr(device, vkResetQueryPool_it))
+            if ((vkResetQueryPool = (PFN_vkResetQueryPool)global_table.vkGetDeviceProcAddr(device, vkResetQueryPool_it)))
                 break;
 #endif
 #if defined(VK_NV_device_generated_commands)
@@ -1453,7 +1453,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetDepthCompareOp_it : vkCmdSetDepthCompareOp_strings)
-            if (vkCmdSetDepthCompareOp = (PFN_vkCmdSetDepthCompareOp)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthCompareOp_it))
+            if ((vkCmdSetDepthCompareOp = (PFN_vkCmdSetDepthCompareOp)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthCompareOp_it)))
                 break;
         static constexpr std::array vkCmdSetPrimitiveTopology_strings
         {
@@ -1465,7 +1465,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetPrimitiveTopology_it : vkCmdSetPrimitiveTopology_strings)
-            if (vkCmdSetPrimitiveTopology = (PFN_vkCmdSetPrimitiveTopology)global_table.vkGetDeviceProcAddr(device, vkCmdSetPrimitiveTopology_it))
+            if ((vkCmdSetPrimitiveTopology = (PFN_vkCmdSetPrimitiveTopology)global_table.vkGetDeviceProcAddr(device, vkCmdSetPrimitiveTopology_it)))
                 break;
         static constexpr std::array vkCmdSetDepthWriteEnable_strings
         {
@@ -1477,7 +1477,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetDepthWriteEnable_it : vkCmdSetDepthWriteEnable_strings)
-            if (vkCmdSetDepthWriteEnable = (PFN_vkCmdSetDepthWriteEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthWriteEnable_it))
+            if ((vkCmdSetDepthWriteEnable = (PFN_vkCmdSetDepthWriteEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthWriteEnable_it)))
                 break;
         static constexpr std::array vkCmdSetViewportWithCount_strings
         {
@@ -1489,7 +1489,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetViewportWithCount_it : vkCmdSetViewportWithCount_strings)
-            if (vkCmdSetViewportWithCount = (PFN_vkCmdSetViewportWithCount)global_table.vkGetDeviceProcAddr(device, vkCmdSetViewportWithCount_it))
+            if ((vkCmdSetViewportWithCount = (PFN_vkCmdSetViewportWithCount)global_table.vkGetDeviceProcAddr(device, vkCmdSetViewportWithCount_it)))
                 break;
         static constexpr std::array vkCmdSetCullMode_strings
         {
@@ -1501,7 +1501,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetCullMode_it : vkCmdSetCullMode_strings)
-            if (vkCmdSetCullMode = (PFN_vkCmdSetCullMode)global_table.vkGetDeviceProcAddr(device, vkCmdSetCullMode_it))
+            if ((vkCmdSetCullMode = (PFN_vkCmdSetCullMode)global_table.vkGetDeviceProcAddr(device, vkCmdSetCullMode_it)))
                 break;
         static constexpr std::array vkCmdSetFrontFace_strings
         {
@@ -1513,7 +1513,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetFrontFace_it : vkCmdSetFrontFace_strings)
-            if (vkCmdSetFrontFace = (PFN_vkCmdSetFrontFace)global_table.vkGetDeviceProcAddr(device, vkCmdSetFrontFace_it))
+            if ((vkCmdSetFrontFace = (PFN_vkCmdSetFrontFace)global_table.vkGetDeviceProcAddr(device, vkCmdSetFrontFace_it)))
                 break;
         static constexpr std::array vkCmdSetScissorWithCount_strings
         {
@@ -1525,7 +1525,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetScissorWithCount_it : vkCmdSetScissorWithCount_strings)
-            if (vkCmdSetScissorWithCount = (PFN_vkCmdSetScissorWithCount)global_table.vkGetDeviceProcAddr(device, vkCmdSetScissorWithCount_it))
+            if ((vkCmdSetScissorWithCount = (PFN_vkCmdSetScissorWithCount)global_table.vkGetDeviceProcAddr(device, vkCmdSetScissorWithCount_it)))
                 break;
         static constexpr std::array vkCmdBindVertexBuffers2_strings
         {
@@ -1537,7 +1537,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdBindVertexBuffers2_it : vkCmdBindVertexBuffers2_strings)
-            if (vkCmdBindVertexBuffers2 = (PFN_vkCmdBindVertexBuffers2)global_table.vkGetDeviceProcAddr(device, vkCmdBindVertexBuffers2_it))
+            if ((vkCmdBindVertexBuffers2 = (PFN_vkCmdBindVertexBuffers2)global_table.vkGetDeviceProcAddr(device, vkCmdBindVertexBuffers2_it)))
                 break;
         static constexpr std::array vkCmdSetDepthTestEnable_strings
         {
@@ -1549,7 +1549,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetDepthTestEnable_it : vkCmdSetDepthTestEnable_strings)
-            if (vkCmdSetDepthTestEnable = (PFN_vkCmdSetDepthTestEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthTestEnable_it))
+            if ((vkCmdSetDepthTestEnable = (PFN_vkCmdSetDepthTestEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthTestEnable_it)))
                 break;
         static constexpr std::array vkCmdSetDepthBoundsTestEnable_strings
         {
@@ -1561,7 +1561,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetDepthBoundsTestEnable_it : vkCmdSetDepthBoundsTestEnable_strings)
-            if (vkCmdSetDepthBoundsTestEnable = (PFN_vkCmdSetDepthBoundsTestEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthBoundsTestEnable_it))
+            if ((vkCmdSetDepthBoundsTestEnable = (PFN_vkCmdSetDepthBoundsTestEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthBoundsTestEnable_it)))
                 break;
         static constexpr std::array vkCmdSetStencilTestEnable_strings
         {
@@ -1573,7 +1573,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetStencilTestEnable_it : vkCmdSetStencilTestEnable_strings)
-            if (vkCmdSetStencilTestEnable = (PFN_vkCmdSetStencilTestEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetStencilTestEnable_it))
+            if ((vkCmdSetStencilTestEnable = (PFN_vkCmdSetStencilTestEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetStencilTestEnable_it)))
                 break;
         static constexpr std::array vkCmdSetStencilOp_strings
         {
@@ -1585,7 +1585,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetStencilOp_it : vkCmdSetStencilOp_strings)
-            if (vkCmdSetStencilOp = (PFN_vkCmdSetStencilOp)global_table.vkGetDeviceProcAddr(device, vkCmdSetStencilOp_it))
+            if ((vkCmdSetStencilOp = (PFN_vkCmdSetStencilOp)global_table.vkGetDeviceProcAddr(device, vkCmdSetStencilOp_it)))
                 break;
 #endif
 #if defined(VK_NV_external_memory_rdma)
@@ -1641,7 +1641,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetDeviceMemoryOpaqueCaptureAddress_it : vkGetDeviceMemoryOpaqueCaptureAddress_strings)
-            if (vkGetDeviceMemoryOpaqueCaptureAddress = (PFN_vkGetDeviceMemoryOpaqueCaptureAddress)global_table.vkGetDeviceProcAddr(device, vkGetDeviceMemoryOpaqueCaptureAddress_it))
+            if ((vkGetDeviceMemoryOpaqueCaptureAddress = (PFN_vkGetDeviceMemoryOpaqueCaptureAddress)global_table.vkGetDeviceProcAddr(device, vkGetDeviceMemoryOpaqueCaptureAddress_it)))
                 break;
         static constexpr std::array vkGetBufferOpaqueCaptureAddress_strings
         {
@@ -1653,7 +1653,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetBufferOpaqueCaptureAddress_it : vkGetBufferOpaqueCaptureAddress_strings)
-            if (vkGetBufferOpaqueCaptureAddress = (PFN_vkGetBufferOpaqueCaptureAddress)global_table.vkGetDeviceProcAddr(device, vkGetBufferOpaqueCaptureAddress_it))
+            if ((vkGetBufferOpaqueCaptureAddress = (PFN_vkGetBufferOpaqueCaptureAddress)global_table.vkGetDeviceProcAddr(device, vkGetBufferOpaqueCaptureAddress_it)))
                 break;
 #endif
 #if defined(VK_NV_memory_decompression)
@@ -1674,7 +1674,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetRayTracingShaderGroupHandlesKHR_it : vkGetRayTracingShaderGroupHandlesKHR_strings)
-            if (vkGetRayTracingShaderGroupHandlesKHR = (PFN_vkGetRayTracingShaderGroupHandlesKHR)global_table.vkGetDeviceProcAddr(device, vkGetRayTracingShaderGroupHandlesKHR_it))
+            if ((vkGetRayTracingShaderGroupHandlesKHR = (PFN_vkGetRayTracingShaderGroupHandlesKHR)global_table.vkGetDeviceProcAddr(device, vkGetRayTracingShaderGroupHandlesKHR_it)))
                 break;
 #endif
 #if defined(VK_EXT_pageable_device_local_memory)
@@ -1691,7 +1691,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdBeginRenderPass2_it : vkCmdBeginRenderPass2_strings)
-            if (vkCmdBeginRenderPass2 = (PFN_vkCmdBeginRenderPass2)global_table.vkGetDeviceProcAddr(device, vkCmdBeginRenderPass2_it))
+            if ((vkCmdBeginRenderPass2 = (PFN_vkCmdBeginRenderPass2)global_table.vkGetDeviceProcAddr(device, vkCmdBeginRenderPass2_it)))
                 break;
         static constexpr std::array vkCreateRenderPass2_strings
         {
@@ -1703,7 +1703,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCreateRenderPass2_it : vkCreateRenderPass2_strings)
-            if (vkCreateRenderPass2 = (PFN_vkCreateRenderPass2)global_table.vkGetDeviceProcAddr(device, vkCreateRenderPass2_it))
+            if ((vkCreateRenderPass2 = (PFN_vkCreateRenderPass2)global_table.vkGetDeviceProcAddr(device, vkCreateRenderPass2_it)))
                 break;
         static constexpr std::array vkCmdNextSubpass2_strings
         {
@@ -1715,7 +1715,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdNextSubpass2_it : vkCmdNextSubpass2_strings)
-            if (vkCmdNextSubpass2 = (PFN_vkCmdNextSubpass2)global_table.vkGetDeviceProcAddr(device, vkCmdNextSubpass2_it))
+            if ((vkCmdNextSubpass2 = (PFN_vkCmdNextSubpass2)global_table.vkGetDeviceProcAddr(device, vkCmdNextSubpass2_it)))
                 break;
         static constexpr std::array vkCmdEndRenderPass2_strings
         {
@@ -1727,7 +1727,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdEndRenderPass2_it : vkCmdEndRenderPass2_strings)
-            if (vkCmdEndRenderPass2 = (PFN_vkCmdEndRenderPass2)global_table.vkGetDeviceProcAddr(device, vkCmdEndRenderPass2_it))
+            if ((vkCmdEndRenderPass2 = (PFN_vkCmdEndRenderPass2)global_table.vkGetDeviceProcAddr(device, vkCmdEndRenderPass2_it)))
                 break;
 #endif
 #if defined(VK_ANDROID_external_memory_android_hardware_buffer)
@@ -1748,7 +1748,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdDrawIndirectCount_it : vkCmdDrawIndirectCount_strings)
-            if (vkCmdDrawIndirectCount = (PFN_vkCmdDrawIndirectCount)global_table.vkGetDeviceProcAddr(device, vkCmdDrawIndirectCount_it))
+            if ((vkCmdDrawIndirectCount = (PFN_vkCmdDrawIndirectCount)global_table.vkGetDeviceProcAddr(device, vkCmdDrawIndirectCount_it)))
                 break;
         static constexpr std::array vkCmdDrawIndexedIndirectCount_strings
         {
@@ -1763,7 +1763,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdDrawIndexedIndirectCount_it : vkCmdDrawIndexedIndirectCount_strings)
-            if (vkCmdDrawIndexedIndirectCount = (PFN_vkCmdDrawIndexedIndirectCount)global_table.vkGetDeviceProcAddr(device, vkCmdDrawIndexedIndirectCount_it))
+            if ((vkCmdDrawIndexedIndirectCount = (PFN_vkCmdDrawIndexedIndirectCount)global_table.vkGetDeviceProcAddr(device, vkCmdDrawIndexedIndirectCount_it)))
                 break;
 #endif
 #if defined(VK_EXT_host_image_copy)
@@ -1802,7 +1802,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetDeviceGroupPeerMemoryFeatures_it : vkGetDeviceGroupPeerMemoryFeatures_strings)
-            if (vkGetDeviceGroupPeerMemoryFeatures = (PFN_vkGetDeviceGroupPeerMemoryFeatures)global_table.vkGetDeviceProcAddr(device, vkGetDeviceGroupPeerMemoryFeatures_it))
+            if ((vkGetDeviceGroupPeerMemoryFeatures = (PFN_vkGetDeviceGroupPeerMemoryFeatures)global_table.vkGetDeviceProcAddr(device, vkGetDeviceGroupPeerMemoryFeatures_it)))
                 break;
         static constexpr std::array vkCmdSetDeviceMask_strings
         {
@@ -1814,7 +1814,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetDeviceMask_it : vkCmdSetDeviceMask_strings)
-            if (vkCmdSetDeviceMask = (PFN_vkCmdSetDeviceMask)global_table.vkGetDeviceProcAddr(device, vkCmdSetDeviceMask_it))
+            if ((vkCmdSetDeviceMask = (PFN_vkCmdSetDeviceMask)global_table.vkGetDeviceProcAddr(device, vkCmdSetDeviceMask_it)))
                 break;
         static constexpr std::array vkCmdDispatchBase_strings
         {
@@ -1826,7 +1826,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdDispatchBase_it : vkCmdDispatchBase_strings)
-            if (vkCmdDispatchBase = (PFN_vkCmdDispatchBase)global_table.vkGetDeviceProcAddr(device, vkCmdDispatchBase_it))
+            if ((vkCmdDispatchBase = (PFN_vkCmdDispatchBase)global_table.vkGetDeviceProcAddr(device, vkCmdDispatchBase_it)))
                 break;
 #endif
 #if defined(VK_NV_external_memory_sci_buf)
@@ -1847,7 +1847,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetDescriptorSetLayoutSupport_it : vkGetDescriptorSetLayoutSupport_strings)
-            if (vkGetDescriptorSetLayoutSupport = (PFN_vkGetDescriptorSetLayoutSupport)global_table.vkGetDeviceProcAddr(device, vkGetDescriptorSetLayoutSupport_it))
+            if ((vkGetDescriptorSetLayoutSupport = (PFN_vkGetDescriptorSetLayoutSupport)global_table.vkGetDeviceProcAddr(device, vkGetDescriptorSetLayoutSupport_it)))
                 break;
 #endif
 #if defined(VK_KHR_external_memory_win32)
@@ -1870,7 +1870,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkTrimCommandPool_it : vkTrimCommandPool_strings)
-            if (vkTrimCommandPool = (PFN_vkTrimCommandPool)global_table.vkGetDeviceProcAddr(device, vkTrimCommandPool_it))
+            if ((vkTrimCommandPool = (PFN_vkTrimCommandPool)global_table.vkGetDeviceProcAddr(device, vkTrimCommandPool_it)))
                 break;
 #endif
 #if defined(VK_KHR_dynamic_rendering_local_read)
@@ -1898,7 +1898,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetDeviceBufferMemoryRequirements_it : vkGetDeviceBufferMemoryRequirements_strings)
-            if (vkGetDeviceBufferMemoryRequirements = (PFN_vkGetDeviceBufferMemoryRequirements)global_table.vkGetDeviceProcAddr(device, vkGetDeviceBufferMemoryRequirements_it))
+            if ((vkGetDeviceBufferMemoryRequirements = (PFN_vkGetDeviceBufferMemoryRequirements)global_table.vkGetDeviceProcAddr(device, vkGetDeviceBufferMemoryRequirements_it)))
                 break;
         static constexpr std::array vkGetDeviceImageMemoryRequirements_strings
         {
@@ -1910,7 +1910,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetDeviceImageMemoryRequirements_it : vkGetDeviceImageMemoryRequirements_strings)
-            if (vkGetDeviceImageMemoryRequirements = (PFN_vkGetDeviceImageMemoryRequirements)global_table.vkGetDeviceProcAddr(device, vkGetDeviceImageMemoryRequirements_it))
+            if ((vkGetDeviceImageMemoryRequirements = (PFN_vkGetDeviceImageMemoryRequirements)global_table.vkGetDeviceProcAddr(device, vkGetDeviceImageMemoryRequirements_it)))
                 break;
         static constexpr std::array vkGetDeviceImageSparseMemoryRequirements_strings
         {
@@ -1922,7 +1922,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetDeviceImageSparseMemoryRequirements_it : vkGetDeviceImageSparseMemoryRequirements_strings)
-            if (vkGetDeviceImageSparseMemoryRequirements = (PFN_vkGetDeviceImageSparseMemoryRequirements)global_table.vkGetDeviceProcAddr(device, vkGetDeviceImageSparseMemoryRequirements_it))
+            if ((vkGetDeviceImageSparseMemoryRequirements = (PFN_vkGetDeviceImageSparseMemoryRequirements)global_table.vkGetDeviceProcAddr(device, vkGetDeviceImageSparseMemoryRequirements_it)))
                 break;
 #endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_get_memory_requirements2)
@@ -1936,7 +1936,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetBufferMemoryRequirements2_it : vkGetBufferMemoryRequirements2_strings)
-            if (vkGetBufferMemoryRequirements2 = (PFN_vkGetBufferMemoryRequirements2)global_table.vkGetDeviceProcAddr(device, vkGetBufferMemoryRequirements2_it))
+            if ((vkGetBufferMemoryRequirements2 = (PFN_vkGetBufferMemoryRequirements2)global_table.vkGetDeviceProcAddr(device, vkGetBufferMemoryRequirements2_it)))
                 break;
         static constexpr std::array vkGetImageMemoryRequirements2_strings
         {
@@ -1948,7 +1948,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetImageMemoryRequirements2_it : vkGetImageMemoryRequirements2_strings)
-            if (vkGetImageMemoryRequirements2 = (PFN_vkGetImageMemoryRequirements2)global_table.vkGetDeviceProcAddr(device, vkGetImageMemoryRequirements2_it))
+            if ((vkGetImageMemoryRequirements2 = (PFN_vkGetImageMemoryRequirements2)global_table.vkGetDeviceProcAddr(device, vkGetImageMemoryRequirements2_it)))
                 break;
         static constexpr std::array vkGetImageSparseMemoryRequirements2_strings
         {
@@ -1960,7 +1960,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetImageSparseMemoryRequirements2_it : vkGetImageSparseMemoryRequirements2_strings)
-            if (vkGetImageSparseMemoryRequirements2 = (PFN_vkGetImageSparseMemoryRequirements2)global_table.vkGetDeviceProcAddr(device, vkGetImageSparseMemoryRequirements2_it))
+            if ((vkGetImageSparseMemoryRequirements2 = (PFN_vkGetImageSparseMemoryRequirements2)global_table.vkGetDeviceProcAddr(device, vkGetImageSparseMemoryRequirements2_it)))
                 break;
 #endif
 #if defined(VK_EXT_depth_bias_control)
@@ -1981,7 +1981,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCreateSamplerYcbcrConversion_it : vkCreateSamplerYcbcrConversion_strings)
-            if (vkCreateSamplerYcbcrConversion = (PFN_vkCreateSamplerYcbcrConversion)global_table.vkGetDeviceProcAddr(device, vkCreateSamplerYcbcrConversion_it))
+            if ((vkCreateSamplerYcbcrConversion = (PFN_vkCreateSamplerYcbcrConversion)global_table.vkGetDeviceProcAddr(device, vkCreateSamplerYcbcrConversion_it)))
                 break;
         static constexpr std::array vkDestroySamplerYcbcrConversion_strings
         {
@@ -1993,7 +1993,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkDestroySamplerYcbcrConversion_it : vkDestroySamplerYcbcrConversion_strings)
-            if (vkDestroySamplerYcbcrConversion = (PFN_vkDestroySamplerYcbcrConversion)global_table.vkGetDeviceProcAddr(device, vkDestroySamplerYcbcrConversion_it))
+            if ((vkDestroySamplerYcbcrConversion = (PFN_vkDestroySamplerYcbcrConversion)global_table.vkGetDeviceProcAddr(device, vkDestroySamplerYcbcrConversion_it)))
                 break;
 #endif
 #if defined(VK_NV_cuda_kernel_launch)
@@ -2015,7 +2015,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCreateDescriptorUpdateTemplate_it : vkCreateDescriptorUpdateTemplate_strings)
-            if (vkCreateDescriptorUpdateTemplate = (PFN_vkCreateDescriptorUpdateTemplate)global_table.vkGetDeviceProcAddr(device, vkCreateDescriptorUpdateTemplate_it))
+            if ((vkCreateDescriptorUpdateTemplate = (PFN_vkCreateDescriptorUpdateTemplate)global_table.vkGetDeviceProcAddr(device, vkCreateDescriptorUpdateTemplate_it)))
                 break;
         static constexpr std::array vkDestroyDescriptorUpdateTemplate_strings
         {
@@ -2027,7 +2027,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkDestroyDescriptorUpdateTemplate_it : vkDestroyDescriptorUpdateTemplate_strings)
-            if (vkDestroyDescriptorUpdateTemplate = (PFN_vkDestroyDescriptorUpdateTemplate)global_table.vkGetDeviceProcAddr(device, vkDestroyDescriptorUpdateTemplate_it))
+            if ((vkDestroyDescriptorUpdateTemplate = (PFN_vkDestroyDescriptorUpdateTemplate)global_table.vkGetDeviceProcAddr(device, vkDestroyDescriptorUpdateTemplate_it)))
                 break;
         static constexpr std::array vkUpdateDescriptorSetWithTemplate_strings
         {
@@ -2039,7 +2039,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkUpdateDescriptorSetWithTemplate_it : vkUpdateDescriptorSetWithTemplate_strings)
-            if (vkUpdateDescriptorSetWithTemplate = (PFN_vkUpdateDescriptorSetWithTemplate)global_table.vkGetDeviceProcAddr(device, vkUpdateDescriptorSetWithTemplate_it))
+            if ((vkUpdateDescriptorSetWithTemplate = (PFN_vkUpdateDescriptorSetWithTemplate)global_table.vkGetDeviceProcAddr(device, vkUpdateDescriptorSetWithTemplate_it)))
                 break;
 #endif
 #if defined(VK_KHR_video_encode_queue)
@@ -2057,7 +2057,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkWaitSemaphores_it : vkWaitSemaphores_strings)
-            if (vkWaitSemaphores = (PFN_vkWaitSemaphores)global_table.vkGetDeviceProcAddr(device, vkWaitSemaphores_it))
+            if ((vkWaitSemaphores = (PFN_vkWaitSemaphores)global_table.vkGetDeviceProcAddr(device, vkWaitSemaphores_it)))
                 break;
         static constexpr std::array vkGetSemaphoreCounterValue_strings
         {
@@ -2069,7 +2069,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetSemaphoreCounterValue_it : vkGetSemaphoreCounterValue_strings)
-            if (vkGetSemaphoreCounterValue = (PFN_vkGetSemaphoreCounterValue)global_table.vkGetDeviceProcAddr(device, vkGetSemaphoreCounterValue_it))
+            if ((vkGetSemaphoreCounterValue = (PFN_vkGetSemaphoreCounterValue)global_table.vkGetDeviceProcAddr(device, vkGetSemaphoreCounterValue_it)))
                 break;
         static constexpr std::array vkSignalSemaphore_strings
         {
@@ -2081,7 +2081,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkSignalSemaphore_it : vkSignalSemaphore_strings)
-            if (vkSignalSemaphore = (PFN_vkSignalSemaphore)global_table.vkGetDeviceProcAddr(device, vkSignalSemaphore_it))
+            if ((vkSignalSemaphore = (PFN_vkSignalSemaphore)global_table.vkGetDeviceProcAddr(device, vkSignalSemaphore_it)))
                 break;
 #endif
 #if defined(VK_VERSION_1_2) || defined(VK_EXT_buffer_device_address) || defined(VK_KHR_buffer_device_address)
@@ -2098,7 +2098,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetBufferDeviceAddress_it : vkGetBufferDeviceAddress_strings)
-            if (vkGetBufferDeviceAddress = (PFN_vkGetBufferDeviceAddress)global_table.vkGetDeviceProcAddr(device, vkGetBufferDeviceAddress_it))
+            if ((vkGetBufferDeviceAddress = (PFN_vkGetBufferDeviceAddress)global_table.vkGetDeviceProcAddr(device, vkGetBufferDeviceAddress_it)))
                 break;
 #endif
 #if defined(VK_ANDROID_native_buffer)
@@ -2134,7 +2134,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCreatePrivateDataSlot_it : vkCreatePrivateDataSlot_strings)
-            if (vkCreatePrivateDataSlot = (PFN_vkCreatePrivateDataSlot)global_table.vkGetDeviceProcAddr(device, vkCreatePrivateDataSlot_it))
+            if ((vkCreatePrivateDataSlot = (PFN_vkCreatePrivateDataSlot)global_table.vkGetDeviceProcAddr(device, vkCreatePrivateDataSlot_it)))
                 break;
         static constexpr std::array vkDestroyPrivateDataSlot_strings
         {
@@ -2146,7 +2146,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkDestroyPrivateDataSlot_it : vkDestroyPrivateDataSlot_strings)
-            if (vkDestroyPrivateDataSlot = (PFN_vkDestroyPrivateDataSlot)global_table.vkGetDeviceProcAddr(device, vkDestroyPrivateDataSlot_it))
+            if ((vkDestroyPrivateDataSlot = (PFN_vkDestroyPrivateDataSlot)global_table.vkGetDeviceProcAddr(device, vkDestroyPrivateDataSlot_it)))
                 break;
         static constexpr std::array vkSetPrivateData_strings
         {
@@ -2158,7 +2158,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkSetPrivateData_it : vkSetPrivateData_strings)
-            if (vkSetPrivateData = (PFN_vkSetPrivateData)global_table.vkGetDeviceProcAddr(device, vkSetPrivateData_it))
+            if ((vkSetPrivateData = (PFN_vkSetPrivateData)global_table.vkGetDeviceProcAddr(device, vkSetPrivateData_it)))
                 break;
         static constexpr std::array vkGetPrivateData_strings
         {
@@ -2170,7 +2170,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetPrivateData_it : vkGetPrivateData_strings)
-            if (vkGetPrivateData = (PFN_vkGetPrivateData)global_table.vkGetDeviceProcAddr(device, vkGetPrivateData_it))
+            if ((vkGetPrivateData = (PFN_vkGetPrivateData)global_table.vkGetDeviceProcAddr(device, vkGetPrivateData_it)))
                 break;
 #endif
 #if defined(VK_KHR_external_semaphore_win32)
@@ -2194,7 +2194,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdCopyBuffer2_it : vkCmdCopyBuffer2_strings)
-            if (vkCmdCopyBuffer2 = (PFN_vkCmdCopyBuffer2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyBuffer2_it))
+            if ((vkCmdCopyBuffer2 = (PFN_vkCmdCopyBuffer2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyBuffer2_it)))
                 break;
         static constexpr std::array vkCmdCopyImage2_strings
         {
@@ -2206,7 +2206,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdCopyImage2_it : vkCmdCopyImage2_strings)
-            if (vkCmdCopyImage2 = (PFN_vkCmdCopyImage2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyImage2_it))
+            if ((vkCmdCopyImage2 = (PFN_vkCmdCopyImage2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyImage2_it)))
                 break;
         static constexpr std::array vkCmdCopyBufferToImage2_strings
         {
@@ -2218,7 +2218,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdCopyBufferToImage2_it : vkCmdCopyBufferToImage2_strings)
-            if (vkCmdCopyBufferToImage2 = (PFN_vkCmdCopyBufferToImage2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyBufferToImage2_it))
+            if ((vkCmdCopyBufferToImage2 = (PFN_vkCmdCopyBufferToImage2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyBufferToImage2_it)))
                 break;
         static constexpr std::array vkCmdCopyImageToBuffer2_strings
         {
@@ -2230,7 +2230,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdCopyImageToBuffer2_it : vkCmdCopyImageToBuffer2_strings)
-            if (vkCmdCopyImageToBuffer2 = (PFN_vkCmdCopyImageToBuffer2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyImageToBuffer2_it))
+            if ((vkCmdCopyImageToBuffer2 = (PFN_vkCmdCopyImageToBuffer2)global_table.vkGetDeviceProcAddr(device, vkCmdCopyImageToBuffer2_it)))
                 break;
         static constexpr std::array vkCmdBlitImage2_strings
         {
@@ -2242,7 +2242,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdBlitImage2_it : vkCmdBlitImage2_strings)
-            if (vkCmdBlitImage2 = (PFN_vkCmdBlitImage2)global_table.vkGetDeviceProcAddr(device, vkCmdBlitImage2_it))
+            if ((vkCmdBlitImage2 = (PFN_vkCmdBlitImage2)global_table.vkGetDeviceProcAddr(device, vkCmdBlitImage2_it)))
                 break;
         static constexpr std::array vkCmdResolveImage2_strings
         {
@@ -2254,7 +2254,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdResolveImage2_it : vkCmdResolveImage2_strings)
-            if (vkCmdResolveImage2 = (PFN_vkCmdResolveImage2)global_table.vkGetDeviceProcAddr(device, vkCmdResolveImage2_it))
+            if ((vkCmdResolveImage2 = (PFN_vkCmdResolveImage2)global_table.vkGetDeviceProcAddr(device, vkCmdResolveImage2_it)))
                 break;
 #endif
 #if defined(VK_KHR_swapchain)
@@ -2275,7 +2275,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdBeginRendering_it : vkCmdBeginRendering_strings)
-            if (vkCmdBeginRendering = (PFN_vkCmdBeginRendering)global_table.vkGetDeviceProcAddr(device, vkCmdBeginRendering_it))
+            if ((vkCmdBeginRendering = (PFN_vkCmdBeginRendering)global_table.vkGetDeviceProcAddr(device, vkCmdBeginRendering_it)))
                 break;
         static constexpr std::array vkCmdEndRendering_strings
         {
@@ -2287,7 +2287,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdEndRendering_it : vkCmdEndRendering_strings)
-            if (vkCmdEndRendering = (PFN_vkCmdEndRendering)global_table.vkGetDeviceProcAddr(device, vkCmdEndRendering_it))
+            if ((vkCmdEndRendering = (PFN_vkCmdEndRendering)global_table.vkGetDeviceProcAddr(device, vkCmdEndRendering_it)))
                 break;
 #endif
 #if defined(VK_KHR_ray_tracing_maintenance1)
@@ -2304,7 +2304,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetRasterizerDiscardEnable_it : vkCmdSetRasterizerDiscardEnable_strings)
-            if (vkCmdSetRasterizerDiscardEnable = (PFN_vkCmdSetRasterizerDiscardEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetRasterizerDiscardEnable_it))
+            if ((vkCmdSetRasterizerDiscardEnable = (PFN_vkCmdSetRasterizerDiscardEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetRasterizerDiscardEnable_it)))
                 break;
         static constexpr std::array vkCmdSetDepthBiasEnable_strings
         {
@@ -2316,7 +2316,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetDepthBiasEnable_it : vkCmdSetDepthBiasEnable_strings)
-            if (vkCmdSetDepthBiasEnable = (PFN_vkCmdSetDepthBiasEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthBiasEnable_it))
+            if ((vkCmdSetDepthBiasEnable = (PFN_vkCmdSetDepthBiasEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetDepthBiasEnable_it)))
                 break;
         static constexpr std::array vkCmdSetPrimitiveRestartEnable_strings
         {
@@ -2328,7 +2328,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetPrimitiveRestartEnable_it : vkCmdSetPrimitiveRestartEnable_strings)
-            if (vkCmdSetPrimitiveRestartEnable = (PFN_vkCmdSetPrimitiveRestartEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetPrimitiveRestartEnable_it))
+            if ((vkCmdSetPrimitiveRestartEnable = (PFN_vkCmdSetPrimitiveRestartEnable)global_table.vkGetDeviceProcAddr(device, vkCmdSetPrimitiveRestartEnable_it)))
                 break;
 #endif
 #if defined(VK_KHR_fragment_shading_rate)
@@ -2395,7 +2395,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkCmdSetLineStippleKHR_it : vkCmdSetLineStippleKHR_strings)
-            if (vkCmdSetLineStippleKHR = (PFN_vkCmdSetLineStippleKHR)global_table.vkGetDeviceProcAddr(device, vkCmdSetLineStippleKHR_it))
+            if ((vkCmdSetLineStippleKHR = (PFN_vkCmdSetLineStippleKHR)global_table.vkGetDeviceProcAddr(device, vkCmdSetLineStippleKHR_it)))
                 break;
 #endif
 #if defined(VK_EXT_shader_object) || defined(VK_EXT_extended_dynamic_state2)
@@ -2467,7 +2467,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetCalibratedTimestampsKHR_it : vkGetCalibratedTimestampsKHR_strings)
-            if (vkGetCalibratedTimestampsKHR = (PFN_vkGetCalibratedTimestampsKHR)global_table.vkGetDeviceProcAddr(device, vkGetCalibratedTimestampsKHR_it))
+            if ((vkGetCalibratedTimestampsKHR = (PFN_vkGetCalibratedTimestampsKHR)global_table.vkGetDeviceProcAddr(device, vkGetCalibratedTimestampsKHR_it)))
                 break;
 #endif
 #if defined(VK_EXT_attachment_feedback_loop_dynamic_state)
@@ -2488,7 +2488,7 @@ struct VkDeviceTable {
 #endif
         };
         for (auto vkGetImageSubresourceLayout2KHR_it : vkGetImageSubresourceLayout2KHR_strings)
-            if (vkGetImageSubresourceLayout2KHR = (PFN_vkGetImageSubresourceLayout2KHR)global_table.vkGetDeviceProcAddr(device, vkGetImageSubresourceLayout2KHR_it))
+            if ((vkGetImageSubresourceLayout2KHR = (PFN_vkGetImageSubresourceLayout2KHR)global_table.vkGetDeviceProcAddr(device, vkGetImageSubresourceLayout2KHR_it)))
                 break;
 #endif
 #if defined(VK_EXT_device_fault)

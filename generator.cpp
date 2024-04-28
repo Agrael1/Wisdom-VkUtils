@@ -100,7 +100,7 @@ std::string MakeCommandInit(std::string_view init_format, std::string_view cmd,
     }
     output += "};\n";
 
-    output += wis::format("for(auto {}_it : {}_strings)\n if({})\n break;\n",
+    output += wis::format("for(auto {}_it : {}_strings)\n if(({}))\n break;\n",
                           cmd,
                           cmd,
                           Replace(init_format, std::array{
