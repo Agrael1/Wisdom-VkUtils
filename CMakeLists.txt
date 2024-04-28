@@ -102,12 +102,15 @@ if(NOT WISVK_ONLY_HEADERS)
 	)
 endif(NOT WISVK_ONLY_HEADERS)
 
+find_package(Vulkan REQUIRED)
+
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(wis::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} INTERFACE 
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/wisvk>
 	$<INSTALL_INTERFACE:include>
 )
+target_link_libraries(${PROJECT_NAME} INTERFACE Vulkan::Headers)
 
 if(WISVK_BUILD_EXAMPLES)
 	add_subdirectory(examples)
