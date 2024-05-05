@@ -9,7 +9,7 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("wisvk")
+project (WisVk)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(WTOP ON)
@@ -25,6 +25,7 @@ else()
   set(WUSE_FMT OFF)
 endif()
 
+include( GNUInstallDirs )
 
 option(WISVK_ONLY_HEADERS "Only use generated headers" OFF)
 option(WISVK_RUN_GENERATOR "Run VkUtils generator to generate newest headers." ${WTOP})
@@ -105,10 +106,10 @@ endif(NOT WISVK_ONLY_HEADERS)
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} INTERFACE)
-add_library(wis::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+add_library(Wisdom::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} INTERFACE 
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/wisvk>
-	$<INSTALL_INTERFACE:include>
+	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 target_link_libraries(${PROJECT_NAME} INTERFACE Vulkan::Headers)
 
@@ -117,12 +118,18 @@ if(WISVK_BUILD_EXAMPLES)
 endif()
 
 # install
-include( GNUInstallDirs )
+
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}Targets
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/wisvk/wisvk" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
+install(EXPORT ${PROJECT_NAME}Targets
+        NAMESPACE Wisdom::
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+        FILE ${PROJECT_NAME}Config.cmake
 )
 
 
@@ -132,32 +139,21 @@ write_basic_package_version_file(
     VERSION 1.0
     COMPATIBILITY SameMajorVersion
 )
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in")
-	file(WRITE "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in" "@PACKAGE_INIT@\n\ninclude(\"${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake\")\ncheck_required_components(\"@PROJECT_NAME@\")")
-endif()
-configure_package_config_file(
-  "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
-  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION
-  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
-
-
-install(EXPORT ${PROJECT_NAME}Targets
-        FILE ${PROJECT_NAME}Targets.cmake
-        NAMESPACE wis::
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
-
-export(
-    TARGETS ${PROJECT_NAME}
-    NAMESPACE wis::
-    FILE ${PROJECT_NAME}Targets.cmake
+install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
 )
 
-install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-              "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+configure_file(
+	"${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+	"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+	IMMEDIATE @ONLY
+)
 
+add_custom_target(
+	uninstall
+	"${CMAKE_COMMAND}" -P
+	"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+)
 
-install(DIRECTORY ${CMAKE_INSTALL_INCLUDEDIR}/wisvk	DESTINATION include)
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
 include(CPack)
