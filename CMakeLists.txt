@@ -128,19 +128,27 @@ install(TARGETS ${PROJECT_NAME}
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/wisvk/wisvk" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
 install(EXPORT ${PROJECT_NAME}Targets
         NAMESPACE Wisdom::
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
-        FILE ${PROJECT_NAME}Config.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+        FILE ${PROJECT_NAME}Targets.cmake
 )
 
 
 include(CMakePackageConfigHelpers)
+configure_package_config_file( 
+  "cmake/${PROJECT_NAME}Config.cmake.in" 
+  "${PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
 write_basic_package_version_file(
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
     VERSION 1.0
     COMPATIBILITY SameMajorVersion
 )
-install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+
+install(FILES 
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 configure_file(
