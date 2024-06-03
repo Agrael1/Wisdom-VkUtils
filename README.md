@@ -6,6 +6,23 @@ Contains only parts of the API that are actually improving the development exper
 
 # Contents
 
+## Generator WisVk_generator
+
+- Generates a header file with Vulkan functions and types
+- Generates a header file for a subset of Vulkan functions. Example: `./WisVk_generator -l -i in.txt -o out.hpp`
+- Text file has a simple format:
+```
+[table name]
+
+function1
+[opt]function2
+# comment
+```
+- Opt will generate no error if the function is not loaded to the table
+- Comment will be ignored
+- There may be up to 3 tables generated from a single table name: Global, Instance and Device tables
+
+
 ## A header only vulkan loader implementation with separate loading tables (vk_loader.hpp)
 - Supports loading of Vulkan functions from a dynamic library
 - Does not require linking to the Vulkan library

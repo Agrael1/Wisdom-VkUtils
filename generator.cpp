@@ -4,30 +4,13 @@
 #include <ranges>
 #include <unordered_set>
 #include <array>
-
-struct FeatureHash {
-    std::size_t operator()(const std::span<const std::string_view>& k) const noexcept
-    {
-        std::size_t hash = 0;
-        for (auto& i : k) {
-            hash ^= std::hash<std::string_view>()(i);
-        }
-        return hash;
-    }
-};
-
-struct FeatureEqual {
-    bool operator()(const std::span<const std::string_view>& lhs, const std::span<const std::string_view>& rhs) const
-    {
-        return lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
-    }
-};
+#include "util.h"
 
 auto SortByFeature(const auto& commands,
                    const std::unordered_map<std::string_view, std::vector<std::string_view>>& command_to_features)
 {
     // stores the commands under the same features
-    std::unordered_map<std::span<const std::string_view>, std::vector<std::string_view>, FeatureHash, FeatureEqual> feature_blocks;
+    std::unordered_map<std::span<const std::string_view>, std::vector<std::string_view>, wis::FeatureHash, wis::FeatureEqual> feature_blocks;
     for (auto command : commands) {
         auto features = std::span{ command_to_features.at(command) };
         feature_blocks[features].push_back(command);
@@ -105,7 +88,7 @@ std::string MakeCommandInit(std::string_view init_format, std::string_view cmd,
                           cmd,
                           Replace(init_format, std::array{
                                                        mapty{ "{cmd}", cmd },
-                                                       mapty{ "{type}", std::format("{}_it", cmd) },
+                                                       mapty{ "{type}", wis::format("{}_it", cmd) },
                                                }));
 
     return output;
@@ -376,14 +359,13 @@ public:
     stream << output;
 }
 
-
 std::string MakeMovableHandle(const wis::Handle& handle)
 {
     return wis::format("using {} = wis::movable_handle<::{}>;", handle.name, handle.name);
 }
 
 std::string MakeMovableHandles(const std::unordered_map<std::string_view, wis::Handle>& handles,
-                             const std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
+                               const std::unordered_map<std::string_view, std::vector<std::string_view>>& features)
 {
     auto feature_blocks = SortByFeature(handles | std::views::keys, features);
     std::string output;
