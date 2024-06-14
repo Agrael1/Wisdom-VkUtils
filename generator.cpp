@@ -427,15 +427,15 @@ struct movable_handle
 
     constexpr movable_handle() = default;
     constexpr explicit movable_handle(HandleType h) noexcept : handle(h) {}
-    constexpr movable_handle(nullptr_t) noexcept : handle(nullptr) {}
+    constexpr movable_handle(nullptr_t) noexcept : handle(VK_NULL_HANDLE) {}
     movable_handle(const movable_handle&) = delete;
     constexpr movable_handle(movable_handle&& h)noexcept
-    : handle(std::exchange(h.handle, nullptr)) {}
+    : handle(std::exchange(h.handle, VK_NULL_HANDLE)) {}
 
     movable_handle& operator=(const movable_handle&) = delete;
     constexpr movable_handle& operator=(movable_handle&& h)noexcept
     {
-        handle = std::exchange(h.handle, nullptr);
+        handle = std::exchange(h.handle, VK_NULL_HANDLE);
         return *this;
     }
     constexpr movable_handle& operator=(HandleType h) noexcept
