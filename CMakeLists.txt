@@ -55,25 +55,35 @@ if(NOT WISVK_ONLY_HEADERS)
 	include(FetchContent)
 	
 	set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+
+	find_package(tinyxml2 CONFIG QUIET)
+ 	if (tinyxml2_FOUND OR TARGET tinyxml2::tinyxml2)
+  		message("tinyxml2 found, skipping download.")
+  	else()
+		message("Loading tinyxml2...")
+		FetchContent_Declare(
+	 	 tinyxml2
+	 	 GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
+	 	 GIT_TAG origin/master)
 	
-	message("Loading tinyxml2...")
-	FetchContent_Declare(
-	  tinyxml2
-	  GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
-	  GIT_TAG origin/master)
-	
-	set(tinyxml2_BUILD_TESTING
-	    OFF
-	    CACHE BOOL "" FORCE)
-	FetchContent_MakeAvailable(tinyxml2)
+		set(tinyxml2_BUILD_TESTING
+	 	   OFF
+	 	   CACHE BOOL "" FORCE)
+		FetchContent_MakeAvailable(tinyxml2)
+ 	endif()
 	
 	if(WISVK_USE_FMT)
-		message("Loading fmtlib...")
-		FetchContent_Declare(
+ 		find_package(fmt 10.0 CONFIG QUIET)
+		if(fmt_FOUND OR TARGET fmt::fmt)
+ 		 message("fmtlib found, skipping download.")
+		else()
+		  message("Loading fmtlib...")
+		  FetchContent_Declare(
 			fmt
 			GIT_REPOSITORY https://github.com/fmtlib/fmt.git
 			GIT_TAG origin/master)
-		FetchContent_MakeAvailable(fmt)
+		  FetchContent_MakeAvailable(fmt)
+    		endif()
 	endif()
 	
 	
