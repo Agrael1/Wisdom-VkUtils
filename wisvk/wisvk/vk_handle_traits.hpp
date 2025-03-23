@@ -14,7 +14,7 @@ class empty_type
 };
 
 template<typename T>
-using function_pointer_t = std::conditional_t<std::is_function_v<std::remove_pointer_t<T>>, std::remove_pointer_t<T>*, nullptr_t>;
+using function_pointer_t = std::conditional_t<std::is_function_v<std::remove_pointer_t<T>>, std::remove_pointer_t<T>*, std::nullptr_t>;
 
 template<typename HandleType>
 class handle_traits
@@ -23,7 +23,7 @@ public:
     using parent = empty_type;
     using deleter_parent = empty_type;
     using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
+    using deleter_pfn = std::nullptr_t;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
@@ -113,7 +113,7 @@ public:
     using parent = VkDevice;
     using deleter_parent = empty_type;
     using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
+    using deleter_pfn = std::nullptr_t;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
@@ -132,7 +132,7 @@ public:
     using parent = VkInstance;
     using deleter_parent = empty_type;
     using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
+    using deleter_pfn = std::nullptr_t;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
@@ -737,7 +737,7 @@ public:
     using parent = VkDisplayKHR;
     using deleter_parent = empty_type;
     using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
+    using deleter_pfn = std::nullptr_t;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {

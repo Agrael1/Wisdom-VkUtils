@@ -17,7 +17,7 @@ struct movable_handle {
     constexpr movable_handle() = default;
     constexpr explicit movable_handle(HandleType h) noexcept
         : handle(h) { }
-    constexpr movable_handle(nullptr_t) noexcept
+    constexpr movable_handle(std::nullptr_t) noexcept
         : handle(VK_NULL_HANDLE) { }
     movable_handle(const movable_handle&) = delete;
     constexpr movable_handle(movable_handle&& h) noexcept

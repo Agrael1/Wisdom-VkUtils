@@ -268,7 +268,7 @@ public:
             handle.parent ? handle.parent->name : "empty_type",
             handle.destroy_parent ? handle.destroy_parent->name : "empty_type",
             handle.pool ? handle.pool->name : "empty_type",
-            handle.destroy_command ? wis::format("function_pointer_t<decltype({})>", handle.destroy_command->name) : "nullptr_t",
+            handle.destroy_command ? wis::format("function_pointer_t<decltype({})>", handle.destroy_command->name) : "std::nullptr_t",
             handle.destroy_command ? handle.destroy_command->name : "nullptr");
 }
 
@@ -341,7 +341,7 @@ class empty_type
 };
 
 template<typename T>
-using function_pointer_t = std::conditional_t<std::is_function_v<std::remove_pointer_t<T>>, std::remove_pointer_t<T>*, nullptr_t>;
+using function_pointer_t = std::conditional_t<std::is_function_v<std::remove_pointer_t<T>>, std::remove_pointer_t<T>*, std::nullptr_t>;
 
 template<typename HandleType>
 class handle_traits
@@ -350,7 +350,7 @@ public:
     using parent = empty_type;
     using deleter_parent = empty_type;
     using deleter_pool = empty_type;
-    using deleter_pfn = nullptr_t;
+    using deleter_pfn = std::nullptr_t;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
@@ -437,7 +437,7 @@ struct movable_handle
 
     constexpr movable_handle() = default;
     constexpr explicit movable_handle(HandleType h) noexcept : handle(h) {}
-    constexpr movable_handle(nullptr_t) noexcept : handle(VK_NULL_HANDLE) {}
+    constexpr movable_handle(std::nullptr_t) noexcept : handle(VK_NULL_HANDLE) {}
     movable_handle(const movable_handle&) = delete;
     constexpr movable_handle(movable_handle&& h)noexcept
     : handle(std::exchange(h.handle, VK_NULL_HANDLE)) {}
