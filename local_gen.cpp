@@ -288,10 +288,16 @@ int wis::LocalGenParser::Parse(std::filesystem::path p)
 void wis::LocalGenParser::GenerateSubsetTables(const wis::Context& context, std::ostream& stream)
 {
     std::string output{ R"(#pragma once
+#ifndef WISVK_MODULE_DECL
 #include <array>
 #include <vulkan/vulkan.h>
 #include <wisvk/vk_libinit.hpp>
+#define WISVK_EXPORT
+#else
+#define WISVK_EXPORT export
+#endif // WISVK_MODULE_DECL
 
+WISVK_EXPORT
 namespace wis {
 
 )" };
