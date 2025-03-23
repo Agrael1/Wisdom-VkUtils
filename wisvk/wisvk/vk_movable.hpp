@@ -1,8 +1,14 @@
 #pragma once
+#ifndef WISVK_MODULE_DECL
 #include <type_traits>
 #include <utility>
 #include <vulkan/vulkan.h>
+#define WISVK_EXPORT
+#else
+#define WISVK_EXPORT export
+#endif // WISVK_MODULE_DECL
 
+WISVK_EXPORT
 namespace wis {
 template<typename HandleType>
 struct movable_handle {
@@ -102,11 +108,22 @@ using VkDebugUtilsMessengerEXT = wis::movable_handle<::VkDebugUtilsMessengerEXT>
 #if defined(VK_EXT_shader_object)
 using VkShaderEXT = wis::movable_handle<::VkShaderEXT>;
 #endif
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
+using VkDescriptorUpdateTemplate = wis::movable_handle<::VkDescriptorUpdateTemplate>;
+#endif
+#if defined(VK_KHR_pipeline_binary)
+using VkPipelineBinaryKHR = wis::movable_handle<::VkPipelineBinaryKHR>;
+#endif
 #if defined(VK_EXT_validation_cache)
 using VkValidationCacheEXT = wis::movable_handle<::VkValidationCacheEXT>;
 #endif
-#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
-using VkDescriptorUpdateTemplate = wis::movable_handle<::VkDescriptorUpdateTemplate>;
+#if defined(VK_KHR_video_queue)
+using VkVideoSessionParametersKHR = wis::movable_handle<::VkVideoSessionParametersKHR>;
+using VkVideoSessionKHR = wis::movable_handle<::VkVideoSessionKHR>;
+#endif
+#if defined(VK_EXT_device_generated_commands)
+using VkIndirectCommandsLayoutEXT = wis::movable_handle<::VkIndirectCommandsLayoutEXT>;
+using VkIndirectExecutionSetEXT = wis::movable_handle<::VkIndirectExecutionSetEXT>;
 #endif
 #if defined(VK_KHR_deferred_host_operations)
 using VkDeferredOperationKHR = wis::movable_handle<::VkDeferredOperationKHR>;
@@ -122,10 +139,6 @@ using VkBufferCollectionFUCHSIA = wis::movable_handle<::VkBufferCollectionFUCHSI
 #endif
 #if defined(VK_VERSION_1_3) || defined(VK_EXT_private_data)
 using VkPrivateDataSlot = wis::movable_handle<::VkPrivateDataSlot>;
-#endif
-#if defined(VK_KHR_video_queue)
-using VkVideoSessionParametersKHR = wis::movable_handle<::VkVideoSessionParametersKHR>;
-using VkVideoSessionKHR = wis::movable_handle<::VkVideoSessionKHR>;
 #endif
 #if defined(VK_NV_optical_flow)
 using VkOpticalFlowSessionNV = wis::movable_handle<::VkOpticalFlowSessionNV>;

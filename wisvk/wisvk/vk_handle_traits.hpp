@@ -1,7 +1,13 @@
 #pragma once
+#ifndef WISVK_MODULE_DECL
 #include <type_traits>
 #include <vulkan/vulkan.h>
+#define WISVK_EXPORT
+#else
+#define WISVK_EXPORT export
+#endif // WISVK_MODULE_DECL
 
+WISVK_EXPORT
 namespace wis {
 class empty_type
 {
@@ -805,6 +811,48 @@ public:
 };
 
 #endif
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
+template<>
+class handle_traits<VkDescriptorUpdateTemplate>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyDescriptorUpdateTemplate)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+#ifndef WISVK_NO_DEFAULT_DELETER
+        return vkDestroyDescriptorUpdateTemplate;
+#else
+        return nullptr;
+#endif
+    }
+};
+
+#endif
+#if defined(VK_KHR_pipeline_binary)
+template<>
+class handle_traits<VkPipelineBinaryKHR>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyPipelineBinaryKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+#ifndef WISVK_NO_DEFAULT_DELETER
+        return vkDestroyPipelineBinaryKHR;
+#else
+        return nullptr;
+#endif
+    }
+};
+
+#endif
 #if defined(VK_EXT_validation_cache)
 template<>
 class handle_traits<VkValidationCacheEXT>
@@ -826,20 +874,79 @@ public:
 };
 
 #endif
-#if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
+#if defined(VK_KHR_video_queue)
 template<>
-class handle_traits<VkDescriptorUpdateTemplate>
+class handle_traits<VkVideoSessionParametersKHR>
+{
+public:
+    using parent = VkVideoSessionKHR;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionParametersKHR)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+#ifndef WISVK_NO_DEFAULT_DELETER
+        return vkDestroyVideoSessionParametersKHR;
+#else
+        return nullptr;
+#endif
+    }
+};
+
+template<>
+class handle_traits<VkVideoSessionKHR>
 {
 public:
     using parent = VkDevice;
     using deleter_parent = VkDevice;
     using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyDescriptorUpdateTemplate)>;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionKHR)>;
 
     constexpr static inline deleter_pfn default_deleter() noexcept
     {
 #ifndef WISVK_NO_DEFAULT_DELETER
-        return vkDestroyDescriptorUpdateTemplate;
+        return vkDestroyVideoSessionKHR;
+#else
+        return nullptr;
+#endif
+    }
+};
+
+#endif
+#if defined(VK_EXT_device_generated_commands)
+template<>
+class handle_traits<VkIndirectCommandsLayoutEXT>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyIndirectCommandsLayoutEXT)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+#ifndef WISVK_NO_DEFAULT_DELETER
+        return vkDestroyIndirectCommandsLayoutEXT;
+#else
+        return nullptr;
+#endif
+    }
+};
+
+template<>
+class handle_traits<VkIndirectExecutionSetEXT>
+{
+public:
+    using parent = VkDevice;
+    using deleter_parent = VkDevice;
+    using deleter_pool = empty_type;
+    using deleter_pfn = function_pointer_t<decltype(vkDestroyIndirectExecutionSetEXT)>;
+
+    constexpr static inline deleter_pfn default_deleter() noexcept
+    {
+#ifndef WISVK_NO_DEFAULT_DELETER
+        return vkDestroyIndirectExecutionSetEXT;
 #else
         return nullptr;
 #endif
@@ -945,46 +1052,6 @@ public:
     {
 #ifndef WISVK_NO_DEFAULT_DELETER
         return vkDestroyPrivateDataSlot;
-#else
-        return nullptr;
-#endif
-    }
-};
-
-#endif
-#if defined(VK_KHR_video_queue)
-template<>
-class handle_traits<VkVideoSessionParametersKHR>
-{
-public:
-    using parent = VkVideoSessionKHR;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionParametersKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-#ifndef WISVK_NO_DEFAULT_DELETER
-        return vkDestroyVideoSessionParametersKHR;
-#else
-        return nullptr;
-#endif
-    }
-};
-
-template<>
-class handle_traits<VkVideoSessionKHR>
-{
-public:
-    using parent = VkDevice;
-    using deleter_parent = VkDevice;
-    using deleter_pool = empty_type;
-    using deleter_pfn = function_pointer_t<decltype(vkDestroyVideoSessionKHR)>;
-
-    constexpr static inline deleter_pfn default_deleter() noexcept
-    {
-#ifndef WISVK_NO_DEFAULT_DELETER
-        return vkDestroyVideoSessionKHR;
 #else
         return nullptr;
 #endif

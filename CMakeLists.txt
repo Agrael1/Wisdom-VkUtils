@@ -66,9 +66,6 @@ if(NOT WISVK_ONLY_HEADERS)
 	 	 GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
 	 	 GIT_TAG origin/master)
 	
-		set(tinyxml2_BUILD_TESTING
-	 	   OFF
-	 	   CACHE BOOL "" FORCE)
 		FetchContent_MakeAvailable(tinyxml2)
  	endif()
 	

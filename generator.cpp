@@ -326,10 +326,15 @@ void wis::Generator::GenerateHandleTraits(const Context& context, std::ostream& 
 {
     std::string output{
         R"(#pragma once
+#ifndef WISVK_MODULE_DECL
 #include <type_traits>
 #include <vulkan/vulkan.h>
+#define WISVK_EXPORT
+#else
+#define WISVK_EXPORT export
+#endif // WISVK_MODULE_DECL
 
-
+WISVK_EXPORT
 namespace wis {
 class empty_type
 {
@@ -414,11 +419,16 @@ void wis::Generator::GenerateMovableHandles(const Context& context, std::ostream
 {
     std::string output{
         R"(#pragma once
+#ifndef WISVK_MODULE_DECL
 #include <type_traits>
 #include <utility>
 #include <vulkan/vulkan.h>
+#define WISVK_EXPORT
+#else
+#define WISVK_EXPORT export
+#endif // WISVK_MODULE_DECL
 
-
+WISVK_EXPORT
 namespace wis {
 template<typename HandleType>
 struct movable_handle
@@ -464,10 +474,17 @@ namespace h{
 void wis::Generator::GenerateLoader(const Context& context, std::ostream& stream)
 {
     std::string output{ R"(#pragma once
+#ifndef WISVK_MODULE_DECL
 #include <array>
 #include <vulkan/vulkan.h>
 #include "vk_libinit.hpp"
+#define WISVK_EXPORT
+#else
+#define WISVK_EXPORT export
+#endif // WISVK_MODULE_DECL
 
+
+WISVK_EXPORT
 namespace wis {
 
 )" };
