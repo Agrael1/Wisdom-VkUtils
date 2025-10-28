@@ -83,17 +83,14 @@ using VkCuFunctionNVX = wis::movable_handle<::VkCuFunctionNVX>;
 using VkCudaFunctionNV = wis::movable_handle<::VkCudaFunctionNV>;
 using VkCudaModuleNV = wis::movable_handle<::VkCudaModuleNV>;
 #endif
+#if defined(VK_NV_external_compute_queue)
+using VkExternalComputeQueueNV = wis::movable_handle<::VkExternalComputeQueueNV>;
+#endif
 #if defined(VK_EXT_debug_report)
 using VkDebugReportCallbackEXT = wis::movable_handle<::VkDebugReportCallbackEXT>;
 #endif
-#if defined(VK_VERSION_1_1) || defined(VK_KHR_sampler_ycbcr_conversion)
-using VkSamplerYcbcrConversion = wis::movable_handle<::VkSamplerYcbcrConversion>;
-#endif
-#if defined(VK_NV_device_generated_commands)
-using VkIndirectCommandsLayoutNV = wis::movable_handle<::VkIndirectCommandsLayoutNV>;
-#endif
-#if defined(VK_INTEL_performance_query)
-using VkPerformanceConfigurationINTEL = wis::movable_handle<::VkPerformanceConfigurationINTEL>;
+#if defined(VK_ARM_data_graph)
+using VkDataGraphPipelineSessionARM = wis::movable_handle<::VkDataGraphPipelineSessionARM>;
 #endif
 #if defined(VK_EXT_opacity_micromap)
 using VkMicromapEXT = wis::movable_handle<::VkMicromapEXT>;
@@ -107,6 +104,15 @@ using VkDebugUtilsMessengerEXT = wis::movable_handle<::VkDebugUtilsMessengerEXT>
 #endif
 #if defined(VK_EXT_shader_object)
 using VkShaderEXT = wis::movable_handle<::VkShaderEXT>;
+#endif
+#if defined(VK_VERSION_1_1) || defined(VK_KHR_sampler_ycbcr_conversion)
+using VkSamplerYcbcrConversion = wis::movable_handle<::VkSamplerYcbcrConversion>;
+#endif
+#if defined(VK_NV_device_generated_commands)
+using VkIndirectCommandsLayoutNV = wis::movable_handle<::VkIndirectCommandsLayoutNV>;
+#endif
+#if defined(VK_INTEL_performance_query)
+using VkPerformanceConfigurationINTEL = wis::movable_handle<::VkPerformanceConfigurationINTEL>;
 #endif
 #if defined(VK_VERSION_1_1) || defined(VK_KHR_descriptor_update_template)
 using VkDescriptorUpdateTemplate = wis::movable_handle<::VkDescriptorUpdateTemplate>;
@@ -142,6 +148,10 @@ using VkPrivateDataSlot = wis::movable_handle<::VkPrivateDataSlot>;
 #endif
 #if defined(VK_NV_optical_flow)
 using VkOpticalFlowSessionNV = wis::movable_handle<::VkOpticalFlowSessionNV>;
+#endif
+#if defined(VK_ARM_tensors)
+using VkTensorARM = wis::movable_handle<::VkTensorARM>;
+using VkTensorViewARM = wis::movable_handle<::VkTensorViewARM>;
 #endif
 #if defined(VK_KHR_surface)
 using VkSurfaceKHR = wis::movable_handle<::VkSurfaceKHR>;

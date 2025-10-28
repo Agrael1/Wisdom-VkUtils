@@ -154,7 +154,19 @@ void wis::Context::ReadFeature(const tinyxml2::XMLElement& feature)
     if (name == attributes.end())
         throw std::runtime_error("Feature without name");
 
-    auto& featurex = features[name->second];
+    std::string name_transformed{};
+
+    // check if feature ends with _VERSION_X_Y
+    auto pos = name->second.find("_VERSION_");
+    if (pos != std::string_view::npos) {
+        name_transformed = name->second.substr(0, name->second.find('_'));
+        name_transformed += name->second.substr(pos);
+    } else {
+        name_transformed = std::string{name->second};
+    }
+    
+
+    auto& featurex = features[std::move(name_transformed)];
     for (auto child = feature.FirstChildElement("require"); child != nullptr; child = child->NextSiblingElement("require")) {
         std::string_view value = child->Value();
         ReadRequire(*child, featurex);

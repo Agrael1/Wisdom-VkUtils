@@ -118,7 +118,7 @@ public:
 
     std::unordered_map<std::string_view, std::vector<std::string_view>> command_to_aliases;
 
-    std::unordered_map<std::string_view, Feature> features;
+    std::unordered_map<std::string, Feature> features;
     std::unordered_map<std::string_view, Feature> extensions;
     std::unordered_map<std::string_view, Command> commands;
     std::unordered_map<std::string_view, Handle> handles;
